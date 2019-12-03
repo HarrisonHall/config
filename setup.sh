@@ -19,7 +19,12 @@ sudo apt-get install papirus-icon-theme
 # Ubuntu
 ins unity-tweak-tool
 
+# Setup config
+cp -r .emacs.d ~/.
+cp .tmux.conf ~/.
+
 # Manually setup/install:
 # arc dark
 # Papirus fonts
+# Upgrade python (3.6+)
 
