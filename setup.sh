@@ -11,6 +11,9 @@ ins htop  # Top
 ins vtop  # Top
 ins gotop-cjbassi  # Nice top
 
+# .bashrc
+cat .bashrc >> ~/.bashrc
+
 # Icons
 sudo add-apt-repository ppa:papirus/papirus
 sudo apt-get update
