@@ -1,0 +1,109 @@
+[Background]
+Bold=false
+Color=46,52,64
+
+[BackgroundIntense]
+Bold=false
+Color=46,52,64
+
+[Color0]
+# Frost 4
+Bold=false
+Color=94,129,172
+
+
+[Color0Intense]
+Bold=false
+Color=94,129,172
+
+
+[Color1]
+# frost 3
+Bold=false
+Color=129,161,193
+
+
+[Color1Intense]
+Bold=false
+Color=129,161,193
+
+
+[Color2]
+# Frost 2
+Bold=false
+Color=136,192,208
+
+
+[Color2Intense]
+Bold=false
+Color=136,192,208
+
+
+[Color3]
+# Snowstorm 1
+Bold=false
+Color=216,222,233
+
+
+[Color3Intense]
+Bold=false
+Color=216,222,233
+
+
+[Color4]
+# aurora 5, purple
+Bold=false
+Color=180,142,173
+
+
+[Color4Intense]
+Bold=false
+Color=180,142,173
+
+
+[Color5]
+# aurora 1, red
+Bold=false
+Color=191,97,106
+
+
+[Color5Intense]
+Bold=false
+Color=191,97,106
+
+
+[Color6]
+# aurora 3, yellow
+Bold=false
+Color=235,203,139
+
+
+[Color6Intense]
+Bold=false
+Color=235,203,139
+
+
+[Color7]
+# polar 4
+Bold=false
+Color=76,86,106
+
+
+[Color7Intense]
+Bold=false
+Color=76,86,106
+
+
+[Foreground]
+# snowstorm 3
+Bold=false
+Color=236,239,244
+
+
+[ForegroundIntense]
+Bold=false
+Color=236,239,244
+
+
+[General]
+Description=Nord Colors
