@@ -30,5 +30,9 @@ cp .tmux.conf ~/.
 # Manually setup/install:
 # arc dark
 # Papirus icons
-# Upgrade python (3.6+)
+# Upgrade python (3.8+)
+
+# Tmux
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+ln -s .tmux.conf ~/.tmux.conf
 
