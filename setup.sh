@@ -13,7 +13,7 @@ ins fonts-hack-otf  # Hack font
 ins fonts-hack-ttf  # Hack font
 
 # .bashrc
-cat .bashrc >> ~/.bashrc
+echo "source ~/Documents/.tmuxrc/.bashrc" >> ~/.bashrc
 
 # Icons
 sudo add-apt-repository ppa:papirus/papirus
