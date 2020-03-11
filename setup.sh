@@ -25,8 +25,14 @@ sudo apt-get install papirus-icon-theme
 
 # Suckless
 mkdir ~/Documents/programs
-git clone https://git.suckless.org/st ~/Documents/programs/st
-git clone https://git.suckless.org/dwm ~/Documents/programs/dwm
+sudo apt-get install build-essential libx11-dev libxinerama-dev sharutils suckless-tools
+ln -s dwm/ ~/Documents/programs/dwm/
+ln -s st/ ~/Documents/programs/st/
+cd dwm
+make
+cd ..; cd st;
+make
+cd ..
 
 # Setup config
 cp -r .emacs.d ~/.
