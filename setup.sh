@@ -13,7 +13,7 @@ ins fonts-hack-otf  # Hack font
 ins fonts-hack-ttf  # Hack font
 
 # .bashrc
-cat .bashrc >> ~/.bashrc
+echo "source ~/Documents/.tmuxrc/.bashrc" >> ~/.bashrc
 
 # Icons
 sudo add-apt-repository ppa:papirus/papirus
@@ -21,7 +21,12 @@ sudo apt-get update
 sudo apt-get install papirus-icon-theme
 
 # Ubuntu
-ins unity-tweak-tool
+#ins unity-tweak-tool
+
+# Suckless
+mkdir ~/Documents/programs
+git clone https://git.suckless.org/st ~/Documents/programs/st
+git clone https://git.suckless.org/dwm ~/Documents/programs/dwm
 
 # Setup config
 cp -r .emacs.d ~/.
