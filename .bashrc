@@ -1,5 +1,7 @@
 alias ins='sudo apt install'
 alias emacs='emacs -nw'
+alias emasc='emacs -nw'
+alias st='~/Documents/programs/st/st'
 alias x='exit'
 alias d='tmux detach-client'
 

@@ -25,7 +25,7 @@ sudo apt-get install papirus-icon-theme
 
 # Suckless
 mkdir ~/Documents/programs
-sudo apt-get install build-essential libx11-dev libxinerama-dev sharutils suckless-tools
+sudo apt-get install build-essential libx11-dev libxinerama-dev sharutils suckless-tools libxft-dev
 ln -s dwm/ ~/Documents/programs/dwm/
 ln -s st/ ~/Documents/programs/st/
 cd dwm
