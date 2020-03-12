@@ -32,7 +32,8 @@ cd dwm
 make
 cd ..; cd st;
 make
-cd ..
+cd ..;
+sudo apt install libgcr-3-dev
 
 # Setup config
 cp -r .emacs.d ~/.
@@ -47,3 +48,6 @@ cp .tmux.conf ~/.
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ln -s .tmux.conf ~/.tmux.conf
 
+
+## Other packages
+sudo apt install adpi scrot

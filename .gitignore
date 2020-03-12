@@ -1,5 +1,6 @@
 dwm/dwm
 st/st
 surf/surf
+dmenu/dmenu
 *.o
 *.so
