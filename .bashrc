@@ -12,4 +12,4 @@ alias screenshot='source ~/Documents/.tmuxrc/scripts/screenshot.sh'
 #    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 #fi
 
-PS1='\w\n-> '
+PS1='\[\033[34m\]\w\n\[\033[37m\]-> '
