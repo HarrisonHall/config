@@ -1,5 +1,7 @@
-alias ins="sudo apt install"
+# Generic setup script
+# Harrison Hall
 
+alias ins="sudo apt install"
 
 # General
 ins cmus  # Terminal music player
@@ -7,7 +9,6 @@ ins ranger  # Terminal file browser
 ins tmux  # Terminal multiplexer
 ins emacs  # Duh...
 ins htop  # Top
-ins vtop  # Top
 ins gotop-cjbassi  # Nice top
 ins fonts-hack-otf  # Hack font
 ins fonts-hack-ttf  # Hack font
@@ -47,6 +48,10 @@ cp .tmux.conf ~/.
 # Tmux
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ln -s .tmux.conf ~/.tmux.conf
+
+## Scripts
+ln -s ~/Documents/.tmuxrc ~/config
+sudo ln -s ~/Documents/.tmuxrc/scripts/screenshot.sh /usr/bin/screenshot
 
 
 ## Other packages
