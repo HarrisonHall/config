@@ -55,4 +55,4 @@ sudo ln -s ~/Documents/.tmuxrc/scripts/screenshot.sh /usr/bin/screenshot
 
 
 ## Other packages
-sudo apt install adpi scrot
+sudo apt install adpi scrot ranger
