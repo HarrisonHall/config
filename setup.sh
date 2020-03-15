@@ -4,8 +4,6 @@
 alias ins="sudo apt install"
 
 # General
-ins cmus  # Terminal music player
-ins ranger  # Terminal file browser
 ins tmux  # Terminal multiplexer
 ins emacs  # Duh...
 ins htop  # Top
@@ -26,7 +24,7 @@ sudo apt-get install papirus-icon-theme
 
 # Suckless
 mkdir ~/Documents/programs
-sudo apt-get install build-essential libx11-dev libxinerama-dev sharutils suckless-tools libxft-dev
+sudo apt-get install build-essential libx11-dev libxinerama-dev sharutils suckless-tools libxft-dev libwebkit2gtk-4.0-dev
 ln -s dwm/ ~/Documents/programs/dwm/
 ln -s st/ ~/Documents/programs/st/
 cd dwm
@@ -52,7 +50,12 @@ ln -s .tmux.conf ~/.tmux.conf
 ## Scripts
 ln -s ~/Documents/.tmuxrc ~/config
 sudo ln -s ~/Documents/.tmuxrc/scripts/screenshot.sh /usr/bin/screenshot
-
+sudo ln -s ~/Documents/.tmuxrc/scripts/network.sh /usr/bin/network
+sudo ln -s ~/Documents/.tmuxrc/scripts/files.sh /usr/bin/files
 
 ## Other packages
-sudo apt install adpi scrot ranger
+ins adpi  # battery
+ins scrot  # screenshots
+ins ranger  # File manager
+ins mdp  # markdown presentation tool
+ins cmus  # Terminal music player
