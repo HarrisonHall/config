@@ -58,4 +58,5 @@ ins adpi  # battery
 ins scrot  # screenshots
 ins ranger  # File manager
 ins mdp  # markdown presentation tool
-ins cmus  # Terminal music player
+ins cmus  # terminal music player
+ins pulsemixer  # audio control
