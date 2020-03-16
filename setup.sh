@@ -114,6 +114,7 @@ fi
 ## Other packages
 sudo apt install adpi  # battery
 sudo apt install scrot  # screenshots
+sudo apt install kazam  # screen recording
 sudo apt install ranger  # File manager
 sudo apt install mdp  # markdown presentation tool
 sudo apt install cmus  # terminal music player
