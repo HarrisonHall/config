@@ -91,6 +91,10 @@ if [ ! -f /usr/bin/suspend ]
 then
     sudo ln -s ~/Documents/.tmuxrc/scripts/suspend.sh /usr/bin/suspend
 fi
+if [ ! -f /usr/bin/colorgrab ]
+then
+    sudo ln -s ~/Documents/.tmuxrc/scripts/colorgrab.sh /usr/bin/colorgrab
+fi
 
 
 if [ ! -f /usr/bin/st ]
@@ -106,6 +110,7 @@ then
     sudo ln -s ~/Documents/.tmuxrc/surf/surf /usr/bin/surf
 fi
 
+
 ## Other packages
 sudo apt install adpi  # battery
 sudo apt install scrot  # screenshots
@@ -114,3 +119,4 @@ sudo apt install mdp  # markdown presentation tool
 sudo apt install cmus  # terminal music player
 sudo apt install pulsemixer  # audio control
 sudo apt install feh  # image viewer
+sudo apt install grabc  # grab a color
