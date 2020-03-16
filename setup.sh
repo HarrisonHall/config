@@ -4,13 +4,13 @@
 # General
 sudo apt install tmux  # Terminal multiplexer
 sudo apt install emacs  # Duh...
-sudo apt install htop  # Top
+sudo apt install htop  # Topp
 sudo apt install gotop-cjbassi  # Nice top
 sudo apt install fonts-hack-otf  # Hack font
 sudo apt install fonts-hack-ttf  # Hack font
 
 # .bashrc
-if grep -q "source ~/Documents/.tmuxrc/.bashrc" ~/.bashrc
+if ! grep -q "source ~/Documents/.tmuxrc/.bashrc" ~/.bashrc
 then
     echo "source ~/Documents/.tmuxrc/.bashrc" >> ~/.bashrc
 fi
@@ -41,6 +41,14 @@ cd ..; cd st;
 make
 cd ..;
 sudo apt install libgcr-3-dev
+
+# cava
+#apt-get install libfftw3-dev libasound2-dev libncursesw5-dev libpulse-dev libtool automake
+#cd cava;
+#./autogen.sh
+#./configure
+#make
+
 
 # Setup config
 cp -r .emacs.d ~/.
@@ -83,9 +91,9 @@ if [ ! -f /usr/bin/volume ]
 then
     sudo ln -s ~/Documents/.tmuxrc/scripts/volume.sh /usr/bin/volume
 fi
-if [ ! -f /usr/bin/sleep ]
+if [ ! -f /usr/bin/sleepy ]
 then
-    sudo ln -s ~/Documents/.tmuxrc/scripts/sleep.sh /usr/bin/sleep
+    sudo ln -s ~/Documents/.tmuxrc/scripts/sleepy.sh /usr/bin/sleepy
 fi
 if [ ! -f /usr/bin/suspend ]
 then
@@ -94,6 +102,18 @@ fi
 if [ ! -f /usr/bin/colorgrab ]
 then
     sudo ln -s ~/Documents/.tmuxrc/scripts/colorgrab.sh /usr/bin/colorgrab
+fi
+if [ ! -f /usr/bin/cava ]
+then
+    sudo ln -s ~/Documents/.tmuxrc/cava/cava /usr/bin/cava
+fi
+if [ ! -f /usr/bin/restart ]
+then
+    sudo ln -s /sbin/reboot /usr/bin/restart
+fi
+if [ ! -f /usr/bin/audiovisualizer ]
+then
+    sudo ln -s ~/Documents/.tmuxrc/scripts/audiovisualizer.sh /usr/bin/audiovisualizer
 fi
 
 
