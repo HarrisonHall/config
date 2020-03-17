@@ -62,8 +62,12 @@ cp .tmux.conf ~/.
 # Upgrade python (3.8+)
 
 # Tmux
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-if [ ! -f ~/.tmux.conf ]; then
+if [ ! -f ~/.tmux/plugins/tpm ]
+then
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
+if [ ! -f ~/.tmux.conf ]
+then
     ln -s .tmux.conf ~/.tmux.conf
 fi
 
@@ -116,6 +120,10 @@ fi
 if [ ! -f /usr/bin/audiovisualizer ]
 then
     sudo ln -s ~/Documents/.tmuxrc/scripts/audiovisualizer.sh /usr/bin/audiovisualizer
+fi
+if [ ! -f /usr/bin/music ]
+then
+    sudo ln -s ~/Documents/.tmuxrc/scripts/music.sh /usr/bin/music
 fi
 if [ ! -f /usr/bin/lockscreen ]
 then
