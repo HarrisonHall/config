@@ -26,7 +26,7 @@ fi
 
 # Suckless
 mkdir ~/Documents/programs
-sudo apt-get install build-essential libx11-dev libxinerama-dev sharutils suckless-tools libxft-dev libwebkit2gtk-4.0-dev
+sudo apt-get install build-essential libx11-dev libxinerama-dev sharutils suckless-tools libxft-dev libwebkit2gtk-4.0-dev libgcr-3-dev
 if [ ! -f ~/Documents/programs/dwm ]
 then
     ln -s dwm/ ~/Documents/programs/dwm/
@@ -39,8 +39,10 @@ cd dwm
 make
 cd ..; cd st;
 make
+cd ..; cd slock;
+make
 cd ..;
-sudo apt install libgcr-3-dev
+
 
 # cava
 #apt-get install libfftw3-dev libasound2-dev libncursesw5-dev libpulse-dev libtool automake
@@ -115,6 +117,10 @@ if [ ! -f /usr/bin/audiovisualizer ]
 then
     sudo ln -s ~/Documents/.tmuxrc/scripts/audiovisualizer.sh /usr/bin/audiovisualizer
 fi
+if [ ! -f /usr/bin/lockscreen ]
+then
+    sudo ln -s ~/Documents/.tmuxrc/scripts/lockscreen.sh /usr/bin/lockscreen
+fi
 
 
 if [ ! -f /usr/bin/st ]
@@ -141,3 +147,4 @@ sudo apt install cmus  # terminal music player
 sudo apt install pulsemixer  # audio control
 sudo apt install feh  # image viewer
 sudo apt install grabc  # grab a color
+sudo apt install arandr  # xrandr display gui
