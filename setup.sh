@@ -45,7 +45,8 @@ cd ..;
 
 
 # cava
-#apt-get install libfftw3-dev libasound2-dev libncursesw5-dev libpulse-dev libtool automake
+#apt-get install libfftw3-dev libasound2-dev libncursesw5-dev
+#libpulse-dev libtool automake libportaudio2
 #cd cava;
 #./autogen.sh
 #./configure
@@ -120,6 +121,10 @@ fi
 if [ ! -f /usr/bin/audiovisualizer ]
 then
     sudo ln -s ~/Documents/.tmuxrc/scripts/audiovisualizer.sh /usr/bin/audiovisualizer
+fi
+if [ ! -f /usr/bin/audio ]
+then
+    sudo ln -s ~/Documents/.tmuxrc/scripts/audio.sh /usr/bin/audio
 fi
 if [ ! -f /usr/bin/music ]
 then
