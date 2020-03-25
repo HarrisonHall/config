@@ -90,7 +90,7 @@ There are two things you can do about this warning:
 
 (setq inhibit-startup-message t
       inhibit-startup-echo-area-message t)
-(load-theme 'dracula)
+(load-theme 'nord)
 
 (defun on-after-init ()
   (unless (display-graphic-p (selected-frame))

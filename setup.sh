@@ -54,8 +54,15 @@ cd ..;
 
 
 # Setup config
-cp -r .emacs.d ~/.
-cp .tmux.conf ~/.
+if [ ! -f ~/.emacs.d ]
+then
+    cp -r .emacs.d ~/.
+fi
+if [ ! -f ~/.tmux.conf ]
+then
+    cp .tmux.conf ~/.
+fi
+
 
 # Manually setup/sudo apt install:
 # arc dark

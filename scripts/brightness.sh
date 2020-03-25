@@ -1,7 +1,7 @@
 #!/bin/bash
 
 choices="20%\n40%\n60%\n80%\n100%\nexit"
-choice=$( echo -e $choices | ~/Documents/.tmuxrc/dmenu/dmenu)
+choice=$( echo -e $choices | ~/Documents/.tmuxrc/dmenu/dmenu -p "Brightness: ")
 
 monitor=$(xrandr | grep -w connected | awk -F'[ \+]' '{print $1}' 2>/dev/null)
 
