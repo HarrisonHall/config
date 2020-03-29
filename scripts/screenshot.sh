@@ -1,7 +1,7 @@
 #!/bin/bash
 
 choices="screenshot\nscreenrecording\nexit"
-choice=$( echo -e $choices | ~/Documents/.tmuxrc/dmenu/dmenu)
+choice=$( echo -e $choices | ~/Documents/.tmuxrc/dmenu/dmenu -p "Screenshot Applications")
 
 case $choice in
     "screenshot")

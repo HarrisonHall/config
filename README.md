@@ -2,7 +2,8 @@
 Run `setup.sh` in order to set up the system.  
 Some things need to be set up manually. 
 
-### Scripts in `/usr/bin`
+### Scripts 
+These are 
 * audio
 * audiovisualizer
 * brightness

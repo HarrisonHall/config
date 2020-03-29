@@ -9,4 +9,7 @@ alias d='tmux detach-client'
 alias screenshot='source ~/Documents/.tmuxrc/scripts/screenshot.sh'
 alias r='ranger'
 
+export VISUAL="emacs -nw"
+export EDITOR="$VISUAL"
+
 PS1='\[\033[34m\]\w\n\[\033[37m\]-> '

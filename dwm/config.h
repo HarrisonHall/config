@@ -19,12 +19,12 @@ static const char col_gray4[]       = "#88c0d0";
 static const char col_cyan[]        = "#4c566a";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+	[SchemeNorm] = { col_gray3, col_gray1, col_cyan },
+	[SchemeSel]  = { col_gray4, col_cyan,  col_gray2  },
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4"};
+static const char *tags[] = { "●", "●", "●", "●"};
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -34,6 +34,7 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",  NULL,       NULL,       0,            1,           -1 },
+        { "Microsoft Teams Notification",  NULL,       NULL,       0,            1,           -1 },
 };
 
 /* layout(s) */
@@ -51,9 +52,9 @@ static const Layout layouts[] = {
 /* key definitions */
 #define MODKEY Mod1Mask
 #define TAGKEYS(KEY,TAG) \
-	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
+	{ MODKEY,                       KEY,      comboview,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
+	{ MODKEY|ShiftMask,             KEY,      combotag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
@@ -68,6 +69,7 @@ static Key keys[] = {
                      /* modifier                     key        function        argument */
                      { MODKEY,                       XK_s,      spawn,          {.v = dmenucmd } },  // search
                      { MODKEY|ShiftMask,             XK_t, spawn,          {.v = termcmd } },
+                     { MODKEY|ControlMask,           XK_t, spawn,          {.v = termcmd } },
                      { MODKEY,                       XK_b,      togglebar,      {0} },
                      { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
                      { MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -81,6 +83,7 @@ static Key keys[] = {
                      { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
                      { MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
                      { MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
+                     { MODKEY,                       XK_z,      setlayout,      {.v = &layouts[2]} },
                      { MODKEY,                       XK_space,  setlayout,      {0} },
                      { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
                      { MODKEY,                       XK_0,      view,           {.ui = ~0 } },

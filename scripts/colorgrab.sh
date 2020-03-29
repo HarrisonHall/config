@@ -3,14 +3,14 @@
 rm -f /tmp/colorgrab
 color=$(grabc 2> /tmp/colorgrab)
 colorrgb=$(cat /tmp/colorgrab)
-choices="copy ${color}\ncopy ${colorrgb}\nexit"
-choice=$( echo -e $choices | ~/Documents/.tmuxrc/dmenu/dmenu)
+choices="${color}\n${colorrgb}\nNone"
+choice=$( echo -e $choices | ~/Documents/.tmuxrc/dmenu/dmenu -p "Copy")
 
 case $choice in
-    "copy ${color}")
+    "${color}")
         echo $color | xclip -selection clipboard
         ;;
-    "copy ${colorrgb}")
+    "${colorrgb}")
         echo $colorrgb | xclip -selection clipboard
         ;;
     *)

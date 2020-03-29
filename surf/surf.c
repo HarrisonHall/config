@@ -182,6 +182,7 @@ static void initwebextensions(WebKitWebContext *wc, Client *c);
 static GtkWidget *createview(WebKitWebView *v, WebKitNavigationAction *a,
                              Client *c);
 static gboolean buttonreleased(GtkWidget *w, GdkEvent *e, Client *c);
+static gboolean scrollmultiply(GtkWidget *w, GdkEvent *e, Client *c);
 static GdkFilterReturn processx(GdkXEvent *xevent, GdkEvent *event,
                                 gpointer d);
 static gboolean winevent(GtkWidget *w, GdkEvent *e, Client *c);
@@ -1182,6 +1183,8 @@ newview(Client *c, WebKitWebView *rv)
 			 G_CALLBACK(titlechanged), c);
 	g_signal_connect(G_OBJECT(v), "button-release-event",
 			 G_CALLBACK(buttonreleased), c);
+        g_signal_connect(G_OBJECT(v), "scroll-event",
+			 G_CALLBACK(scrollmultiply), c);
 	g_signal_connect(G_OBJECT(v), "close",
 			G_CALLBACK(closeview), c);
 	g_signal_connect(G_OBJECT(v), "create",
@@ -1232,6 +1235,16 @@ readpipe(GIOChannel *s, GIOCondition ioc, gpointer unused)
 	}
 
 	return TRUE;
+}
+
+gboolean
+scrollmultiply(GtkWidget *w, GdkEvent *e, Client *c) {
+  #ifdef SCROLL_FACTOR
+  e->scroll.delta_y *= SCROLL_FACTOR;
+  #else
+  e->scroll.delta_y *= 1;
+  #endif
+  return False;
 }
 
 void
@@ -2109,9 +2122,14 @@ main(int argc, char *argv[])
 		usage();
 	} ARGEND;
 	if (argc > 0)
-		arg.v = argv[0];
-	else
-		arg.v = "about:blank";
+          arg.v = argv[0];
+	else {
+          #ifdef HOMEPAGE
+          arg.v = HOMEPAGE;
+          #else
+          arg.v = "about:blank";
+          #endif
+        }
 
 	setup();
 	c = newclient(NULL);

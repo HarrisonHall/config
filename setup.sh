@@ -1,7 +1,7 @@
 # Generic setup script
 # Harrison Hall
 
-# General
+# General, but almost mandatory
 sudo apt install tmux  # Terminal multiplexer
 sudo apt install emacs  # Duh...
 sudo apt install htop  # Topp
@@ -21,10 +21,8 @@ fi
 #sudo apt update
 #sudo apt-get install papirus-icon-theme
 
-# Ubuntu
-#sudo apt install unity-tweak-tool
 
-# Suckless
+# Custom
 mkdir ~/Documents/programs
 sudo apt-get install build-essential libx11-dev libxinerama-dev sharutils suckless-tools libxft-dev libwebkit2gtk-4.0-dev libgcr-3-dev
 if [ ! -f ~/Documents/programs/dwm ]
@@ -35,13 +33,10 @@ if [ ! -f ~/Documents/programs/st/ ]
 then
     ln -s st/ ~/Documents/programs/st/
 fi
-cd dwm
-make
-cd ..; cd st;
-make
-cd ..; cd slock;
-make
-cd ..;
+cd dwm; make; cd ..;
+cd st; make; cd ..;
+cd slock; make; cd ..;
+cd surf; make; cd ..;
 
 
 # cava
@@ -54,13 +49,15 @@ cd ..;
 
 
 # Setup config
-cp -r .emacs.d ~/.
-cp .tmux.conf ~/.
+if [ ! -f ~/.emacs.d ]
+then
+    cp -r .emacs.d ~/.
+fi
+if [ ! -f ~/.tmux.conf ]
+then
+    cp .tmux.conf ~/.
+fi
 
-# Manually setup/sudo apt install:
-# arc dark
-# Papirus icons
-# Upgrade python (3.8+)
 
 # Tmux
 if [ ! -f ~/.tmux/plugins/tpm ]
@@ -134,6 +131,14 @@ if [ ! -f /usr/bin/lockscreen ]
 then
     sudo ln -s ~/Documents/.tmuxrc/scripts/lockscreen.sh /usr/bin/lockscreen
 fi
+if [ ! -f /usr/bin/prtscrn ]
+then
+    sudo ln -s ~/Documents/.tmuxrc/scripts/prtscrn.sh /usr/bin/prtscrn
+fi
+if [ ! -f /usr/bin/web ]
+then
+    sudo ln -s ~/Documents/.tmuxrc/scripts/web.sh /usr/bin/web
+fi
 
 
 if [ ! -f /usr/bin/st ]
@@ -161,3 +166,10 @@ sudo apt install pulsemixer  # audio control
 sudo apt install feh  # image viewer
 sudo apt install grabc  # grab a color
 sudo apt install arandr  # xrandr display gui
+sudo apt install tldr  # easy man pages
+
+
+# Manually setup/sudo apt install:
+# arc dark
+# Papirus icons
+# Upgrade python (3.8+)
