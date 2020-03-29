@@ -64,16 +64,13 @@ if [ ! -f ~/.tmux/plugins/tpm ]
 then
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
-if [ ! -f ~/.tmux.conf ]
-then
-    ln -s .tmux.conf ~/.tmux.conf
-fi
 
 
 ## Scripts
 if [ ! -f ~/config ]
 then
     ln -s ~/Documents/.tmuxrc ~/config
+    echo "here?"
 fi
 if [ ! -f /usr/bin/screenshot ]
 then
