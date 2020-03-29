@@ -7,7 +7,7 @@ monitor=$(xrandr | grep -w connected | awk -F'[ \+]' '{print $1}' 2>/dev/null)
 
 if [ $(echo "$monitor" | wc -l) -gt 1 ]
 then
-    monitor=$(echo -e "$monitor" | ~/config/dmenu/dmenu -p "Which monitor?")
+    monitor=$(echo -e "$monitor" | ~/config/dmenu/dmenu -p "Which monitor?" -i)
 fi
 
 case $choice in
