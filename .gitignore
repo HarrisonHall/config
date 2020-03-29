@@ -4,5 +4,7 @@ surf/surf
 dmenu/dmenu
 dmenu/stest
 slock/slock
+tabbed/tabbed
+tabbed/xembed
 *.o
 *.so
