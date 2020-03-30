@@ -6,5 +6,6 @@ dmenu/stest
 slock/slock
 tabbed/tabbed
 tabbed/xembed
+dunst/dunst
 *.o
 *.so
