@@ -2,8 +2,8 @@
 
 /* appearance */
 static const char font[]        = "Hack:size=14";
-static const char* normfgcolor  = "#81a1c1";
-static const char* normbgcolor  = "#2e3440";
+static const char* normfgcolor  = "#88c0d0";
+static const char* normbgcolor  = "#4c566a";
 static const char* selfgcolor   = "#81a1c1";
 static const char* selbgcolor   = "#2e3440";
 static const char* urgfgcolor   = "#88c0d0";

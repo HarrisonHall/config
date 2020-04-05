@@ -37,6 +37,9 @@ cd dwm; make; cd ..;
 cd st; make; cd ..;
 cd slock; make; cd ..;
 cd surf; make; cd ..;
+cd tabbed; make; cd ..;
+cd dmenu; make; cd ..;
+cd dunst; make; cd ..;
 
 
 # cava
@@ -49,7 +52,7 @@ cd surf; make; cd ..;
 
 
 # Setup config
-if [ ! -f ~/.emacs.d ]
+if [ ! -d ~/.emacs.d ]
 then
     cp -r .emacs.d ~/.
 fi
@@ -67,7 +70,7 @@ fi
 
 
 ## Scripts
-if [ ! -f ~/config ]
+if [ ! -d ~/config ]
 then
     ln -s ~/Documents/.tmuxrc ~/config
     echo "here?"
@@ -136,6 +139,10 @@ if [ ! -f /usr/bin/web ]
 then
     sudo ln -s ~/Documents/.tmuxrc/scripts/web.sh /usr/bin/web
 fi
+if [ ! -d ~/.config/dunst ]
+then
+    sudo ln -s ~/Documents/.tmuxrc/.config/dunst/ ~/.config/
+fi
 
 
 if [ ! -f /usr/bin/st ]
@@ -150,6 +157,11 @@ if [ ! -f /usr/bin/surf ]
 then
     sudo ln -s ~/Documents/.tmuxrc/surf/surf /usr/bin/surf
 fi
+if [ ! -f /usr/bin/dunst ]
+then
+    sudo ln -s ~/Documents/.tmuxrc/dunst/dunst /usr/bin/dunst
+fi
+
 
 
 ## Other packages
@@ -164,7 +176,9 @@ sudo apt install feh  # image viewer
 sudo apt install grabc  # grab a color
 sudo apt install arandr  # xrandr display gui
 sudo apt install tldr  # easy man pages
-
+sudo apt install entr  # run script on file change
+sudo apt install libxss-dev  # for dunst, xscreensaver
+sudo apt install libxss1  # for dunst, xscreensaver
 
 # Manually setup/sudo apt install:
 # arc dark
