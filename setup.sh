@@ -54,11 +54,13 @@ cd dunst; make; cd ..;
 # Setup config
 if [ ! -d ~/.emacs.d ]
 then
-    cp -r .emacs.d ~/.
+    #cp -r .emacs.d ~/.
+    echo todo
 fi
 if [ ! -f ~/.tmux.conf ]
 then
-    cp .tmux.conf ~/.
+    #cp .tmux.conf ~/.
+    echo todo
 fi
 
 
