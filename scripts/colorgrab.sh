@@ -3,8 +3,9 @@
 rm -f /tmp/colorgrab
 color=$(grabc 2> /tmp/colorgrab)
 colorrgb=$(cat /tmp/colorgrab)
-choices="${color}\n${colorrgb}\nNone"
-choice=$( echo -e $choices | ~/Documents/.tmuxrc/dmenu/dmenu -p "Copy")
+choices="${color}\n${colorrgb}\nExit"
+sleep .2
+choice=$( echo -e $choices | rofi -dmenu -p "Copy")
 
 case $choice in
     "${color}")

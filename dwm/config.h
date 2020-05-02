@@ -17,6 +17,7 @@ static const char col_gray2[]       = "#81a1c1";
 static const char col_gray3[]       = "#81a1c1";
 static const char col_gray4[]       = "#88c0d0"; 
 static const char col_cyan[]        = "#4c566a";
+static const char urgbordercolor[]  = "#bf616a";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_cyan },
@@ -68,35 +69,44 @@ static const char *dmenucmd[] = { "dmenu_run_conf", "-m", dmenumon, "-fn", dmenu
 static const char *roficmd[] = { "rofi", "-show", "run", NULL };
 static const char *termcmd[]  = { "/home/harrison/Documents/programs/st/st", NULL };
 static const char *pythoncmd[] = { "/home/harrison/Documents/programs/st/st", "-e", "ipython3", NULL};
+static const char *windowcmd[] = { "rofi", "-show", "window", NULL};
+static const char *windowcdcmd[] = { "rofi", "-show", "windowcd", NULL};
+static const char *sshcmd[] = { "rofi", "-show", "ssh", NULL};
+static const char *lockscreencmd[] = { "/home/harrison/Documents/.tmuxrc/scripts/lockscreen.sh", NULL};
+static const char *powercmd[] = { "/home/harrison/Documents/.tmuxrc/scripts/powermenu.sh", NULL};
 
 static Key keys[] = {
   /* modifier                     key        function        argument */
   { MODKEY,                       XK_s,      spawn,          {.v = roficmd } },  // search
-  { MODKEY|ShiftMask,             XK_t,      spawn,          {.v = termcmd } },
-  { MODKEY|ControlMask,           XK_t,      spawn,          {.v = termcmd } },
-  { MODKEY|ShiftMask,           XK_p,      spawn,          {.v = pythoncmd } },
-  { MODKEY,                       XK_b,      togglebar,      {0} },
-  { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-  { MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-  { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-  { MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-  { MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-  { MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-  { MODKEY,                       XK_Return, zoom,           {0} },
-  { MODKEY,                       XK_Tab,    view,           {0} },
-  { MODKEY|ShiftMask,             XK_w,      killclient,     {0} },
-  { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-  { MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-  { MODKEY,                       XK_F,      togglefloating, {0} },
-  { MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-  { MODKEY,                       XK_space,  setlayout,      {0} },
-  { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-  { MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-  { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
+  { MODKEY|ShiftMask,             XK_t,      spawn,          {.v = termcmd } },  // terminal
+  { MODKEY|ControlMask,           XK_t,      spawn,          {.v = termcmd } },  // terminal
+  { MODKEY|ShiftMask,             XK_p,      spawn,          {.v = pythoncmd } },  // ipython window
+  { MODKEY|ShiftMask,             XK_r,      spawn,          {.v = powercmd } },  // ipython window
+  { MODKEY,                       XK_b,      togglebar,      {0} },  // toggle the status bar
+  { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },  // Rotate focus
+  { MODKEY,                       XK_k,      focusstack,     {.i = -1 } },  // Rotate focus
+  { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },  // 
+  { MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },  // 
+  { MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },  // Shift size of master
+  { MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },  // Shift size of master
+  { MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lockscreencmd} },  // lockscreen
+  { MODKEY,                       XK_Return, zoom,           {0} },  // ?
+/*{ MODKEY,                       XK_Tab,    view,           {0} },*/
+  { MODKEY,                       XK_Tab,    spawn,          {.v = windowcmd} },  // window switcher
+  { MODKEY|ShiftMask,             XK_s,      spawn,          {.v = sshcmd} },  // ssh holder
+  { MODKEY|ShiftMask,             XK_w,      killclient,     {0} },  // close window
+  { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },  // tiling mode
+  { MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },  // floating mode
+  { MODKEY,                       XK_F,      togglefloating, {0} },  // ?
+  { MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },  // monicle mode
+  { MODKEY,                       XK_space,  setlayout,      {0} },  // change layout back
+  { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },  // ?
+  { MODKEY,                       XK_0,      view,           {.ui = ~0 } },  // view all tags
+  { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },  // give window every tag
   { MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
   { MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-  { MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-  { MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+  { MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },  // shift focus betweeen monitors
+  { MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },  // shift focus betweeen monitors
   TAGKEYS(                        XK_1,                      0)
   TAGKEYS(                        XK_2,                      1)
   TAGKEYS(                        XK_3,                      2)
@@ -106,8 +116,8 @@ static Key keys[] = {
   TAGKEYS(                        XK_7,                      6)
   TAGKEYS(                        XK_8,                      7)
   TAGKEYS(                        XK_9,                      8)
-  { MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-  { MODKEY|ControlMask,           XK_q,      quit,           {1} },
+  { MODKEY|ShiftMask,             XK_q,      quit,           {0} },  // close dwm
+  { MODKEY|ControlMask,           XK_q,      quit,           {1} },  // restart dwm (keep apps open)
 };
 
 /* button definitions */

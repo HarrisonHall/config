@@ -32,16 +32,17 @@ There are two things you can do about this warning:
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("274fa62b00d732d093fc3f120aca1b31a6bb484492f31081c1814a858e25c72e" default))
+   (quote
+    ("7f6d4aebcc44c264a64e714c3d9d1e903284305fd7e319e7cb73345a9994f5ef" "274fa62b00d732d093fc3f120aca1b31a6bb484492f31081c1814a858e25c72e" default)))
  '(package-selected-packages
-   '(darkroom elpy flycheck flycheck-pycheckers markdown-mode+ markdown-preview-mode dracula-theme markdown-mode auto-complete rainbow-delimiters)))
+   (quote
+    (darkroom elpy flycheck flycheck-pycheckers markdown-mode+ markdown-preview-mode dracula-theme markdown-mode auto-complete rainbow-delimiters))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(linum ((t (:slant normal))))
- )
+ '(linum ((t (:slant normal)))))
 
 (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 
@@ -63,7 +64,7 @@ There are two things you can do about this warning:
 (global-linum-mode t)
 
 ;; Wrap lines at 80 characters
-(add-hook 'prog-mode-hook 'auto-fill-mode)
+;;(add-hook 'prog-mode-hook 'auto-fill-mode)
 ;; (setq-default fill-column 80)
 
 ;; python

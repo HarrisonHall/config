@@ -8,6 +8,7 @@ alias x='exit'
 alias d='tmux detach-client'
 alias screenshot='source ~/Documents/.tmuxrc/scripts/screenshot.sh'
 alias r='ranger'
+alias rofi='rofi'
 
 export VISUAL="emacs -nw"
 export EDITOR="$VISUAL"
