@@ -39,7 +39,7 @@ cd slock; make; cd ..;
 cd surf; make; cd ..;
 cd tabbed; make; cd ..;
 cd dmenu; make; cd ..;
-cd dunst; make; cd ..;
+cd dunst; make install; cd ..;
 
 
 # cava
@@ -52,15 +52,15 @@ cd dunst; make; cd ..;
 
 
 # Setup config
-if [ ! -d ~/.emacs.d ]
+if [ ! -d ~/.emacs.d/init.el ]
 then
-    #cp -r .emacs.d ~/.
-    echo todo
+    #cp -r .emacs.d ~/.  # ln -s ! todo
+    ln -s ~/Documents/.tmuxrc/.emacs.d/init.el ~/init.el
 fi
 if [ ! -f ~/.tmux.conf ]
 then
     #cp .tmux.conf ~/.
-    echo todo
+    ln -s ~/Documents/.tmuxrc/.tmux.conf ~/.tmux.conf
 fi
 
 
@@ -144,6 +144,10 @@ fi
 if [ ! -d ~/.config/dunst ]
 then
     sudo ln -s ~/Documents/.tmuxrc/.config/dunst/ ~/.config/
+fi
+if [ ! -f ~/usr/bin/dmenu_run_conf ]
+then
+    sudo ln -s ~/Documents/.tmuxrc/scripts/dmenu_run.sh /usr/bin/dmenu_run_conf
 fi
 
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 choices="0%\n20%\n40%\n60%\n80%\n100%\nexit"
-choice=$( echo -e $choices | ~/Documents/.tmuxrc/dmenu/dmenu)
+choice=$( echo -e $choices | rofi -dmenu -p "Keyboard backlight: ")
 
 
 case $choice in
