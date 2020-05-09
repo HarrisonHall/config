@@ -6,7 +6,7 @@
     "Ctrl-e": "EndOfLine",
     "Ctrl-n": "CursorDown",
     "Ctrl-p": "CursorUp",
-    "Ctrl-k": "SelectToEndOfLine&Cut",
+    "Ctrl-k": "SelectToEndOfLine,Cut",
     "Alt-w": "Copy",
     "Ctrl-y": "Paste",
     "Ctrl-u": "Undo",
@@ -19,4 +19,6 @@
     "CtrlBackslash": "VSplit",
     "Ctrl-j": "NextSplit",
     "Ctrl-l": "Center",
+	"Ctrl-d": "Find",
+	"Ctrl-i": "ShellMode",
 }
