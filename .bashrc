@@ -13,4 +13,7 @@ alias rofi='rofi'
 export VISUAL="emacs -nw"
 export EDITOR="$VISUAL"
 
+export COLORTERM="truecolor"
+export MICRO_TRUECOLOR=1
+
 PS1='\[\033[34m\]\w\n\[\033[37m\]-> '
