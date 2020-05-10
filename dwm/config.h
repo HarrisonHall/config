@@ -10,8 +10,8 @@ static const int horizpadbar        = 2; // inside padding
 static const int vertpadbar         = 0; // inside padding
 static const int vertpad            = 12; // outside padding
 static const int sidepad            = 8; // outside padding
-static const char *fonts[]          = { "Hack:size=16" };  //14?
-static const char dmenufont[]       = "Hack:size=16";
+static const char *fonts[]          = { "Hack:size=14" };  //14?
+static const char dmenufont[]       = "Hack:size=14";
 static const char col_gray1[]       = "#2e3440";
 static const char col_gray2[]       = "#81a1c1";
 static const char col_gray3[]       = "#81a1c1";
@@ -67,8 +67,8 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run_conf", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *roficmd[] = { "rofi", "-show", "run", NULL };
-static const char *termcmd[]  = { "/home/harrison/Documents/programs/st/st", NULL };
-static const char *pythoncmd[] = { "/home/harrison/Documents/programs/st/st", "-e", "ipython3", NULL};
+static const char *termcmd[]  = { "st", NULL };
+static const char *pythoncmd[] = { "st", "-e", "ipython3", NULL};
 static const char *windowcmd[] = { "rofi", "-show", "window", NULL};
 static const char *windowcdcmd[] = { "rofi", "-show", "windowcd", NULL};
 static const char *sshcmd[] = { "rofi", "-show", "ssh", NULL};

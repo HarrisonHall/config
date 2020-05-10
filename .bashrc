@@ -10,7 +10,7 @@ alias screenshot='source ~/Documents/.tmuxrc/scripts/screenshot.sh'
 alias r='ranger'
 alias rofi='rofi'
 
-export VISUAL="emacs -nw"
+export VISUAL="micro"
 export EDITOR="$VISUAL"
 
 export COLORTERM="truecolor"

@@ -14,6 +14,10 @@ then
     # Background
     feh --bg-scale ~/Pictures/Wallpapers/nord_rocket.png
 fi
+if [ "$pc" == "harrison-archssd" ]
+then
+    feh --bg-scale ~/Pictures/Wallpapers/nord_rocket.png
+fi
 
 ## Colors (Nord)
 b1="#2e3440"
@@ -63,6 +67,11 @@ while true; do
     if [ "$pc" == "harrison-lb-ssd5" ]
     then
         name="${name}";
+    fi
+
+    if [ "$pc" == "harrison-archssd" ]
+    then
+	name="${name}";
     fi
     
     xsetroot -name "${name}"

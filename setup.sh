@@ -2,12 +2,10 @@
 # Harrison Hall
 
 # General, but almost mandatory
-sudo apt install tmux  # Terminal multiplexer
-sudo apt install emacs  # Duh...
-sudo apt install htop  # Topp
-sudo apt install gotop-cjbassi  # Nice top
-sudo apt install fonts-hack-otf  # Hack font
-sudo apt install fonts-hack-ttf  # Hack font
+sudo pacman -Syu
+ins="sudo pacman -S --needed"
+$ins tmux  # Terminal multiplexer
+$ins htop  # Topp
 
 # .bashrc
 if ! grep -q "source ~/Documents/.tmuxrc/.bashrc" ~/.bashrc
@@ -15,31 +13,20 @@ then
     echo "source ~/Documents/.tmuxrc/.bashrc" >> ~/.bashrc
 fi
 
-# Icons
-#sudo add-apt-repository ppa:papirus/papirus
-#sudo apt-get update
-#sudo apt update
-#sudo apt-get install papirus-icon-theme
-
+# Themes
+$ins papirus-icon-theme
+$ins ttf-hack
 
 # Custom
-mkdir ~/Documents/programs
-sudo apt-get install build-essential libx11-dev libxinerama-dev sharutils suckless-tools libxft-dev libwebkit2gtk-4.0-dev libgcr-3-dev
-if [ ! -f ~/Documents/programs/dwm ]
-then
-    ln -s dwm/ ~/Documents/programs/dwm/
-fi
-if [ ! -f ~/Documents/programs/st/ ]
-then
-    ln -s st/ ~/Documents/programs/st/
-fi
-cd dwm; make; cd ..;
-cd st; make; cd ..;
-cd slock; make; cd ..;
-cd surf; make; cd ..;
-cd tabbed; make; cd ..;
-cd dmenu; make; cd ..;
-cd dunst; make install; cd ..;
+#sudo apt-get install build-essential libx11-dev libxinerama-dev sharutils suckless-tools libxft-dev libwebkit2gtk-4.0-dev libgcr-3-dev
+
+cd dwm; sudo make; sudo make install; cd ..;
+cd st;  sudo make; sudo make install; cd ..;
+cd slock;  sudo make; sudo make install; cd ..;
+cd surf;  sudo make; sudo make install; cd ..;
+cd tabbed;  sudo make; sudo make install; cd ..;
+cd dmenu; make;  sudo make; sudo make install; cd ..;
+cd dunst;  sudo make; sudo make install; cd ..;
 
 
 # cava
@@ -151,42 +138,20 @@ then
 fi
 
 
-if [ ! -f /usr/bin/st ]
-then
-    sudo ln -s ~/Documents/.tmuxrc/st/st /usr/bin/st
-fi
-if [ ! -f /usr/bin/dmenu ]
-then
-    sudo ln -s ~/Documents/.tmuxrc/dmenu/dmenu /usr/bin/dmenu
-fi
-if [ ! -f /usr/bin/surf ]
-then
-    sudo ln -s ~/Documents/.tmuxrc/surf/surf /usr/bin/surf
-fi
-if [ ! -f /usr/bin/dunst ]
-then
-    sudo ln -s ~/Documents/.tmuxrc/dunst/dunst /usr/bin/dunst
-fi
-
 
 
 ## Other packages
-sudo apt install adpi  # battery
-sudo apt install scrot  # screenshots
-sudo apt install kazam  # screen recording
-sudo apt install ranger  # File manager
-sudo apt install mdp  # markdown presentation tool
-sudo apt install cmus  # terminal music player
-sudo apt install pulsemixer  # audio control
-sudo apt install feh  # image viewer
-sudo apt install grabc  # grab a color
-sudo apt install arandr  # xrandr display gui
-sudo apt install tldr  # easy man pages
-sudo apt install entr  # run script on file change
-sudo apt install libxss-dev  # for dunst, xscreensaver
-sudo apt install libxss1  # for dunst, xscreensaver
-
-# Manually setup/sudo apt install:
-# arc dark
-# Papirus icons
-# Upgrade python (3.8+)
+#ins adpi  # battery
+$ins scrot  # screenshots
+#ins kazam  # screen recording
+$ins ranger  # File manager
+$ins mdp  # markdown presentation tool
+$ins cmus  # terminal music player
+$ins pulsemixer  # audio control
+$ins feh  # image viewer
+#ins grabc  # grab a color
+$ins arandr  # xrandr display gui
+$ins tldr  # easy man pages
+$ins entr  # run script on file change
+$ins libxss  # for dunst, xscreensaver
+$ins lib32-libxss  # for dunst, xscreensaver
