@@ -132,9 +132,21 @@ if [ ! -d ~/.config/dunst ]
 then
     sudo ln -s ~/Documents/.tmuxrc/.config/dunst/ ~/.config/
 fi
-if [ ! -f ~/usr/bin/dmenu_run_conf ]
+if [ ! -f /usr/bin/dmenu_run_conf ]
 then
     sudo ln -s ~/Documents/.tmuxrc/scripts/dmenu_run.sh /usr/bin/dmenu_run_conf
+fi
+if [ ! -f ~/.config/micro/bindings.json ]
+then
+    sudo ln -s ~/config/micro/bindings.json ~/.config/micro/bindings.json
+fi
+if [ ! -f ~/.config/micro/colorschemes ]
+then
+    sudo ln -s ~/config/micro/colorschemes ~/.config/micro/colorschemes
+fi
+if [ ! -f ~/.config/rofi ]
+then
+    sudo ln -s ~/config/rofi ~/.config/rofi
 fi
 
 
@@ -155,3 +167,4 @@ $ins tldr  # easy man pages
 $ins entr  # run script on file change
 $ins libxss  # for dunst, xscreensaver
 $ins lib32-libxss  # for dunst, xscreensaver
+$ins rofi  # app launcher and more
