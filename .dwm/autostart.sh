@@ -17,6 +17,7 @@ fi
 if [ "$pc" == "harrison-archssd" ]
 then
     feh --bg-scale ~/Pictures/Wallpapers/nord_rocket.png
+    source ~/.screenlayout/default.sh
 fi
 
 ## Colors (Nord)
