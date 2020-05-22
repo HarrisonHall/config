@@ -10,8 +10,8 @@ static const int horizpadbar        = 2; // inside padding
 static const int vertpadbar         = 0; // inside padding
 static const int vertpad            = 12; // outside padding
 static const int sidepad            = 8; // outside padding
-static const char *fonts[]          = { "Hack:size=14" };  //14?
-static const char dmenufont[]       = "Hack:size=14";
+static const char *fonts[]          = { "Hack:size=18" };  //14?
+static const char dmenufont[]       = "Hack:size=18";
 static const char col_gray1[]       = "#2e3440";
 static const char col_gray2[]       = "#81a1c1";
 static const char col_gray3[]       = "#81a1c1";

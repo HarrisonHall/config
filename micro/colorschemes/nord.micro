@@ -14,7 +14,7 @@ color-link statusline "#81a1c1"
 color-link tabbar "#2e3440,#a3be8c"
 color-link indent-char "#a3be8c"
 color-link line-number "#a3be8c"
-color-link gutter-error "#bfn616a"
+color-link gutter-error "#bf616a"
 color-link gutter-warning "#bf616a"
 
 color-link cursor-line "#434c5e"

@@ -3,7 +3,8 @@
 
 # General, but almost mandatory
 sudo pacman -Syu
-ins="sudo pacman -S --needed"
+ins="sudo pacman -Sq --needed"
+yns="yay -Sq --needed"
 $ins tmux  # Terminal multiplexer
 $ins htop  # Topp
 
@@ -29,13 +30,7 @@ cd dmenu; make;  sudo make; sudo make install; cd ..;
 cd dunst;  sudo make; sudo make install; cd ..;
 
 
-# cava
-#apt-get install libfftw3-dev libasound2-dev libncursesw5-dev
-#libpulse-dev libtool automake libportaudio2
-#cd cava;
-#./autogen.sh
-#./configure
-#make
+
 
 
 # Setup config
@@ -136,35 +131,62 @@ if [ ! -f /usr/bin/dmenu_run_conf ]
 then
     sudo ln -s ~/Documents/.tmuxrc/scripts/dmenu_run.sh /usr/bin/dmenu_run_conf
 fi
+if [ ! -d ~/.config/micro ]
+then
+    mkdir ~/.config/micro
+fi
 if [ ! -f ~/.config/micro/bindings.json ]
 then
     sudo ln -s ~/config/micro/bindings.json ~/.config/micro/bindings.json
 fi
-if [ ! -f ~/.config/micro/colorschemes ]
+if [ ! -d ~/.config/micro/colorschemes ]
 then
     sudo ln -s ~/config/micro/colorschemes ~/.config/micro/colorschemes
+fi
+if [ ! -f ~/.config/micro/settings.json ]
+then
+    sudo ln -s ~/config/micro/settings.json ~/.config/micro/settings.json
 fi
 if [ ! -f ~/.config/rofi ]
 then
     sudo ln -s ~/config/rofi ~/.config/rofi
 fi
-
-
-
+if [ ! -f /usr/share/xsessions/dwm.desktop ]
+then
+    sudo cp /home/harrison/config/xsessions/dwm.desktop /usr/share/xsessions/dwm.desktop
+fi
+if [ ! -d ~/.tmux/plugins/tpm ]
+then
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
+if [ ! -d ~/.dwm ]
+then
+   ln -s ~/config/.dwm ~/.dwm
+fi
 
 ## Other packages
-#ins adpi  # battery
+$ins acpi  # battery
+$ins xorg-xsetroot  # set name of x root
 $ins scrot  # screenshots
-#ins kazam  # screen recording
 $ins ranger  # File manager
 $ins mdp  # markdown presentation tool
 $ins cmus  # terminal music player
 $ins pulsemixer  # audio control
 $ins feh  # image viewer
-#ins grabc  # grab a color
 $ins arandr  # xrandr display gui
 $ins tldr  # easy man pages
 $ins entr  # run script on file change
 $ins libxss  # for dunst, xscreensaver
 $ins lib32-libxss  # for dunst, xscreensaver
 $ins rofi  # app launcher and more
+$ins lxappearance  # set gtk
+$ins bat  # a cooler cat
+$ins discord  # discord, man
+$ins ipython  # better python
+$ins nautilus  # file browser
+$ins python-pip  # install python libraries
+$ins evince  # pdf viewer
+$ins xclip  # cliboard stuff
+
+## AUR
+$yns grabc-git  # grab color

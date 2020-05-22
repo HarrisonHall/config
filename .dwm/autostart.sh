@@ -2,16 +2,17 @@
 
 pc=$(hostname)
 
-if [ "$pc" == "harrisonmac" ]
+if [ "$pc" == "harrison-archmbp" ]
 then
     # Laptop touch click
     # scroll delta is inversly proportional to
     # scroll speed
-    synclient MaxTapTime=0
-    synclient VertScrollDelta=-250  
-    synclient HorizScrollDelta=-250  
+    #synclient MaxTapTime=0
+    #synclient VertScrollDelta=-250  
+    #synclient HorizScrollDelta=-250  
     
     # Background
+    source ~/.screenlayout/default.sh
     feh --bg-scale ~/Pictures/Wallpapers/nord_rocket.png
 fi
 if [ "$pc" == "harrison-archssd" ]
@@ -47,7 +48,7 @@ dte(){
 
 bat0() {
     bat="$(acpi -b | grep -o '[0-9]\{1,\}%')"
-    echo -e "🔋 $bat"
+    echo -e "☇ $bat"
 }
 
 vol() {
@@ -60,7 +61,7 @@ while true; do
     name="^c${w1}^[^c${a4}^$(dte)^c${w1}^]"
     name="^c${w1}^[^c${a3}^$(vol)^c${w1}^] ${name}"
     
-    if [ "$pc" == "harrisonmac" ]
+    if [ "$pc" == "harrison-archmbp" ]
     then
         name="^c${w1}^[^c${a5}^$(bat0)^c${w1}^] ${name}";
     fi

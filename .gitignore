@@ -9,3 +9,4 @@ tabbed/xembed
 dunst/dunst
 *.o
 *.so
+include/*
