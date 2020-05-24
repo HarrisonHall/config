@@ -8,9 +8,9 @@ ins="sudo pacman -Sq --needed"
 yns="yay -Sq --needed"
 
 # .bashrc
-if ! grep -q "source ~/Documents/.tmuxrc/.bashrc" ~/.bashrc
+if ! grep -q "source ~/config/.bashrc" ~/.bashrc
 then
-    echo "source ~/Documents/.tmuxrc/.bashrc" >> ~/.bashrc
+    echo "source ~/config/.bashrc" >> ~/.bashrc
 fi
 
 # Custom builds

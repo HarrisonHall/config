@@ -2,7 +2,7 @@
 # Edit network settings
 
 choices="network\nexit"
-choice=$( echo -e $choices | ~/Documents/.tmuxrc/dmenu/dmenu)
+choice=$( echo -e $choices | rofi -dmenu)
 
 case $choice in
     "network")
