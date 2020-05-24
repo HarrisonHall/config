@@ -10,8 +10,8 @@ static const int horizpadbar        = 2; // inside padding
 static const int vertpadbar         = 0; // inside padding
 static const int vertpad            = 12; // outside padding
 static const int sidepad            = 8; // outside padding
-static const char *fonts[]          = { "Hack:size=18" };  //14?
-static const char dmenufont[]       = "Hack:size=18";
+static const char *fonts[]          = { "Hack:size=14" };  // 14,18
+static const char dmenufont[]       = "Hack:size=14";
 static const char col_gray1[]       = "#2e3440";
 static const char col_gray2[]       = "#81a1c1";
 static const char col_gray3[]       = "#81a1c1";
@@ -35,9 +35,10 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",  NULL,       NULL,       0,            0,           -1 },
-        { "Microsoft Teams Notification",  NULL,       NULL,       0,            1,           -1 },
-        { "zoom",     NULL,       NULL,       0,            1,           -1 },
-        { "microsoft teams - preview",  NULL,       NULL,       0,            1,           -1 },
+    { "Microsoft Teams Notification",  NULL,       NULL,       0,            1,           -1 },
+    { "zoom",     NULL,       NULL,       0,            1,           -1 },
+    { "microsoft teams - preview",  NULL,       NULL,       0,            1,           -1 },
+    { "Counter-Strike: Global Offensive - OpenGL", NULL, NULL, 0, 0, -1},
 };
 
 /* layout(s) */
@@ -67,7 +68,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run_conf", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *roficmd[] = { "rofi", "-show", "run", NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { "st", "-e", "tmux", "new-session", "-A", "-s", "MAIN", NULL };
 static const char *pythoncmd[] = { "st", "-e", "ipython3", NULL};
 static const char *windowcmd[] = { "rofi", "-show", "window", NULL};
 static const char *windowcdcmd[] = { "rofi", "-show", "windowcd", NULL};

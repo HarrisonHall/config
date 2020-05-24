@@ -1,12 +1,11 @@
 # Generic setup script
 # Harrison Hall
 
-# General, but almost mandatory
+# General
 sudo pacman -Syu
+yay -Syu
 ins="sudo pacman -Sq --needed"
 yns="yay -Sq --needed"
-$ins tmux  # Terminal multiplexer
-$ins htop  # Topp
 
 # .bashrc
 if ! grep -q "source ~/Documents/.tmuxrc/.bashrc" ~/.bashrc
@@ -14,179 +13,88 @@ then
     echo "source ~/Documents/.tmuxrc/.bashrc" >> ~/.bashrc
 fi
 
-# Themes
-$ins papirus-icon-theme
-$ins ttf-hack
-
-# Custom
-#sudo apt-get install build-essential libx11-dev libxinerama-dev sharutils suckless-tools libxft-dev libwebkit2gtk-4.0-dev libgcr-3-dev
-
-cd dwm; sudo make; sudo make install; cd ..;
-cd st;  sudo make; sudo make install; cd ..;
-cd slock;  sudo make; sudo make install; cd ..;
-cd surf;  sudo make; sudo make install; cd ..;
-cd tabbed;  sudo make; sudo make install; cd ..;
-cd dmenu; make;  sudo make; sudo make install; cd ..;
-cd dunst;  sudo make; sudo make install; cd ..;
-
-
-
+# Custom builds
+cd apps/dmenu; make;  sudo make; sudo make install; cd ../..;
+cd apps/dunst;  sudo make; sudo make install; cd ../..;
+cd apps/dwm; sudo make; sudo make install; cd ../..;
+cd apps/slock;  sudo make; sudo make install; cd ../..;
+cd apps/st;  sudo make; sudo make install; cd ../..;
+cd apps/tabbed;  sudo make; sudo make install; cd ../..;
 
 
 # Setup config
-if [ ! -d ~/.emacs.d/init.el ]
-then
-    #cp -r .emacs.d ~/.  # ln -s ! todo
-    ln -s ~/Documents/.tmuxrc/.emacs.d/init.el ~/init.el
-fi
-if [ ! -f ~/.tmux.conf ]
-then
-    #cp .tmux.conf ~/.
-    ln -s ~/Documents/.tmuxrc/.tmux.conf ~/.tmux.conf
-fi
-
-
-# Tmux
-if [ ! -f ~/.tmux/plugins/tpm ]
-then
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-fi
-
+[ ! -f ~/.tmux.conf ] && ln -s ~/config/.tmux.conf ~/.tmux.conf
+[ ! -f ~/.tmux/plugins/tpm ] && git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+[ ! -f ~/.config/dunst ] && ln -s ~/config/.config/dunst/ ~/.config/
 
 ## Scripts
-if [ ! -d ~/config ]
-then
-    ln -s ~/Documents/.tmuxrc ~/config
-    echo "here?"
-fi
-if [ ! -f /usr/bin/screenshot ]
-then
-    sudo ln -s ~/Documents/.tmuxrc/scripts/screenshot.sh /usr/bin/screenshot
-fi
-if [ ! -f /usr/bin/network ]
-then
-    sudo ln -s ~/Documents/.tmuxrc/scripts/network.sh /usr/bin/network
-fi
-if [ ! -f /usr/bin/files ]
-then
-    sudo ln -s ~/Documents/.tmuxrc/scripts/files.sh /usr/bin/files
-fi
-if [ ! -f /usr/bin/brightness ]
-then
-    sudo ln -s ~/Documents/.tmuxrc/scripts/brightness.sh /usr/bin/brightness
-fi
-if [ ! -f /usr/bin/volume ]
-then
-    sudo ln -s ~/Documents/.tmuxrc/scripts/volume.sh /usr/bin/volume
-fi
-if [ ! -f /usr/bin/sleepy ]
-then
-    sudo ln -s ~/Documents/.tmuxrc/scripts/sleepy.sh /usr/bin/sleepy
-fi
-if [ ! -f /usr/bin/suspend ]
-then
-    sudo ln -s ~/Documents/.tmuxrc/scripts/suspend.sh /usr/bin/suspend
-fi
-if [ ! -f /usr/bin/colorgrab ]
-then
-    sudo ln -s ~/Documents/.tmuxrc/scripts/colorgrab.sh /usr/bin/colorgrab
-fi
-if [ ! -f /usr/bin/cava ]
-then
-    sudo ln -s ~/Documents/.tmuxrc/cava/cava /usr/bin/cava
-fi
-if [ ! -f /usr/bin/restart ]
-then
-    sudo ln -s /sbin/reboot /usr/bin/restart
-fi
-if [ ! -f /usr/bin/audiovisualizer ]
-then
-    sudo ln -s ~/Documents/.tmuxrc/scripts/audiovisualizer.sh /usr/bin/audiovisualizer
-fi
-if [ ! -f /usr/bin/audio ]
-then
-    sudo ln -s ~/Documents/.tmuxrc/scripts/audio.sh /usr/bin/audio
-fi
-if [ ! -f /usr/bin/music ]
-then
-    sudo ln -s ~/Documents/.tmuxrc/scripts/music.sh /usr/bin/music
-fi
-if [ ! -f /usr/bin/lockscreen ]
-then
-    sudo ln -s ~/Documents/.tmuxrc/scripts/lockscreen.sh /usr/bin/lockscreen
-fi
-if [ ! -f /usr/bin/prtscrn ]
-then
-    sudo ln -s ~/Documents/.tmuxrc/scripts/prtscrn.sh /usr/bin/prtscrn
-fi
-if [ ! -f /usr/bin/web ]
-then
-    sudo ln -s ~/Documents/.tmuxrc/scripts/web.sh /usr/bin/web
-fi
-if [ ! -d ~/.config/dunst ]
-then
-    sudo ln -s ~/Documents/.tmuxrc/.config/dunst/ ~/.config/
-fi
-if [ ! -f /usr/bin/dmenu_run_conf ]
-then
-    sudo ln -s ~/Documents/.tmuxrc/scripts/dmenu_run.sh /usr/bin/dmenu_run_conf
-fi
-if [ ! -d ~/.config/micro ]
-then
-    mkdir ~/.config/micro
-fi
-if [ ! -f ~/.config/micro/bindings.json ]
-then
-    sudo ln -s ~/config/micro/bindings.json ~/.config/micro/bindings.json
-fi
-if [ ! -d ~/.config/micro/colorschemes ]
-then
-    sudo ln -s ~/config/micro/colorschemes ~/.config/micro/colorschemes
-fi
-if [ ! -f ~/.config/micro/settings.json ]
-then
-    sudo ln -s ~/config/micro/settings.json ~/.config/micro/settings.json
-fi
-if [ ! -f ~/.config/rofi ]
-then
-    sudo ln -s ~/config/rofi ~/.config/rofi
-fi
-if [ ! -f /usr/share/xsessions/dwm.desktop ]
-then
-    sudo cp /home/harrison/config/xsessions/dwm.desktop /usr/share/xsessions/dwm.desktop
-fi
-if [ ! -d ~/.tmux/plugins/tpm ]
-then
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-fi
-if [ ! -d ~/.dwm ]
-then
-   ln -s ~/config/.dwm ~/.dwm
-fi
+[ ! -f /usr/local/bin/audio ] && sudo ln -s ~/config/scripts/audio.sh /usr/local/bin/audio
+[ ! -f /usr/local/bin/audiovisualizer ] && sudo ln -s ~/config/scripts/audiovisualizer.sh /usr/local/bin/audiovisualizer
+[ ! -f /usr/local/bin/brightness ]  && sudo ln -s ~/config/scripts/brightness.sh /usr/local/bin/brightness
+[ ! -f /usr/local/bin/cava ] && sudo ln -s ~/config/apps/cava/cava /usr/local/bin/cava
+[ ! -f /usr/local/bin/colorgrab ] && sudo ln -s ~/config/scripts/colorgrab.sh /usr/local/bin/colorgrab
+[ ! -f /usr/local/bin/dmenu_run_conf ] && sudo ln -s ~/config/scripts/dmenu_run.sh /local/usr/bin/dmenu_run_conf
+[ ! -f /usr/local/bin/files ] && sudo ln -s ~/config/scripts/files.sh /usr/local/bin/files
+[ ! -f /usr/local/bin/lockscreen ] && sudo ln -s ~/config/scripts/lockscreen.sh /usr/local/bin/lockscreen
+[ ! -f /usr/local/bin/music ] && sudo ln -s ~/config/scripts/music.sh /usr/local/bin/music
+[ ! -f /usr/local/bin/network ] && sudo ln -s ~/config/scripts/network.sh /usr/local/bin/network
+[ ! -f /usr/local/bin/prtscrn ] && sudo ln -s ~/config/scripts/prtscrn.sh /usr/local/bin/prtscrn
+[ ! -f /usr/local/bin/screenshot ] && sudo ln -s ~/config/scripts/screenshot.sh /usr/local/bin/screenshot
+[ ! -f /usr/local/bin/sleepy ] && sudo ln -s ~/config/scripts/sleepy.sh /usr/local/bin/sleepy
+[ ! -f /usr/local/bin/suspend ] && sudo ln -s ~/config/scripts/suspend.sh /usr/local/bin/suspend
+[ ! -f /usr/local/bin/volume ] && sudo ln -s ~/config/scripts/volume.sh /usr/local/bin/volume
+[ ! -f /usr/local/bin/web ] && sudo ln -s ~/config/scripts/web.sh /usr/local/bin/web
+[ ! -f /usr/local/bin/xfetch ] && sudo ln -s ~/config/scripts/xfetch.sh /usr/local/bin/xfetch
+
+## Micro
+[ ! -d ~/.config/micro ] && mkdir ~/.config/micro
+[ ! -f ~/.config/micro/bindings.json ] && sudo ln -s ~/config/.config/micro/bindings.json ~/.config/micro/bindings.json
+[ ! -f ~/.config/micro/colorschemes ] && sudo ln -s ~/config/.config/micro/colorschemes ~/.config/micro/colorschemes
+[ ! -f ~/.config/micro/settings.json ] && sudo ln -s ~/config/.config/micro/settings.json ~/.config/micro/settings.json
+
+## Rofi
+[ ! -f ~/.config/rofi ] && sudo ln -s ~/config/.config/rofi ~/.config/rofi
+
+## Xsessions (lightdm)
+[ ! -f /usr/share/xsessions/dwm.desktop ] && sudo cp ~/config/.config/xsessions/dwm.desktop /usr/share/xsessions/dwm.desktop
+
+## DWM
+[ ! -f ~/.dwm ] && ln -s ~/config/.config/.dwm ~/.dwm
+
 
 ## Other packages
 $ins acpi  # battery
-$ins xorg-xsetroot  # set name of x root
-$ins scrot  # screenshots
-$ins ranger  # File manager
-$ins mdp  # markdown presentation tool
-$ins cmus  # terminal music player
-$ins pulsemixer  # audio control
-$ins feh  # image viewer
 $ins arandr  # xrandr display gui
-$ins tldr  # easy man pages
+$ins bat  # a cooler cat
+$ins cmus  # terminal music player
+$ins colordiff  # color diff viewer
+$ins discord  # discord, man
 $ins entr  # run script on file change
+$ins evince  # pdf viewer
+$ins feh  # image viewer
+$ins htop  # Top
+$ins ipython  # better python
 $ins libxss  # for dunst, xscreensaver
 $ins lib32-libxss  # for dunst, xscreensaver
-$ins rofi  # app launcher and more
 $ins lxappearance  # set gtk
-$ins bat  # a cooler cat
-$ins discord  # discord, man
-$ins ipython  # better python
+$ins mdp  # markdown presentation tool
 $ins nautilus  # file browser
+$ins papirus-icon-theme  # papirus icons
+$ins pulsemixer  # audio control
 $ins python-pip  # install python libraries
-$ins evince  # pdf viewer
+$ins ranger  # File manager
+$ins rofi  # app launcher and more
+$ins scrot  # screenshots
+$ins tldr  # easy man pages
+$ins tmux  # Terminal multiplexer
+$ins ttf-hack  # Hack font
+$ins vlc  # vlc player
 $ins xclip  # cliboard stuff
+$ins xorg-xsetroot  # set name of x root
 
 ## AUR
 $yns grabc-git  # grab color
+$yns aur/micro-git  # micro text editor
+$yns aur/tad-bin  # Tabular data viewer
+$yns aur/xxd-standalone  # hex file viewer
+$yns aur/ly  # TUI display manager (lightdm replacement)

@@ -19,6 +19,7 @@
     "CtrlBackslash": "VSplit",
     "Ctrl-j": "NextSplit",
     "Ctrl-l": "Center",
-	"Ctrl-d": "Find",
+	"Ctrl-d": "FindLiteral",
+	"Ctrl-m": "FindNext",
 	"Ctrl-i": "ShellMode",
 }

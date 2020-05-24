@@ -1,14 +1,13 @@
 alias ins='sudo apt install'
 alias emacs='emacs -nw'
 alias emasc='emacs -nw'
-alias st='~/Documents/programs/st/st'
-alias dmenu='~/Documents/.tmuxrc/dmenu/dmenu'
-alias surf='~/Documents/.tmuxrc/surf/surf'
 alias x='exit'
 alias d='tmux detach-client'
-alias screenshot='source ~/Documents/.tmuxrc/scripts/screenshot.sh'
+alias screenshot='source ~/config/scripts/screenshot.sh'
 alias r='ranger'
 alias rofi='rofi'
+alias diff='colordiff'
+alias less='less --mouse --wheel-lines=3'
 
 export VISUAL="micro"
 export EDITOR="$VISUAL"
