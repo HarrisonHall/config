@@ -98,3 +98,4 @@ $yns aur/micro-git  # micro text editor
 $yns aur/tad-bin  # Tabular data viewer
 $yns aur/xxd-standalone  # hex file viewer
 $yns aur/ly  # TUI display manager (lightdm replacement)
+$yns aur/slack-desktop  # Slack
