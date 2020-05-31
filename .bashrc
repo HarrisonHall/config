@@ -1,4 +1,3 @@
-alias ins='sudo apt install'
 alias emacs='emacs -nw'
 alias emasc='emacs -nw'
 alias x='exit'
@@ -8,6 +7,12 @@ alias r='ranger'
 alias rofi='rofi'
 alias diff='colordiff'
 alias less='less --mouse --wheel-lines=3'
+alias bat='bat --theme Nord'
+
+scrollable_man () {
+	man $@ | less --mouse --wheel-lines=3
+}
+alias man='scrollable_man'
 
 export VISUAL="micro"
 export EDITOR="$VISUAL"

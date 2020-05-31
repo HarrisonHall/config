@@ -61,6 +61,9 @@ cd apps/tabbed;  sudo make; sudo make install; cd ../..;
 ## DWM
 [ ! -f ~/.dwm ] && ln -s ~/config/.config/.dwm ~/.dwm
 
+## Zathura (pdf)
+[ ! -d ~/.config/zathura ] && ln -s ~/config/.config/zathura ~/.config/zathura
+
 
 ## Other packages
 $ins acpi  # battery
@@ -74,8 +77,7 @@ $ins evince  # pdf viewer
 $ins feh  # image viewer
 $ins htop  # Top
 $ins ipython  # better python
-$ins libxss  # for dunst, xscreensaver
-$ins lib32-libxss  # for dunst, xscreensaver
+$ins libxss lib32-libxss  # for dunst, xscreensaver
 $ins lxappearance  # set gtk
 $ins mdp  # markdown presentation tool
 $ins nautilus  # file browser
@@ -91,6 +93,7 @@ $ins ttf-hack  # Hack font
 $ins vlc  # vlc player
 $ins xclip  # cliboard stuff
 $ins xorg-xsetroot  # set name of x root
+$ins zathura zathura-pdf-poppler  # Document viewer (pdf)
 
 ## AUR
 $yns grabc-git  # grab color
