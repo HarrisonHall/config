@@ -20,4 +20,6 @@ export EDITOR="$VISUAL"
 export COLORTERM="truecolor"
 export MICRO_TRUECOLOR=1
 
+export PATH=$PATH:~/config/scripts
+
 PS1='\[\033[34m\]\w\n\[\033[37m\]-> '

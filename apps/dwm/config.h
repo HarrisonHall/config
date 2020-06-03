@@ -25,7 +25,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "●", "●", "●", "●"}; // ⚃ ●
+static const char *tags[] = { "●", "●", "●", "●", "●", "●", "●", "●"}; // ⚃ ●
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -68,8 +68,9 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run_conf", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *roficmd[] = { "rofi", "-show", "run", NULL };
-static const char *termcmd[]  = { "st", "-e", "tmux", "new-session", "-A", "-s", "MAIN", NULL };
 static const char *pythoncmd[] = { "st", "-e", "ipython3", NULL};
+static const char *termcmd[]  = { "st", "-e", "tmux", "new-session", "-A", "-s", "MAIN", NULL };
+static const char *newtermcmd[]  = { "st", "-e", "tmux",NULL };
 static const char *windowcmd[] = { "rofi", "-show", "window", NULL};
 static const char *windowcdcmd[] = { "rofi", "-show", "windowcd", NULL};
 static const char *sshcmd[] = { "rofi", "-show", "ssh", NULL};
@@ -81,6 +82,7 @@ static Key keys[] = {
   { MODKEY,                       XK_s,      spawn,          {.v = roficmd } },  // search
   { MODKEY|ShiftMask,             XK_t,      spawn,          {.v = termcmd } },  // terminal
   { MODKEY|ControlMask,           XK_t,      spawn,          {.v = termcmd } },  // terminal
+  { MODKEY|ShiftMask,             XK_n,      spawn,          {.v = newtermcmd } },  // terminal
   { MODKEY|ShiftMask,             XK_p,      spawn,          {.v = pythoncmd } },  // ipython window
   { MODKEY|ShiftMask,             XK_r,      spawn,          {.v = powercmd } },  // ipython window
   { MODKEY,                       XK_b,      togglebar,      {0} },  // toggle the status bar

@@ -6,7 +6,7 @@ choice=$( echo -e $choices | rofi -dmenu)
 
 case $choice in
     "network")
-        ~/config/st/st -e nmtui
+        st -e nmtui
         ;;
     *)
 esac
