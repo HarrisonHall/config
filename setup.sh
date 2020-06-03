@@ -24,7 +24,7 @@ cd apps/tabbed;  sudo make; sudo make install; cd ../..;
 
 # Setup config
 [ ! -f ~/.tmux.conf ] && ln -s ~/config/.tmux.conf ~/.tmux.conf
-[ ! -f ~/.tmux ] && ln -s ~/config/.config/.tmux ~/.tmux
+[ ! -d ~/.tmux ] && ln -s ~/config/.config/.tmux ~/.tmux
 [ ! -f ~/.config/dunst ] && ln -s ~/config/.config/dunst/ ~/.config/
 
 ## Scripts
@@ -43,7 +43,7 @@ cd apps/tabbed;  sudo make; sudo make install; cd ../..;
 [ ! -f /usr/share/xsessions/dwm.desktop ] && sudo cp ~/config/.config/xsessions/dwm.desktop /usr/share/xsessions/dwm.desktop
 
 ## DWM
-[ ! -f ~/.dwm ] && ln -s ~/config/.config/.dwm ~/.dwm
+[ ! -d ~/.dwm ] && ln -s ~/config/.config/.dwm ~/.dwm
 
 ## Zathura (pdf)
 [ ! -d ~/.config/zathura ] && ln -s ~/config/.config/zathura ~/.config/zathura
