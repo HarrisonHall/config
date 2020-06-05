@@ -25,7 +25,7 @@ cd apps/tabbed;  sudo make; sudo make install; cd ../..;
 # Setup config
 [ ! -f ~/.tmux.conf ] && ln -s ~/config/.tmux.conf ~/.tmux.conf
 [ ! -d ~/.tmux ] && ln -s ~/config/.config/.tmux ~/.tmux
-[ ! -f ~/.config/dunst ] && ln -s ~/config/.config/dunst/ ~/.config/
+[ ! -f ~/.config/dunst ] && ln -s ~/config/.config/dunst/ ~/.config/dunst
 
 ## Scripts
 #### Moved to path
