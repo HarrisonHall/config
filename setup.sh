@@ -36,6 +36,10 @@ cd apps/tabbed;  sudo make; sudo make install; cd ../..;
 [ ! -f ~/.config/micro/colorschemes ] && sudo ln -s ~/config/.config/micro/colorschemes ~/.config/micro/colorschemes
 [ ! -f ~/.config/micro/settings.json ] && sudo ln -s ~/config/.config/micro/settings.json ~/.config/micro/settings.json
 
+## Jupyter
+[ ! -d ~/.jupyter ] && mkdir ~/.jupyter
+[ ! -d ~/.jupyter/custom ] && ln -s ~/config/.config/.jupyter/custom ~/.jupyter/custom
+
 ## Rofi
 [ ! -f ~/.config/rofi ] && sudo ln -s ~/config/.config/rofi ~/.config/rofi
 
@@ -65,6 +69,7 @@ $ins evince  # pdf viewer
 $ins feh  # image viewer
 $ins htop  # Top
 $ins ipython  # better python
+$ins jupyter  # python notebook
 $ins libxss lib32-libxss  # for dunst, xscreensaver
 $ins lxappearance  # set gtk
 $ins mdp  # markdown presentation tool
@@ -89,3 +94,7 @@ $yns grabc-git  # grab color
 $yns aur/micro-git  # micro text editor
 $yns aur/tad-bin  # Tabular data viewer
 $yns aur/slack-desktop  # Slack
+
+## PIP
+sudo pip install jupyterthemes  # Jupyter themes
+jt -t chesterish -dfonts -T  # Dark blue jupyter theme

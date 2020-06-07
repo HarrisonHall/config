@@ -1,5 +1,4 @@
 #!/bin/bash
-echo test
 
 choices="screenshot\nscreenrecording\nexit"
 choice=$( echo -e $choices | rofi -dmenu -p "Screenshot Applications")

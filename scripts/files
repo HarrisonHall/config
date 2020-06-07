@@ -1,4 +1,4 @@
 #!/bin/bash
 # Edit network settings
 
-~/config/st/st -e ranger
+st -e ranger
