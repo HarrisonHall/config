@@ -3,9 +3,23 @@
 endeavouros. .dotfiles saved since I should only have to set something
 up the first time. 
 
+![basic](media/basic.png)
 ![tmux](media/tmux.png)
 ![tiled](media/tiled.png)
 ![zathura](media/zathura.png)
+
+Most everything is nord-themed (I know, I'm basic). Old setup used to use
+dracula, but I've enjoyed the minimalism that comes with nord. 
+
+This repo provides both a simple way for me to set my system up
+```bash
+git clone https://github.com/harrisonhall/config
+cd config
+./setup.sh
+```
+and acts as a show-and-tell for my current configs. I would not recommend
+copying it, but rather looking element-by-element and integrating my
+changes into your own configs.
 
 ### Forks
 Custom builds of certain programs utilizing only the patches I need. 
