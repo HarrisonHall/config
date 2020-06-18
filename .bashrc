@@ -1,6 +1,7 @@
 alias emacs='emacs -nw'
 alias emasc='emacs -nw'
 alias x='exit'
+alias c='clear'
 alias d='tmux detach-client'
 alias ll='ls -alh'
 alias cdh='cd; cd'
@@ -20,7 +21,5 @@ export EDITOR="$VISUAL"
 
 export COLORTERM="truecolor"
 export MICRO_TRUECOLOR=1
-
-export PATH=$PATH:~/config/scripts
 
 PS1='\[\033[34m\]\w\n\[\033[37m\]-> '

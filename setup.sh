@@ -7,10 +7,16 @@ yay -Syu
 ins="sudo pacman -Sq --needed"
 yns="yay -Sq --needed"
 
-# .bashrc
+# Add .bashrc to .bashrc
 if ! grep -q "source ~/config/.bashrc" ~/.bashrc
 then
     echo "source ~/config/.bashrc" >> ~/.bashrc
+fi
+
+# Add path to .profile
+if ! grep -q "export PATH=$PATH:~/config/scripts" ~/.profile
+then
+	echo "export PATH=$PATH:~/config/scripts" >> ~/.profile
 fi
 
 # Custom builds
@@ -58,11 +64,13 @@ cd apps/tabbed;  sudo make; sudo make install; cd ../..;
 
 
 ## Other packages
+$ins ack  # grep for code
 $ins acpi  # battery
 $ins arandr  # xrandr display gui
 $ins bat  # a cooler cat
 $ins cmus  # terminal music player
 $ins colordiff  # color diff viewer
+$ins dictd  # cli dictionary
 $ins discord  # discord, man
 $ins entr  # run script on file change
 $ins evince  # pdf viewer

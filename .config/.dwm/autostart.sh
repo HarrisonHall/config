@@ -17,7 +17,7 @@ then
 fi
 if [ "$pc" == "harrison-archssd" ]
 then
-    feh --bg-scale ~/Pictures/Wallpapers/nord_rocket.png
+    feh --bg-scale ~/media/pictures/Wallpapers/rdark2.png
     source ~/.screenlayout/default.sh
 fi
 
