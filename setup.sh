@@ -28,10 +28,20 @@ cd apps/st;  sudo make; sudo make install; cd ../..;
 cd apps/tabbed;  sudo make; sudo make install; cd ../..;
 
 
-# Setup config
+## Setup config
 [ ! -f ~/.tmux.conf ] && ln -s ~/config/.tmux.conf ~/.tmux.conf
 [ ! -d ~/.tmux ] && ln -s ~/config/.config/.tmux ~/.tmux
 [ ! -f ~/.config/dunst ] && ln -s ~/config/.config/dunst/ ~/.config/dunst
+[ ! -f ~/.dir_colors ] && ln -s ~/config/.config/.dir_colors ~/.dir_colors
+[ ! -f ~/.emacs.d ] && ln -s ~/config/.emacs.d ~/.emacs.d
+### Other fonts
+[ ! -d ~/.local/share/fonts ] mkdir ~/.local/share/fonts
+[ ! -d /usr/share/fonts/emacs ] mkdir /usr/share/fonts/emacs
+for n in $(ls -A1 ~/config/.emacs.d/plugins/all-the-icons/fonts/*.ttf); do
+    [ ! -f "usr/share/fonts/emacs/$(basename $n)" ] sudo ln -s "$n" "/usr/share/fonts/$(basename $n)";
+done;
+         
+
 
 ## Scripts
 #### Moved to path

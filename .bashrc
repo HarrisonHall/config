@@ -22,4 +22,6 @@ export EDITOR="$VISUAL"
 export COLORTERM="truecolor"
 export MICRO_TRUECOLOR=1
 
+eval $(dircolors ~/.dir_colors)
+
 PS1='\[\033[34m\]\w\n\[\033[37m\]-> '

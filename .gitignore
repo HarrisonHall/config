@@ -10,3 +10,9 @@ apps/dunst/dunst
 *.o
 *.so
 include/*
+
+ac-comphist.dat
+history.el
+auto-save-list
+
+.config/.tmux/resurrect
