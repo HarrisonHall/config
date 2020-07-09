@@ -1,51 +1,6 @@
-;; load emacs 24's package system. Add MELPA repository.
+;; Harrison Hall - emacs config
 
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-
-;; melpa
-(require 'package)
-(let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
-                    (not (gnutls-available-p))))
-       (proto (if no-ssl "http" "https")))
-  (when no-ssl
-    (warn "\
-Your version of Emacs does not support SSL connections,
-which is unsafe because it allows man-in-the-middle attacks.
-There are two things you can do about this warning:
-1. Install an Emacs version that does support SSL and be safe.
-2. Remove this warning from your init file so you won't see it again."))
-  ;; Comment/uncomment these two lines to enable/disable MELPA and MELPA Stable as desired
-  (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
-  ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
-  (when (< emacs-major-version 24)
-    ;; For important compatibility libraries like cl-lib
-    (add-to-list 'package-archives (cons "gnu" (concat proto "://elpa.gnu.org/packages/")))))
-(package-initialize)
-
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("7f6d4aebcc44c264a64e714c3d9d1e903284305fd7e319e7cb73345a9994f5ef" "274fa62b00d732d093fc3f120aca1b31a6bb484492f31081c1814a858e25c72e" default)))
- '(package-selected-packages
-   (quote
-    (darkroom elpy flycheck flycheck-pycheckers markdown-mode+ markdown-preview-mode dracula-theme markdown-mode auto-complete rainbow-delimiters))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(linum ((t (:slant normal)))))
-
-(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-
+;; general
 (setq auto-revert-mode t)
 (setq scroll-step 1
       scroll-conservatively 10000)
@@ -55,20 +10,15 @@ There are two things you can do about this warning:
 (xterm-mouse-mode 1)
 (electric-pair-mode 1)
 (column-number-mode)
-(setq warning-minimum-level :emergency) 
+;;(setq warning-minimum-level :emergency) 
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (require 'linum)
 (global-linum-mode t)
-
-;; Wrap lines at 80 characters
-;;(add-hook 'prog-mode-hook 'auto-fill-mode)
-;; (setq-default fill-column 80)
-
-;; python
-(elpy-enable) 
+(add-hook 'prog-mode-hook 'hl-line-mode)
+(set-default 'truncate-lines t)
 
 ;; custom keys
 (global-set-key (kbd "C-x |") 'split-window-right)
@@ -83,15 +33,57 @@ There are two things you can do about this warning:
 (global-set-key (kbd "C-x r") 'query-replace)
 (global-set-key (kbd "C-x q") 'keyboard-quit)
 (global-set-key (kbd "C-u") 'undo)
-
+(global-set-key (kbd "C-t") 'dired-sidebar-toggle-sidebar)
 
 ;; use customized linum-format: add a addition space after the line number
-(setq linum-format (lambda (line) (propertize (format (let ((w (length (number-to-string (count-lines (point-min) (point-max)))))) (concat "%" 
-(number-to-string w) "d ")) line) 'face 'linum)))
+(setq linum-format (lambda (line) (propertize (format (let ((w (length (number-to-string (count-lines (point-min) (point-max)))))) (concat "%" (number-to-string w) "d ")) line) 'face 'linum)))
 
+;; other packages
+(let ((default-directory "~/.emacs.d/plugins/"))
+  (normal-top-level-add-subdirs-to-load-path))
+
+;;(require 'all-the-icons)
+(require 'dired-sidebar)  ;; sidebar
+(setq dired-sidebar-theme 'nerd)  ;; no icons
+(require 'powerline)
+(powerline-default-theme)
+(require 'rainbow-delimiters)
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+(require 'auto-complete-config)
+(ac-config-default)
+(require 'evil)
+
+;; toggle evil mode with C-z
+(define-key evil-normal-state-map (kbd "C-z") 'evil-mode)
+(global-set-key (kbd "C-z") 'evil-mode)
+
+;; use yaml-mode for yaml files
+(require 'yaml-mode)
+(add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-mode))
+
+;; magit
+(add-to-list 'load-path "~/.emacs.d/site-lisp/magit/lisp")
+(require 'magit)
+(with-eval-after-load 'info
+  (info-initialize)
+  (add-to-list 'Info-directory-list
+               "~/.emacs.d/site-lisp/magit/Documentation/"))
+
+;; org-mode
+(require 'org)
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+(setq org-log-done t)
+
+
+;; theme
+(add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
+(load-theme 'nord t)
+
+
+;; startup
 (setq inhibit-startup-message t
       inhibit-startup-echo-area-message t)
-(load-theme 'nord)
 
 (defun on-after-init ()
   (unless (display-graphic-p (selected-frame))
