@@ -60,6 +60,8 @@
 ;;  (let ((display-table (or buffer-display-table standard-display-table)))
 ;;    (set-display-table-slot display-table 5 ?│)
 ;;    (set-window-display-table (selected-window) display-table)))
+(set-face-background 'vertical-border "#5e81ac")
+(set-face-foreground 'vertical-border (face-background 'vertical-border))
 
 ;;(add-hook 'window-configuration-change-hook 'my-change-window-divider)
 
@@ -132,8 +134,3 @@
     (set-face-background 'default "unspecified-bg"
   (selected-frame))))
 (add-hook 'window-setup-hook 'on-after-init)
-
-
-
-;; extras
-;; for recompiling: (byte-recompile-directory "~/.emacs.d/plugins/markdown-mode" 0)
