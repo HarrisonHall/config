@@ -14,5 +14,6 @@ include/*
 ac-comphist.dat
 history.el
 auto-save-list
+places
 
 .config/.tmux/resurrect

@@ -35,13 +35,6 @@ cd apps/tabbed;  sudo make; sudo make install; cd ../..;
 [ ! -f ~/.dir_colors ] && ln -s ~/config/.config/.dir_colors ~/.dir_colors
 [ ! -f ~/.emacs.d ] && ln -s ~/config/.emacs.d ~/.emacs.d
 ### Other fonts
-[ ! -d ~/.local/share/fonts ] mkdir ~/.local/share/fonts
-[ ! -d /usr/share/fonts/emacs ] mkdir /usr/share/fonts/emacs
-for n in $(ls -A1 ~/config/.emacs.d/plugins/all-the-icons/fonts/*.ttf); do
-    [ ! -f "usr/share/fonts/emacs/$(basename $n)" ] sudo ln -s "$n" "/usr/share/fonts/$(basename $n)";
-done;
-         
-
 
 ## Scripts
 #### Moved to path
@@ -85,6 +78,7 @@ $ins discord  # discord, man
 $ins entr  # run script on file change
 $ins evince  # pdf viewer
 $ins feh  # image viewer
+$ins graphviz  # graphing
 $ins htop  # Top
 $ins ipython  # better python
 $ins jupyter  # python notebook
