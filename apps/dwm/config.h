@@ -55,6 +55,7 @@ static const Layout layouts[] = {
 
 /* key definitions */
 #define MODKEY Mod4Mask
+#define PrintScreenDWM 0x0000ff61
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      comboview,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -74,8 +75,9 @@ static const char *newtermcmd[]  = { "st", "-e", "tmux",NULL };
 static const char *windowcmd[] = { "rofi", "-show", "window", NULL};
 static const char *windowcdcmd[] = { "rofi", "-show", "windowcd", NULL};
 static const char *sshcmd[] = { "rofi", "-show", "ssh", NULL};
-static const char *lockscreencmd[] = { "/home/harrison/Documents/.tmuxrc/scripts/lockscreen.sh", NULL};
-static const char *powercmd[] = { "/home/harrison/Documents/.tmuxrc/scripts/powermenu.sh", NULL};
+static const char *lockscreencmd[] = { "/home/harrison/config/scripts/lockscreen", NULL};
+static const char *powercmd[] = { "/home/harrison/config/scripts/powermenu", NULL};
+static const char *printscreencmd[] = { "/home/harrison/config/scripts/printscreen", NULL};
 
 static Key keys[] = {
   /* modifier                     key        function        argument */
@@ -95,6 +97,7 @@ static Key keys[] = {
   { MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lockscreencmd} },  // lockscreen
   { MODKEY,                       XK_Return, zoom,           {0} },  // ?
 /*{ MODKEY,                       XK_Tab,    view,           {0} },*/
+  { 0,                            PrintScreenDWM, spawn,     {.v = printscreencmd} },  // print screen
   { MODKEY,                       XK_Tab,    spawn,          {.v = windowcmd} },  // window switcher
   { MODKEY|ShiftMask,             XK_s,      spawn,          {.v = sshcmd} },  // ssh holder
   { MODKEY|ShiftMask,             XK_w,      killclient,     {0} },  // close window
