@@ -1,0 +1,213 @@
+#!/bin/python
+'''
+simplenotify.py
+===============
+Reference notifications by custom id for scripting.
+
+Details:
+The program works by binding to a port and receiving all future information by
+socketio. If the port is not bound, the instance becomes the server and will run
+until there are no more notifications. The script will exit immediately either way
+in order to preserve scripting.
+
+Flags: -h shows all flags
+
+Requires (pip):
+    pyzmq
+    notify2 (which of course requires libnotify)
+
+Note:
+    Action and category are not supported because dunst, the notification daemon I uses, doesn't support
+    them in this form and I didn't want to test them. 
+    If the port happens to be used by another project, change it.
+'''
+
+import argparse as ap
+import functools
+import notify2 as notify
+import os
+import time
+import zmq
+
+PORT = 45655
+URL = f"tcp://localhost:{PORT}"
+BIND_URL = f"tcp://*:{PORT}"
+POLL_TIME = 0.2 * 1000
+APP_NAME = "SimpleNotify"
+
+
+def is_already_running():
+    try:
+        context = zmq.Context()
+        socket = context.socket(zmq.REQ)
+        socket.bind(BIND_URL)
+        return False
+    except Exception as e:
+        return True
+
+def receive_data(socket, notifications):
+    if (p := socket.poll(POLL_TIME)) == 0:
+        return notifications
+    info = socket.recv().decode().split(",")
+    nid = info[-1]
+    if nid == "" or nid not in notifications:
+        notifications[nid] = {
+            "notification": Notification(info)
+        }
+    else:
+        notifications[nid]["notification"].parse_info(info)
+    notifications[nid]["notification"].show()
+    return notifications
+
+def send_notification(notification):
+    context = zmq.Context()
+    socket = context.socket(zmq.REQ)
+    socket.connect(URL)
+    socket.send(str(notification).encode())
+
+def server_loop(n):
+    notify.init(APP_NAME)
+    notifications = {
+        n.id : {
+            "notification": n,
+        }
+    }
+    n.show()
+    while len(notifications) > 0:
+        context = zmq.Context()
+        socket = context.socket(zmq.REP)
+        socket.bind(BIND_URL)
+        to_pop = []
+        for nid in notifications.keys():
+            if (time.time() - notifications[nid]["notification"].start_time >
+                notifications[nid]["notification"].timeout):
+                to_pop.append(nid)
+        for p in to_pop:
+            notifications.pop(p)
+        notifications = receive_data(socket, notifications)
+        del socket
+        del context
+
+class Notification:
+    def __init__(self, info = None):
+        self.has_been_shown = False
+        if info:
+            self.parse_info(info)
+        else:
+            self.parse_arguments()
+            self.quit_if_empty()
+
+    @functools.cached_property
+    def notification(self):
+        return notify.Notification(
+            self.summary,
+            self.message,
+            self.icon
+        )
+
+    def show(self):
+        if self.has_been_shown:
+            if (time.time() - self.start_time < self.timeout):
+                self.timeout -= (time.time() - self.start_time)
+        self.has_been_shown = True
+        self.start_time = time.time()    
+        self.update()
+        self.notification.show()
+
+    def update(self):
+        self.notification.update(self.summary, self.message, self.icon)
+        self.notification.set_timeout(int(self.timeout) * 1000)
+        if "l" in self.urgency.lower():
+            self.notification.set_urgency(notify.URGENCY_LOW)
+        if "c" in self.urgency.lower():
+            self.notification.set_urgency(notify.URGENCY_CRITICAL)
+        if "n" in self.urgency.lower():
+            self.notification.set_urgency(notify.URGENCY_NORMAL)
+
+    def parse_arguments(self):
+        parser = ap.ArgumentParser(
+            description='A simple notification system.'
+        )
+        parser.add_argument(
+            '-S', '-s', '--summary', '-T', '-t', '--title',
+            action="store", default="",
+            help="Notification title"
+        )
+        parser.add_argument(
+            '-M', '-m', '--message',
+            action="store", default="",
+            help="Notification contents"
+        )
+        parser.add_argument(
+            '-I', '-i', '--icon',
+            action="store", default="",
+            help="Notification icon"
+        )
+        parser.add_argument(
+            '--timeout',
+            action="store", default=10, type=int,
+            help="Notification timeout"
+        )
+        parser.add_argument(
+            "-U", "-u", "--urgency",
+            action="store", default="normal",
+            help="Notification urgency (low, normal, critical)"
+        )
+        parser.add_argument(
+            '--id',
+            action="store", default="",
+            help="Scripting id"
+        )
+        
+        parser.add_argument(
+            '-D', '-d', '--debug', '-V', '-v', '--verbose',
+            action="store_true", default=False,
+            help="Debug/Verbose printing"
+        )
+        args = parser.parse_args()
+        self.summary = args.summary
+        self.message = args.message
+        self.icon = args.icon
+        self.debug = args.debug
+        self.id = args.id
+        self.timeout = args.timeout
+        self.action=""
+        self.urgency = args.urgency
+        self.category = ""
+        if self.debug:
+            print(str(self))
+
+    def parse_info(self, info):
+        (self.summary, self.message, self.icon,
+         self.timeout, self.action,
+         self.urgency, self.category, self.debug, self.id) = info
+        self.timeout = int(self.timeout)
+        if self.debug:
+            print(str(self))
+
+    def quit_if_empty(self):
+        if (
+                self.summary == "" and
+                self.message == "" and
+                self.icon == ""
+            ):
+            exit(0)
+
+    def __str__(self):
+        return (
+            f"{self.summary},{self.message},{self.icon},"
+            f"{self.timeout},{self.action},{self.urgency},{self.category},"
+            f"{self.debug},{self.id}"
+        )
+
+
+if __name__ == "__main__":
+    n = Notification()
+    pid = os.fork()
+    if pid != 0:
+        exit(0)
+    if is_already_running():
+        send_notification(n)
+    else:
+        server_loop(n)
+
