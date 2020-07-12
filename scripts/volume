@@ -17,7 +17,7 @@ case $choice in
         amixer -D pulse sset Master 60%
         ;;
     "80%")
-        amixer -D pulse sset Master 60%
+        amixer -D pulse sset Master 80%
         ;;
     "100%")
         amixer -D pulse sset Master 100%

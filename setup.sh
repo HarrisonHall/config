@@ -88,6 +88,7 @@ $ins mdp  # markdown presentation tool
 $ins nautilus  # file browser
 $ins papirus-icon-theme  # papirus icons
 $ins pulsemixer  # audio control
+$ins puzzles  # Simon Tatham's portable puzzle collection
 $ins python-pip  # install python libraries
 $ins ranger  # File manager
 $ins rofi  # app launcher and more

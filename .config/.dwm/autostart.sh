@@ -43,7 +43,7 @@ a5="#b48ead" #purple
 
 dte(){
     dte="$(date +'%d %b - %H:%M')"
-    echo -e "🕒 $dte"
+    echo -e "⧗ $dte"
 }
 
 bat0() {
@@ -53,7 +53,7 @@ bat0() {
 
 vol() {
     vol="$(amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }')"
-    echo -e "🔊 $vol"
+    echo -e "⏆ $vol"
 }
 
 # Custom title

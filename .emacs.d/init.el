@@ -14,6 +14,8 @@
 (setq mouse-wheel-progressive-speed nil)
 (electric-pair-mode 1)
 (column-number-mode)
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
 ;;(setq warning-minimum-level :emergency)
 
 (menu-bar-mode -1)
@@ -32,10 +34,7 @@
 (global-set-key (kbd "C-x -") 'split-window-below)
 (global-set-key (kbd "C-x _") 'split-window-below)
 (global-set-key (kbd "C-x x") 'delete-window)
-;;(global-set-key (kbd "C-x <right>") 'enlarge-window-horizontally)
-;;(global-set-key (kbd "C-x <up>") 'enlarge-window-vertically)
-;;(global-set-key (kbd "C-x <left>") 'shrink-window-horizontally)
-;;(global-set-key (kbd "C-x <down>") 'shrink-window-horizontally)
+(global-set-key (kbd "C-x C-x") 'delete-window)
 (global-set-key (kbd "C-x r") 'query-replace)
 (global-set-key (kbd "C-x q") 'keyboard-quit)
 (global-set-key (kbd "C-u") 'undo)
@@ -89,6 +88,8 @@
 
 ;; code folding (hide-show mode)
 (add-hook 'prog-mode-hook 'hs-minor-mode)
+(global-set-key (kbd "C-x C-u") 'hs-hide-all)
+(global-set-key (kbd "C-x C-d") 'hs-show-all)
 
 ;; magit
 (add-to-list 'load-path "~/.emacs.d/site-lisp/magit/lisp")
@@ -118,7 +119,13 @@
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-log-done t)
 (require 'org-brain)
-(global-set-key (kbd "C-c b") '(org-brain-prefix-map org-mode-map))
+(add-hook 'org-mode-hook
+          (lambda()
+            (local-set-key (kbd "C-c b") '(org-brain-prefix-map org-mode-map))
+            (local-set-key (kbd "C-c t") 'org-show-todo-tree)))
+
+
+
 
 ;; theme
 (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
