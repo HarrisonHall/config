@@ -124,7 +124,10 @@
             (local-set-key (kbd "C-c b") '(org-brain-prefix-map org-mode-map))
             (local-set-key (kbd "C-c t") 'org-show-todo-tree)))
 
+;; frame
+(global-set-key (kbd "C-x f") 'make-frame-command)
 
+;; closing emacs
 
 
 ;; theme

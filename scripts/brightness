@@ -11,6 +11,9 @@ then
 fi
 
 case $choice in
+    "exit")
+        exit
+        ;;
     "20%")
         xrandr --output $monitor --brightness 0.2
         ;;
@@ -29,3 +32,4 @@ case $choice in
     *)
 esac
 
+simplenotify -t "Brightness $choice" --timeout 2 --reset --id brightness

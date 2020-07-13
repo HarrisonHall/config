@@ -57,7 +57,7 @@ Custom builds of certain programs utilizing only the patches I need.
   * Simple file to make dwm selectable from lightdm
 * zathura
   * pdf viewer
-
+  
 ### Scripts 
 Minimal scripts utilizing rofi with being cross-platform in mind.
 * audio

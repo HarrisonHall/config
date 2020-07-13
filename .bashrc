@@ -1,5 +1,7 @@
-alias emacs='emacs -nw'
-alias emasc='emacs -nw'
+#!/bin/bash
+#alias emacs='emacs -nw'
+alias emacs='emacsclient -a \"\" -t'
+alias emasc='emacsclient -a \"\" -t'
 alias x='exit'
 alias c='clear'
 alias d='tmux detach-client'

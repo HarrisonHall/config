@@ -106,7 +106,7 @@ class Notification:
         )
 
     def show(self):
-        if self.has_been_shown:
+        if self.has_been_shown and not self.reset:
             if (time.time() - self.start_time < self.timeout):
                 self.timeout -= (time.time() - self.start_time)
         self.has_been_shown = True
@@ -149,6 +149,11 @@ class Notification:
             help="Notification timeout"
         )
         parser.add_argument(
+            '-R', "-r", "--reset",
+            action="store_true", default=False,
+            help="Reset timeout"
+        )
+        parser.add_argument(
             "-U", "-u", "--urgency",
             action="store", default="normal",
             help="Notification urgency (low, normal, critical)"
@@ -174,14 +179,17 @@ class Notification:
         self.action=""
         self.urgency = args.urgency
         self.category = ""
+        self.reset = args.reset
         if self.debug:
             print(str(self))
 
     def parse_info(self, info):
         (self.summary, self.message, self.icon,
-         self.timeout, self.action,
+         self.timeout, self.reset, self.action,
          self.urgency, self.category, self.debug, self.id) = info
         self.timeout = int(self.timeout)
+        if "true" in self.reset.lower():  self.reset = True
+        else:  self.reset = False
         if self.debug:
             print(str(self))
 
@@ -196,7 +204,8 @@ class Notification:
     def __str__(self):
         return (
             f"{self.summary},{self.message},{self.icon},"
-            f"{self.timeout},{self.action},{self.urgency},{self.category},"
+            f"{self.timeout},{self.reset},{self.action},"
+            f"{self.urgency},{self.category},"
             f"{self.debug},{self.id}"
         )
 

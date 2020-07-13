@@ -1,3 +1,4 @@
+# programs
 apps/dwm/dwm
 apps/st/st
 apps/surf/surf
@@ -7,13 +8,17 @@ apps/slock/slock
 apps/tabbed/tabbed
 apps/tabbed/xembed
 apps/dunst/dunst
+
+# Compile
 *.o
 *.so
 include/*
 
+# emacs
 ac-comphist.dat
 history.el
 auto-save-list
 places
+eshell
 
 .config/.tmux/resurrect

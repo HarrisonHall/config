@@ -4,6 +4,9 @@ choices="0%\n20%\n40%\n60%\n80%\n100%\nexit"
 choice=$( echo -e $choices | rofi -dmenu -p "Keyboard backlight: ")
 
 case $choice in
+    "exit")
+        exit
+        ;;
     "0%")
         echo 0 > /sys/class/leds/smc\:\:kbd_backlight/brightness
         ;;
@@ -24,4 +27,5 @@ case $choice in
         ;;
     *)
 esac
+simplenotify -t "Keyboard Backlight $choice" --timeout 2 --reset --id "keyboard backlight"
 
