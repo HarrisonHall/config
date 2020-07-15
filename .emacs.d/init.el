@@ -124,11 +124,32 @@
             (local-set-key (kbd "C-c b") '(org-brain-prefix-map org-mode-map))
             (local-set-key (kbd "C-c t") 'org-show-todo-tree)))
 
+(require 'eyebrowse)
+(eyebrowse-mode t)
+
+;; movement/motion
+(require 'doremi)
+(require 'window-movement)
+(global-set-key (kbd "<M-down>") 'win-resize-minimize-vert)
+(global-set-key (kbd "<M-up>") 'win-resize-enlarge-vert)
+(global-set-key (kbd "<M-left>") 'win-resize-minimize-horiz)
+(global-set-key (kbd "<M-right>") 'win-resize-enlarge-horiz)
+(global-set-key (kbd "<M-up>") 'win-resize-enlarge-horiz)
+(global-set-key (kbd "<M-down>") 'win-resize-minimize-horiz)
+(global-set-key (kbd "<M-left>") 'win-resize-enlarge-vert)
+(global-set-key (kbd "<M-right>") 'win-resize-minimize-vert)
+
+
 ;; frame
 (global-set-key (kbd "C-x f") 'make-frame-command)
 
 ;; closing emacs
-
+;; define function to shutdown emacs server instance
+(defun server-shutdown ()
+  "Save buffers, Quit, and Shutdown (kill) server"
+  (interactive)
+  (save-some-buffers)
+  (kill-emacs))
 
 ;; theme
 (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
@@ -144,3 +165,4 @@
     (set-face-background 'default "unspecified-bg"
   (selected-frame))))
 (add-hook 'window-setup-hook 'on-after-init)
+(put 'narrow-to-region 'disabled nil)

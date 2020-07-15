@@ -1,5 +1,8 @@
 #! /bin/bash
 
+# Start emacs
+emacs --daemon &
+
 pc=$(hostname)
 
 if [ "$pc" == "harrison-archmbp" ]

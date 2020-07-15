@@ -75,6 +75,7 @@ $ins cmus  # terminal music player
 $ins colordiff  # color diff viewer
 $ins dictd  # cli dictionary
 $ins discord  # discord, man
+$ins emacs  # life
 $ins entr  # run script on file change
 $ins evince  # pdf viewer
 $ins feh  # image viewer
@@ -98,6 +99,7 @@ $ins tmux  # Terminal multiplexer
 $ins ttf-hack  # Hack font
 $ins vim  # text editor
 $ins vlc  # vlc player
+$ins w3m  # browser/image viewer
 $ins xclip  # cliboard stuff
 $ins xorg-xsetroot  # set name of x root
 $ins zathura zathura-pdf-poppler  # Document viewer (pdf)
