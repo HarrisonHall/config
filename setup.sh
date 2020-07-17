@@ -34,7 +34,7 @@ cd apps/tabbed;  sudo make; sudo make install; cd ../..;
 [ ! -f ~/.config/dunst ] && ln -s ~/config/.config/dunst/ ~/.config/dunst
 [ ! -f ~/.dir_colors ] && ln -s ~/config/.config/.dir_colors ~/.dir_colors
 [ ! -f ~/.emacs.d ] && ln -s ~/config/.emacs.d ~/.emacs.d
-### Other fonts
+[ ! -d ~/.config/ranger ] && ln -s ~/config/.config/ranger ~/.config/ranger
 
 ## Scripts
 #### Moved to path

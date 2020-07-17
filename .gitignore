@@ -20,5 +20,6 @@ history.el
 auto-save-list
 places
 eshell
+url
 
 .config/.tmux/resurrect

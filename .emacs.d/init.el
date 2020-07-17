@@ -54,15 +54,8 @@
 (let ((default-directory "~/.emacs.d/plugins/"))
   (normal-top-level-add-subdirs-to-load-path))
 
-;; clean seperator
-;;(defun my-change-window-divider ()
-;;  (let ((display-table (or buffer-display-table standard-display-table)))
-;;    (set-display-table-slot display-table 5 ?│)
-;;    (set-window-display-table (selected-window) display-table)))
 (set-face-background 'vertical-border "#5e81ac")
 (set-face-foreground 'vertical-border (face-background 'vertical-border))
-
-;;(add-hook 'window-configuration-change-hook 'my-change-window-divider)
 
 ;;(require 'all-the-icons)
 (require 'dired-sidebar)  ;; sidebar
@@ -123,25 +116,42 @@
           (lambda()
             (local-set-key (kbd "C-c b") '(org-brain-prefix-map org-mode-map))
             (local-set-key (kbd "C-c t") 'org-show-todo-tree)))
+;;(setq org-agenda-files '("~/workspace/classes/about/todo/misc.org"))
+(setq org-agenda-files (directory-files-recursively "~/workspace/classes" "\\.org$"))
 
 (require 'eyebrowse)
 (eyebrowse-mode t)
+
+;; RSS
+(require 'elfeed)
+(setq elfeed-feeds
+      '("https://old.reddit.com/.rss?feed=71e68a9313aae45cf6647d31e7ea6cae483f6628&user=capt_jelly"
+        "https://news.ycombinator.com/rss"
+        "https://www.nasa.gov/rss/dyn/breaking_news.rss"))
+(setf url-queue-timeout 30)
+(global-set-key (kbd "M-e") 'elfeed)
+(define-key elfeed-show-mode-map "u" 'elfeed-update-feed)
+(add-hook 'elfeed-show-mode-hook
+          (lambda()
+            (local-set-key (kbd "u") 'elfeed-update-feed)))
 
 ;; movement/motion
 (require 'doremi)
 (require 'window-movement)
 (global-set-key (kbd "<M-down>") 'win-resize-minimize-vert)
 (global-set-key (kbd "<M-up>") 'win-resize-enlarge-vert)
-(global-set-key (kbd "<M-left>") 'win-resize-minimize-horiz)
-(global-set-key (kbd "<M-right>") 'win-resize-enlarge-horiz)
+(global-set-key (kbd "<M-right>") 'win-resize-minimize-horiz)
+(global-set-key (kbd "<M-left>") 'win-resize-enlarge-horiz)
 (global-set-key (kbd "<M-up>") 'win-resize-enlarge-horiz)
 (global-set-key (kbd "<M-down>") 'win-resize-minimize-horiz)
 (global-set-key (kbd "<M-left>") 'win-resize-enlarge-vert)
 (global-set-key (kbd "<M-right>") 'win-resize-minimize-vert)
 
-
 ;; frame
 (global-set-key (kbd "C-x f") 'make-frame-command)
+
+;; copy-paste
+(setq x-select-enable-clipboard t)
 
 ;; closing emacs
 ;; define function to shutdown emacs server instance
@@ -151,10 +161,21 @@
   (save-some-buffers)
   (kill-emacs))
 
-;; theme
+;; tabbing
+(setq-default c-basic-offset 4
+              tab-width 4
+              indent-tabs-mode t)
+(c-set-offset 'case-label '+)
+(add-hook 'python-mode-hook 'guess-style-guess-tabs-mode)
+(add-hook 'python-mode-hook (lambda ()
+                              (guess-style-guess-tab-width)))
+
+
+(global-set-key (kbd "M-Q") 'server-shutdown)
+
+;; Theme
 (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
 (load-theme 'nord t)
-
 
 ;; startup
 (setq inhibit-startup-message t
