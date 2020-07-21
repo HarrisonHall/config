@@ -86,7 +86,7 @@ static Key keys[] = {
   { MODKEY|ControlMask,           XK_t,      spawn,          {.v = termcmd } },  // terminal
   { MODKEY|ShiftMask,             XK_n,      spawn,          {.v = newtermcmd } },  // terminal
   { MODKEY|ShiftMask,             XK_p,      spawn,          {.v = pythoncmd } },  // ipython window
-  { MODKEY|ShiftMask,             XK_r,      spawn,          {.v = powercmd } },  // ipython window
+  { MODKEY|ShiftMask,             XK_q,      spawn,          {.v = powercmd} },  // powermenu
   { MODKEY,                       XK_b,      togglebar,      {0} },  // toggle the status bar
   { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },  // Rotate focus
   { MODKEY,                       XK_k,      focusstack,     {.i = -1 } },  // Rotate focus
@@ -122,7 +122,7 @@ static Key keys[] = {
   TAGKEYS(                        XK_7,                      6)
   TAGKEYS(                        XK_8,                      7)
   TAGKEYS(                        XK_9,                      8)
-  { MODKEY|ShiftMask,             XK_q,      quit,           {0} },  // close dwm
+  /*{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },  // close dwm */
   { MODKEY|ControlMask,           XK_q,      quit,           {1} },  // restart dwm (keep apps open)
 };
 

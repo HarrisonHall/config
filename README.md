@@ -3,7 +3,7 @@
 endeavouros. .dotfiles saved since I should only have to set something
 up the first time. 
 
-![basic](media/basic.png)
+![basic](media/main.png)
 ![tmux](media/tmux.png)
 ![tiled](media/tiled.png)
 ![zathura](media/zathura.png)

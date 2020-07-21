@@ -41,10 +41,15 @@
 (global-set-key (kbd "C-t") 'dired-sidebar-toggle-sidebar)
 (global-set-key (kbd "C-h") 'hs-toggle-hiding)
 (windmove-default-keybindings)  ;; shift to move between windows
+(global-set-key (kbd "<C-up>") 'buf-move-up)  ;; moving windows
+(global-set-key (kbd "<C-down>") 'buf-move-down)
+(global-set-key (kbd "<C-left>") 'buf-move-left)
+(global-set-key (kbd "<C-right>") 'buf-move-right)
 (global-set-key (kbd "<C-up>") 'buf-move-up)  ;; swapping windows
 (global-set-key (kbd "<C-down>") 'buf-move-down)
 (global-set-key (kbd "<C-left>") 'buf-move-left)
 (global-set-key (kbd "<C-right>") 'buf-move-right)
+(global-unset-key (kbd "C-<backspace>")) ;; todo
 
 
 ;; use customized linum-format: add a addition space after the line number
@@ -140,12 +145,18 @@
 (require 'window-movement)
 (global-set-key (kbd "<M-down>") 'win-resize-minimize-vert)
 (global-set-key (kbd "<M-up>") 'win-resize-enlarge-vert)
-(global-set-key (kbd "<M-right>") 'win-resize-minimize-horiz)
-(global-set-key (kbd "<M-left>") 'win-resize-enlarge-horiz)
+(global-set-key (kbd "<M-left>") 'win-resize-minimize-horiz)
+(global-set-key (kbd "<M-right>") 'win-resize-enlarge-horiz)
 (global-set-key (kbd "<M-up>") 'win-resize-enlarge-horiz)
 (global-set-key (kbd "<M-down>") 'win-resize-minimize-horiz)
 (global-set-key (kbd "<M-left>") 'win-resize-enlarge-vert)
 (global-set-key (kbd "<M-right>") 'win-resize-minimize-vert)
+
+
+;; dumb-jump
+(require 'xref)
+(require 'dumb-jump)
+(add-to-list 'xref-backend-functions #'dumb-jump-xref-activate)
 
 ;; frame
 (global-set-key (kbd "C-x f") 'make-frame-command)

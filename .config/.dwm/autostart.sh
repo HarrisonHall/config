@@ -16,11 +16,11 @@ then
     
     # Background
     source ~/.screenlayout/default.sh
-    feh --bg-scale ~/Pictures/Wallpapers/nord_rocket.png
+    feh --bg-scale ~/config/media/rdark.png
 fi
 if [ "$pc" == "harrison-archssd" ]
 then
-    feh --bg-scale ~/media/pictures/Wallpapers/rdark2.png
+    feh --bg-scale ~/config/media/rdark.png
     source ~/.screenlayout/default.sh
 fi
 

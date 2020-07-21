@@ -67,7 +67,7 @@ cd apps/tabbed;  sudo make; sudo make install; cd ../..;
 
 
 ## Other packages
-$ins ack  # grep for code
+$ins ack the_silver_searcher  # grep for code
 $ins acpi  # battery
 $ins arandr  # xrandr display gui
 $ins bat  # a cooler cat
