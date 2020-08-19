@@ -25,7 +25,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "●", "●", "●", "●", "●", "●", "●", "●"}; // ⚃ ●
+static const char *tags[] = { "α", "β", "γ", "δ", "ε", "ζ", "η", "θ"}; // ⚃ ●
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -42,9 +42,9 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.5; //.5025 /* factor of master area size [0.05..0.95] */
-static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */  // used to be 1
+static const float mfact     = 0.5;  // factor of master area size [0.05..0.95]
+static const int nmaster     = 1;    // number of clients in master area
+static const int resizehints = 0;    // 1 means respect size hints in tiled resizals  // used to be 1
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
