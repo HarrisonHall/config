@@ -71,6 +71,7 @@ $ins ack the_silver_searcher  # grep for code
 $ins acpi  # battery
 $ins arandr  # xrandr display gui
 $ins bat  # a cooler cat
+$ins cheese  # webcame recorder
 $ins cmus  # terminal music player
 $ins colordiff  # color diff viewer
 $ins dictd  # cli dictionary
@@ -87,6 +88,7 @@ $ins libxss lib32-libxss  # for dunst, xscreensaver
 $ins lxappearance  # set gtk
 $ins mdp  # markdown presentation tool
 $ins nautilus  # file browser
+$ins obs-studio # Screen recording
 $ins papirus-icon-theme  # papirus icons
 $ins pulsemixer  # audio control
 $ins puzzles  # Simon Tatham's portable puzzle collection
@@ -94,6 +96,7 @@ $ins python-pip  # install python libraries
 $ins ranger  # File manager
 $ins rofi  # app launcher and more
 $ins scrot  # screenshots
+$ins stow  # GNU stowing program
 $ins tldr  # easy man pages
 $ins tmux  # Terminal multiplexer
 $ins ttf-hack  # Hack font
@@ -102,13 +105,20 @@ $ins vlc  # vlc player
 $ins w3m  # browser/image viewer
 $ins xclip  # cliboard stuff
 $ins xorg-xsetroot  # set name of x root
+$ins yajl  # yet another json lib
 $ins zathura zathura-pdf-poppler  # Document viewer (pdf)
 
 ## AUR
 $yns grabc-git  # grab color
 $yns aur/micro-git  # micro text editor
-$yns aur/tad-bin  # Tabular data viewer
+$yns polybar-dwm-module
 $yns aur/slack-desktop  # Slack
+$yns aur/tad-bin  # Tabular data viewer
+$yns aur/teams  # Microsoft teams
+$yns aur/zoom  # Zoom
+
+## Misc
+# digimend is for non-wacom drawing tablets on linux
 
 ## PIP
 sudo pip install jupyterthemes  # Jupyter themes

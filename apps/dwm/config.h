@@ -1,15 +1,11 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 4;        /* border pixel of windows */
-static const unsigned int gappx     = 6; /* gaps between windows */
-static const unsigned int snap      = 8;       /* snap pixel */
+static const unsigned int borderpx  =0;//= 4;        /* border pixel of windows */
+static const unsigned int gappx     = 6;        /* gaps between windows */
+static const unsigned int snap      = 4;        /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int horizpadbar        = 2; // inside padding
-static const int vertpadbar         = 0; // inside padding
-static const int vertpad            = 12; // outside padding
-static const int sidepad            = 8; // outside padding
 static const char *fonts[]          = { "Hack:size=14" };  // 14,18
 static const char dmenufont[]       = "Hack:size=14";
 static const char col_gray1[]       = "#2e3440";
@@ -25,7 +21,8 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "●", "●", "●", "●", "●", "●", "●", "●"}; // ⚃ ●
+//static const char *tags[] = { "●", "●", "●", "●", "●", "●", "●", "●"}; // ⚃ ●
+static const char *tags[] = { "α", "β", "γ", "δ", "ε", "ζ", "η", "θ" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -44,7 +41,7 @@ static const Rule rules[] = {
 /* layout(s) */
 static const float mfact     = 0.5; //.5025 /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */  // used to be 1
+static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */  // used to be 1
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
@@ -78,6 +75,7 @@ static const char *sshcmd[] = { "rofi", "-show", "ssh", NULL};
 static const char *lockscreencmd[] = { "/home/harrison/config/scripts/lockscreen", NULL};
 static const char *powercmd[] = { "/home/harrison/config/scripts/powermenu", NULL};
 static const char *printscreencmd[] = { "/home/harrison/config/scripts/printscreen", NULL};
+static const char *menucmd[] = { "/home/harrison/config/scripts/menu", NULL};
 
 static Key keys[] = {
   /* modifier                     key        function        argument */
@@ -94,7 +92,7 @@ static Key keys[] = {
   { MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },  // 
   { MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },  // Shift size of master
   { MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },  // Shift size of master
-  { MODKEY|ShiftMask,             XK_l,      spawn,          {.v = lockscreencmd} },  // lockscreen
+  { MODKEY|ShiftMask,             XK_l,      spawn,          {.v = menucmd} },  // script menu
   { MODKEY,                       XK_Return, zoom,           {0} },  // ?
 /*{ MODKEY,                       XK_Tab,    view,           {0} },*/
   { 0,                            PrintScreenDWM, spawn,     {.v = printscreencmd} },  // print screen
@@ -124,25 +122,6 @@ static Key keys[] = {
   TAGKEYS(                        XK_9,                      8)
   /*{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },  // close dwm */
   { MODKEY|ControlMask,           XK_q,      quit,           {1} },  // restart dwm (keep apps open)
-};
-
-static const char *ipcsockpath = "/tmp/dwm.sock";
-static IPCCommand ipccommands[] = {
-  IPCCOMMAND(  view,                1,      {ARG_TYPE_UINT}   ),
-  IPCCOMMAND(  toggleview,          1,      {ARG_TYPE_UINT}   ),
-  IPCCOMMAND(  tag,                 1,      {ARG_TYPE_UINT}   ),
-  IPCCOMMAND(  toggletag,           1,      {ARG_TYPE_UINT}   ),
-  IPCCOMMAND(  tagmon,              1,      {ARG_TYPE_UINT}   ),
-  IPCCOMMAND(  focusmon,            1,      {ARG_TYPE_SINT}   ),
-  IPCCOMMAND(  focusstack,          1,      {ARG_TYPE_SINT}   ),
-  IPCCOMMAND(  zoom,                1,      {ARG_TYPE_NONE}   ),
-  IPCCOMMAND(  spawn,               1,      {ARG_TYPE_PTR}    ),
-  IPCCOMMAND(  incnmaster,          1,      {ARG_TYPE_SINT}   ),
-  IPCCOMMAND(  killclient,          1,      {ARG_TYPE_SINT}   ),
-  IPCCOMMAND(  togglefloating,      1,      {ARG_TYPE_NONE}   ),
-  IPCCOMMAND(  setmfact,            1,      {ARG_TYPE_FLOAT}  ),
-  IPCCOMMAND(  setlayoutsafe,       1,      {ARG_TYPE_PTR}    ),
-  IPCCOMMAND(  quit,                1,      {ARG_TYPE_NONE}   )
 };
 
 /* button definitions */

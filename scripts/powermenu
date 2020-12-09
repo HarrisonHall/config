@@ -1,9 +1,15 @@
 #!/bin/bash
 
-choices="Shutdown\nSuspend\nLock"
-choice=$( echo -e $choices | rofi -dmenu -p "Volume")
+choices="Lockout\nReboot\nShutdown\nSuspend\nLock"
+choice=$( echo -e $choices | rofi -dmenu -p "Power Options")
 
 case $choice in
+	"Lockout")
+		dm-tool lock
+		;;
+	"Reboot")
+		shutdown -r 0
+		;;
     "Shutdown")
         shutdown 0
         ;;

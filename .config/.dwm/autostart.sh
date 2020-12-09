@@ -3,6 +3,22 @@
 # Start emacs
 emacs --daemon &
 
+# Start notifications
+dunst &
+
+# Start compositor
+picom --experimental-backends --backend glx --config ~/config/.config/picom/picom.conf &
+
+#sleep 3
+# if type "xrandr"; then
+# 	for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
+# 		MONITOR=$m polybar --reload -c ~/config/.config/polybar/config mainbar &
+# 	done
+# else
+# 	polybar --reload -c ~/config/.config/polybar/config mainbar &
+# fi
+
+
 pc=$(hostname)
 
 if [ "$pc" == "harrison-archmbp" ]
@@ -20,7 +36,8 @@ then
 fi
 if [ "$pc" == "harrison-archssd" ]
 then
-    feh --bg-scale ~/config/media/rdark.png
+    #feh --bg-scale ~/config/media/rdark.png
+	feh --bg-scale ~/media/pictures/Wallpapers/ice_village.jpg
     source ~/.screenlayout/default.sh
 fi
 
@@ -61,22 +78,22 @@ vol() {
 
 # Custom title
 while true; do
-    name="^c${w1}^[^c${a4}^$(dte)^c${w1}^]"
-    name="^c${w1}^[^c${a3}^$(vol)^c${w1}^] ${name}"
+    name="^c${a4}^$(dte) "
+    name="^c${a3}^$(vol)^c${w1}^ | ${name}"
     
     if [ "$pc" == "harrison-archmbp" ]
     then
-        name="^c${w1}^[^c${a5}^$(bat0)^c${w1}^] ${name}";
+        name="^c${a5}^$(bat0)^c${w1}^ | ${name}";
     fi
 
-    if [ "$pc" == "harrison-lb-ssd5" ]
+    if [ "$pc" ==  "harrison-lb-ssd5" ]
     then
         name="${name}";
     fi
 
     if [ "$pc" == "harrison-archssd" ]
     then
-	name="${name}";
+	name=" ${name}";
     fi
     
     xsetroot -name "${name}"

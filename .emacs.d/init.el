@@ -35,7 +35,7 @@
 (global-set-key (kbd "C-x _") 'split-window-below)
 (global-set-key (kbd "C-x x") 'delete-window)
 (global-set-key (kbd "C-x C-x") 'delete-window)
-(global-set-key (kbd "C-x r") 'query-replace)
+;;(global-set-key (kbd "C-x r") 'query-replace)
 (global-set-key (kbd "C-x q") 'keyboard-quit)
 (global-set-key (kbd "C-u") 'undo)
 (global-set-key (kbd "C-t") 'dired-sidebar-toggle-sidebar)
@@ -163,6 +163,7 @@
 
 ;; copy-paste
 (setq x-select-enable-clipboard t)
+(setq x-select-enable-primary t)
 
 ;; closing emacs
 ;; define function to shutdown emacs server instance
@@ -187,6 +188,9 @@
 ;; Theme
 (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/themes/"))
 (load-theme 'nord t)
+
+;; gui settings
+(set-face-attribute 'default nil :height 160)
 
 ;; startup
 (setq inhibit-startup-message t

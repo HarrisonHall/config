@@ -1,11 +1,12 @@
 #!/bin/bash
 
-choices="screenshot\nfullscreen screenshot\nscreenrecording\nexit"
+choices="screenshot\nfullscreen screenshot\nscreenrecording\nobs\nexit"
 choice=$( echo -e $choices | rofi -dmenu -p "Screenshot Applications")
 
 case $choice in
     "screenshot")
-        scrot -s /tmp/tmp.png && xclip -selection clipboard -t image/png -i /tmp/tmp.png && rm /tmp/tmp.png
+        rm -f /tmp/tmp.png
+		scrot -s /tmp/tmp.png && xclip -selection clipboard -t image/png -i /tmp/tmp.png
         ;;
     "fullscreen screenshot")
         sleep .2
@@ -14,6 +15,9 @@ case $choice in
     "screenrecording")
         kazam
         ;;
+	"obs")
+		obs
+		;;
     *)
 esac
 

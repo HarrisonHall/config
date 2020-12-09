@@ -1,0 +1,30 @@
+#!/bin/bash
+
+time_var=$(date +'%a, %b %e, %H:%M')
+choices="Audio\nBrightness\nFiles\nNetwork\nPower\nScreenshot\nVolume"
+choice=$( echo -e $choices | rofi -dmenu -p "$time_var")
+
+case $choice in
+	"Audio")
+		audio
+		;;
+	"Brightness")
+		brightness
+		;;
+	"Files")
+        files
+        ;;
+	"Network")
+        network
+        ;;
+    "Power")
+        powermenu
+        ;;
+    "Screenshot")
+        screenshot
+        ;;
+	"Volume")
+        volume
+        ;;
+    *)
+esac
