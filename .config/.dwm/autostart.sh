@@ -1,23 +1,17 @@
 #! /bin/bash
 
+# Destroy if already running
+[ "$( pgrep autostart.sh | head -1 )" != "$$" ] && echo "Already Running" && exit 0
+
 # Start emacs
-emacs --daemon &
+#echo "Starting emacs"
+#emacs --daemon &
 
 # Start notifications
 dunst &
 
 # Start compositor
-picom --experimental-backends --backend glx --config ~/config/.config/picom/picom.conf &
-
-#sleep 3
-# if type "xrandr"; then
-# 	for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-# 		MONITOR=$m polybar --reload -c ~/config/.config/polybar/config mainbar &
-# 	done
-# else
-# 	polybar --reload -c ~/config/.config/polybar/config mainbar &
-# fi
-
+picom --experimental-backends --backend glx --config ~/config/.config/picom/picom.conf --daemon &
 
 pc=$(hostname)
 
@@ -37,8 +31,9 @@ fi
 if [ "$pc" == "harrison-archssd" ]
 then
     #feh --bg-scale ~/config/media/rdark.png
-	feh --bg-scale ~/media/pictures/Wallpapers/ice_village.jpg
-    source ~/.screenlayout/default.sh
+	feh --bg-scale ~/media/pictures/Wallpapers/ice_village.jpg &
+    #source ~/.screenlayout/default.sh &
+	echo hi
 fi
 
 ## Colors (Nord)

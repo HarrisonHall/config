@@ -40,7 +40,7 @@ configuration {
 }
 #window {
     background-color: @background;
-    border:           4;
+    border:           0;
     padding:          5;
 }
 #mainbox {
