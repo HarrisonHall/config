@@ -62,6 +62,9 @@
 (set-face-background 'vertical-border "#5e81ac")
 (set-face-foreground 'vertical-border (face-background 'vertical-border))
 
+(load-file "/home/harrison/.emacs.d/plugins/xclip/xclip.el")
+(xclip-mode 1)
+
 ;;(require 'all-the-icons)
 (require 'dired-sidebar)  ;; sidebar
 (setq dired-sidebar-theme 'nerd)  ;; no icons
@@ -72,6 +75,8 @@
 (require 'auto-complete-config)
 (ac-config-default)
 (require 'evil)
+(require 'flycheck)
+(global-flycheck-mode)
 
 ;; toggle evil mode with C-z
 (define-key evil-normal-state-map (kbd "C-z") 'evil-mode)
@@ -165,8 +170,8 @@
 (global-set-key (kbd "C-x f") 'make-frame-command)
 
 ;; copy-paste
-(setq x-select-enable-clipboard t)
-(setq x-select-enable-primary t)
+;(setq x-select-enable-clipboard t)
+;(setq x-select-enable-primary t)
 
 ;; closing emacs
 ;; define function to shutdown emacs server instance

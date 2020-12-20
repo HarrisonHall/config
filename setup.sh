@@ -108,10 +108,17 @@ $ins xorg-xsetroot  # set name of x root
 $ins yajl  # yet another json lib
 $ins zathura zathura-pdf-poppler  # Document viewer (pdf)
 
+## Emacs Linting
+$ins cppcheck  # python
+$ins eslint  # javascript
+$ins python-pylint  # pytho
+
+
 ## AUR
 $yns grabc-git  # grab color
-$yns aur/micro-git  # micro text editor
-$yns polybar-dwm-module
+#$yns aur/micro-git  # micro text editor
+$yns picom-tryone-git  # compositor
+#$yns polybar-dwm-module
 $yns aur/slack-desktop  # Slack
 $yns aur/tad-bin  # Tabular data viewer
 $yns aur/teams  # Microsoft teams

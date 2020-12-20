@@ -32,7 +32,7 @@ if [ "$pc" == "harrison-archssd" ]
 then
     #feh --bg-scale ~/config/media/rdark.png
 	feh --bg-scale ~/media/pictures/Wallpapers/ice_village.jpg &
-    #source ~/.screenlayout/default.sh &
+    source ~/.screenlayout/default.sh &
 	echo hi
 fi
 
