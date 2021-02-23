@@ -1,0 +1,57 @@
+* Emacs
+Harrison's build of emacs. 
+** Benefits
+- All requirements are saved locally
+- Emacs runs in client-server mode, so all instances are connected
+- Copy/pasting works with xclip
+- Extra modes
+  - yaml mode
+  - gdscript mode
+  - markdown mode
+  - org mode
+- Comes with magit!
+- TODOs/FIXMEs/DEBUGs are highlighted
+- RSS with elfeed
+- Rainbow delimeters make brackets super easy
+
+** Keybindings
+*** General
+M-Shift-Q save and quit **all** emacs windows
+C-x C-c saves and closes a window
+C-x C-f allows you to access a new file
+C-x b changes window to another already-opened pane
+C-g backs out of any option in the command line
+q generally backs out of popup windows
+
+*** Window Controls
+C-x | and - split windows
+C-x x deletes the window
+C-up/down/left/right swap windows
+M-up/down/left/right resize windows
+
+*** Bookmarks
+Bookmarks allow you to globally save and follow lines of code
+C-x r m allows you to make a bookmark
+C-x r l allows you to list and follow bookmarks
+
+*** Code following
+Dumb-jumping to function definitions can be done with M-.
+
+*** Code control
+C-h hides and shows code block folds
+
+*** File tree
+C-t shows the dired tree sidebar
+
+*** Vim
+C-z switches to evil-mode (vim/vi)
+
+*** RSS
+M-e pulls the rss feed
+
+*** Magit
+Open up magit with C-x g for the git repo
+Open up magit actions for a file with C-c M-g
+
+** TODOs
+- eyebrowse mode

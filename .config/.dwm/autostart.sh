@@ -11,7 +11,9 @@
 dunst &
 
 # Start compositor
-picom --experimental-backends --backend glx --config ~/config/.config/picom/picom.conf --daemon &
+if pacman -Qs picom-tryone-git; then
+	picom --experimental-backends --backend glx --config ~/config/.config/picom/picom.conf --daemon &
+fi
 
 pc=$(hostname)
 

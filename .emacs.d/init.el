@@ -49,7 +49,7 @@
 (global-set-key (kbd "<C-down>") 'buf-move-down)
 (global-set-key (kbd "<C-left>") 'buf-move-left)
 (global-set-key (kbd "<C-right>") 'buf-move-right)
-(global-unset-key (kbd "C-<backspace>")) ;; todo
+;;(global-unset-key (kbd "<C-backspace>")) ;; todo
 
 
 ;; use customized linum-format: add a addition space after the line number
@@ -62,7 +62,7 @@
 (set-face-background 'vertical-border "#5e81ac")
 (set-face-foreground 'vertical-border (face-background 'vertical-border))
 
-(load-file "/home/harrison/.emacs.d/plugins/xclip/xclip.el")
+(require 'xclip)
 (xclip-mode 1)
 
 ;;(require 'all-the-icons)
@@ -86,6 +86,10 @@
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-mode))
 
+;; use dockerfile mode
+(require 'dockerfile-mode)
+(add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
+
 ;; use gdscript mode
 (require 'gdscript-mode)
 
@@ -96,6 +100,18 @@
 (add-hook 'prog-mode-hook 'hs-minor-mode)
 (global-set-key (kbd "C-x C-u") 'hs-hide-all)
 (global-set-key (kbd "C-x C-d") 'hs-show-all)
+(setq hs-special-modes-alist
+  (mapcar 'purecopy
+  '((c-mode "{" "}" "/[*/]" nil nil)
+    (c++-mode "{" "}" "/[*/]" nil nil)
+    (bibtex-mode ("@\\S(*\\(\\s(\\)" 1))
+    (java-mode "{" "}" "/[*/]" nil nil)
+    (js-mode "{" "}" "/[*/]" nil)
+    ;; (html-mode "<!-- {{{ " "<!-- }}} -->" " -->" nil t)
+    (html-mode "<\([A-Za-z][A-Za-z0-9]*\)[^>]*>.*?"  "</\1>" "-->" nil nil) ;gw: self edited, see blw ref:
+	(mhtml-mode "<\([A-Za-z][A-Za-z0-9]*\)[^>]*>.*?"  "</\1>" "-->" nil nil) ;gw: self edited, see blw ref:
+    ;; http://www.regular-expressions.info/examples.html
+    )))
 
 ;; magit
 (add-to-list 'load-path "~/.emacs.d/site-lisp/magit/lisp")
@@ -129,6 +145,7 @@
           (lambda()
             (local-set-key (kbd "C-c b") '(org-brain-prefix-map org-mode-map))
             (local-set-key (kbd "C-c t") 'org-show-todo-tree)))
+(add-hook 'org-mode-hook 'org-toggle-pretty-entities)
 ;;(setq org-agenda-files '("~/workspace/classes/about/todo/misc.org"))
 (setq org-agenda-files (directory-files-recursively "~/workspace/classes" "\\.org$"))
 
@@ -160,11 +177,15 @@
 (global-set-key (kbd "<M-left>") 'win-resize-enlarge-vert)
 (global-set-key (kbd "<M-right>") 'win-resize-minimize-vert)
 
+;; discover-my-major help
+;;(require 'discover-my-major)
+;;(global-set-key (kbd "C-h C-m") 'discover-my-major)
 
 ;; dumb-jump
 (require 'xref)
 (require 'dumb-jump)
 (add-to-list 'xref-backend-functions #'dumb-jump-xref-activate)
+;; Use dumb-jump with M-.
 
 ;; frame
 (global-set-key (kbd "C-x f") 'make-frame-command)

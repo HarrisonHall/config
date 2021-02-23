@@ -6,7 +6,7 @@
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
 static char *font = "Hack:pixelsize=18:antialias=true:autohint=true";
-static int borderpx = 0;
+static int borderpx = 12;
 
 /*
  * What program is execed by st depends of these precedence rules:
@@ -45,8 +45,7 @@ int allowaltscreen = 1;
 
 /* allow certain non-interactive (insecure) window operations such as:
    setting the clipboard text */
-int allowwindowops = 0;
-
+int allowwindowops = 1;
 /*
  * draw latency range in ms - from new content/keypress/etc until drawing.
  * within this range, st draws when content stops arriving (idle). mostly it's

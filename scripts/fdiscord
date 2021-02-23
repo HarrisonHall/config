@@ -1,0 +1,7 @@
+#!/bin/bash
+simplenotify -t 'Discord' -m 'Running custom discord script at ~/config/scripts/fdiscord'
+#echo "Running custom discord: "
+#/home/harrison/workspace/programs/Discord/Discord
+#flatpak run com.discordapp.Discord
+discord --no-sandbox
+

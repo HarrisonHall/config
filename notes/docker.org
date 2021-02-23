@@ -1,0 +1,10 @@
+* Docker
+** Installation
+~sudo pacman -S docker~
+~sudo systemctl start docker~
+** Permissions
+1. Create group
+~sudo groupadd docker~
+2. Add user
+~sudo usermod -aG docker $USER~
+3. Restart computer

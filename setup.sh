@@ -130,3 +130,7 @@ $yns aur/zoom  # Zoom
 ## PIP
 sudo pip install jupyterthemes  # Jupyter themes
 jt -t chesterish -dfonts -T  # Dark blue jupyter theme
+
+## Pandoc
+$ins pandoc
+$ins texlive-core
