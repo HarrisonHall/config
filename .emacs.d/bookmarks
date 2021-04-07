@@ -2,7 +2,22 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("Config setup"
+(("Japanese Verbs"
+ (filename . "~/workspace/notes/japanese/verbs.org")
+ (front-context-string)
+ (rear-context-string . "* Japanese Verbs")
+ (position . 17))
+("Cloud Computing"
+ (filename . "~/workspace/classes/sen/cloud/cloud.org")
+ (front-context-string . "* Cloud computin")
+ (rear-context-string)
+ (position . 1))
+("Emacs Howto"
+ (filename . "~/.emacs.d/emacs.org")
+ (front-context-string . "* Emacs\nHarrison")
+ (rear-context-string)
+ (position . 1))
+("Config setup"
  (filename . "~/config/setup.sh")
  (front-context-string . "# Generic setup ")
  (rear-context-string)

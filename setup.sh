@@ -80,6 +80,7 @@ $ins emacs  # life
 $ins entr  # run script on file change
 $ins evince  # pdf viewer
 $ins feh  # image viewer
+$ins gamemode  # steam optimizer
 $ins graphviz  # graphing
 $ins htop  # Top
 $ins ipython  # better python

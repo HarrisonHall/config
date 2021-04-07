@@ -157,7 +157,8 @@
 (setq elfeed-feeds
       '("https://old.reddit.com/.rss?feed=71e68a9313aae45cf6647d31e7ea6cae483f6628&user=capt_jelly"
         "https://news.ycombinator.com/rss"
-        "https://www.nasa.gov/rss/dyn/breaking_news.rss"))
+        "https://www.nasa.gov/rss/dyn/breaking_news.rss"
+		"https://github.com/HarrisonHall.private.atom?token=AGEQZQY3VH5WIPPP2GWPEZF6M7WI6"))
 (setf url-queue-timeout 30)
 (global-set-key (kbd "M-e") 'elfeed)
 (define-key elfeed-show-mode-map "u" 'elfeed-update-feed)
@@ -186,6 +187,10 @@
 (require 'dumb-jump)
 (add-to-list 'xref-backend-functions #'dumb-jump-xref-activate)
 ;; Use dumb-jump with M-.
+
+;; imenu-list
+(require 'imenu-list)
+(global-set-key (kbd "C-x i") #'imenu-list-smart-toggle)
 
 ;; frame
 (global-set-key (kbd "C-x f") 'make-frame-command)

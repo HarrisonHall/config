@@ -14,6 +14,10 @@ Patching dwm is simple.
 * [x] `awesomebar.diff` - interactive title bar
 * [x] `combo.patch` - select multiple tags at one time
 * [x] `focusonnetactive.diff` - focus on the active window (games)
+* [x] `fsignal.diff` - send signals to dwm
+  * Ex: `xsetroot -name "fsignal:1"`
+	1. Logout
+	2. Restart DWM (keep windows open)
 * [x] `fullgaps.diff` - show gaps between windows, imo better than uselessgaps
 * [x] `noborder-fixed.diff` - no border in monacle mode
 * [x] `restartsig.diff` - restart dwm with new config

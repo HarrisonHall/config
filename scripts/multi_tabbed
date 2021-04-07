@@ -1,0 +1,4 @@
+#!/bin/sh
+xid="$(tabbed -c -d -s -r 2 st -w x)"
+st -w "$xid" htop &
+st -w "$xid" ranger &

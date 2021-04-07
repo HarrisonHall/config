@@ -1,23 +1,26 @@
 #!/bin/bash
 
-choices="Lockout\nReboot\nShutdown\nSuspend\nLock"
+choices="Lock\nLogout\nReboot\nReset DWM\nShutdown\nSuspend"
 choice=$( echo -e $choices | rofi -dmenu -p "Power Options")
 
 case $choice in
-	"Lockout")
+	"Lock")
 		dm-tool lock
+		# slock
 		;;
-	"Reboot")
-		shutdown -r 0
+	"Logout")
+		xsetroot -name "fsignal:1"
 		;;
     "Shutdown")
         shutdown 0
         ;;
-    "Suspend")
+	"Suspend")
         systemctl suspend
         ;;
-    "Lock")
-        slock
-        ;;
-    *)
+	"Reboot")
+		shutdown -r 0
+		;;
+	"Reset DWM")
+		xsetroot -name "fsignal:2"
+		;;
 esac

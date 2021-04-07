@@ -35,7 +35,6 @@ then
     #feh --bg-scale ~/config/media/rdark.png
 	feh --bg-scale ~/media/pictures/Wallpapers/ice_village.jpg &
     source ~/.screenlayout/default.sh &
-	echo hi
 fi
 
 ## Colors (Nord)
@@ -55,8 +54,6 @@ a2="#d08770" #orange
 a3="#ebcb8b" #yellow
 a4="#a3be8c" #green
 a5="#b48ead" #purple
-
-
 
 dte(){
     dte="$(date +'%d %b - %H:%M')"
