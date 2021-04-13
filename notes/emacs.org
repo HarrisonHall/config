@@ -55,6 +55,45 @@ M-e pulls the rss feed
 Open up magit with C-x g for the git repo
 Open up magit actions for a file with C-c M-g
 
+*** Org
+C-c C-c Create tag
+C-c C-t Cycle TODO status
+C-c t   Show TODOs
+C-c C-, Set priority
+C-c C-. Insert date
+M-Enter Newline with same state
+C-c /   Create a tree from commands
+C-c |   Create table
+C-c '   Create/edit formulas in table
+C-c C-l Create link
+C-c a a Create agenda for current week
+C-c a t Create TODO agenda
+C-c a L Create timeline of current org file
+C-c C-e Export file
+
+**** Coding
+C-c     Evaluate code buffer
+
+Code block example:
+#+begin_src python :results output
+  import pandas as pd
+
+  p = pd.DataFrame(
+	  {
+		  "Hello": [0, 1, 2, 3],
+		  "y": [4, 8, 19, 39]
+	  }
+  )
+  print(p)
+#+end_src
+
+** Concepts
+*** Mark
+While the point is the position of the curser in emacs, the mark is a seperate
+position in each buffer. C-space marks the buffer at a position by adding it to
+the mark-ring. 
+
 ** TODOs
 - eyebrowse mode
 - bookmark+
+  

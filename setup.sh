@@ -91,6 +91,7 @@ $ins mdp  # markdown presentation tool
 $ins nautilus  # file browser
 $ins obs-studio # Screen recording
 $ins papirus-icon-theme  # papirus icons
+$ins polybar  # custom status bar
 $ins pulsemixer  # audio control
 $ins puzzles  # Simon Tatham's portable puzzle collection
 $ins python-pip  # install python libraries
@@ -119,7 +120,6 @@ $ins python-pylint  # pytho
 $yns grabc-git  # grab color
 #$yns aur/micro-git  # micro text editor
 $yns picom-tryone-git  # compositor
-#$yns polybar-dwm-module
 $yns aur/slack-desktop  # Slack
 $yns aur/tad-bin  # Tabular data viewer
 $yns aur/teams  # Microsoft teams

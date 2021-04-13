@@ -50,6 +50,7 @@
 (global-set-key (kbd "<C-left>") 'buf-move-left)
 (global-set-key (kbd "<C-right>") 'buf-move-right)
 ;;(global-unset-key (kbd "<C-backspace>")) ;; todo
+(global-set-key (kbd "C-x m") 'exchange-point-and-mark)  ;; jump to mark
 
 
 ;; use customized linum-format: add a addition space after the line number
@@ -93,8 +94,14 @@
 ;; use gdscript mode
 (require 'gdscript-mode)
 
-;; markdown mode
+;; use markdown mode
 (require 'markdown-mode)
+
+;; use go mode
+(add-to-list 'load-path "~/.emacs.d/plugins/go-mode/")
+(autoload 'go-mode "go-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
+
 
 ;; code folding (hide-show mode)
 (add-hook 'prog-mode-hook 'hs-minor-mode)
@@ -112,6 +119,17 @@
 	(mhtml-mode "<\([A-Za-z][A-Za-z0-9]*\)[^>]*>.*?"  "</\1>" "-->" nil nil) ;gw: self edited, see blw ref:
     ;; http://www.regular-expressions.info/examples.html
     )))
+;; hideshowvis
+(autoload 'hideshowvis-enable "hideshowvis" "Highlight foldable regions")
+(require 'hideshowvis)
+(autoload 'hideshowvis-minor-mode
+  "hideshowvis"
+  "Will indicate regions foldable with hideshow in the fringe."
+  'interactive)
+(dolist (hook (list 'emacs-lisp-mode-hook
+                    'c++-mode-hook))
+  (add-hook hook 'hideshowvis-enable))
+(hideshowvis-symbols)
 
 ;; magit
 (add-to-list 'load-path "~/.emacs.d/site-lisp/magit/lisp")
@@ -149,6 +167,11 @@
 ;;(setq org-agenda-files '("~/workspace/classes/about/todo/misc.org"))
 (setq org-agenda-files (directory-files-recursively "~/workspace/classes" "\\.org$"))
 
+;;;; Org coding
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((python . t)))
+
 (require 'eyebrowse)
 (eyebrowse-mode t)
 
@@ -158,13 +181,22 @@
       '("https://old.reddit.com/.rss?feed=71e68a9313aae45cf6647d31e7ea6cae483f6628&user=capt_jelly"
         "https://news.ycombinator.com/rss"
         "https://www.nasa.gov/rss/dyn/breaking_news.rss"
-		"https://github.com/HarrisonHall.private.atom?token=AGEQZQY3VH5WIPPP2GWPEZF6M7WI6"))
+		"https://github.com/HarrisonHall.private.atom?token=AGEQZQY3VH5WIPPP2GWPEZF6M7WI6"
+		"http://suckless.org/atom.xml"
+		))
 (setf url-queue-timeout 30)
 (global-set-key (kbd "M-e") 'elfeed)
 (define-key elfeed-show-mode-map "u" 'elfeed-update-feed)
 (add-hook 'elfeed-show-mode-hook
           (lambda()
             (local-set-key (kbd "u") 'elfeed-update-feed)))
+
+;; Use smex instead of M-x for commands
+(require 'smex)
+(smex-initialize)
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+;; (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command) ;; normal M-x
 
 ;; movement/motion
 (require 'doremi)
@@ -217,6 +249,7 @@
                               (guess-style-guess-tab-width)))
 
 
+;; Shutdown
 (global-set-key (kbd "M-Q") 'server-shutdown)
 
 ;; Theme
