@@ -1,137 +1,72 @@
-# Generic setup script
+#!/usr/bin/env sh
+# Setup script
 # Harrison Hall
 
-# General
-sudo pacman -Syu
-yay -Syu
 ins="sudo pacman -Sq --needed"
 yns="yay -Sq --needed"
 
-# Add .bashrc to .bashrc
-if ! grep -q "source ~/config/.bashrc" ~/.bashrc
-then
-    echo "source ~/config/.bashrc" >> ~/.bashrc
-fi
+BOLDRED='\e[1;31m'  # Bold Red
+BOLDGREEN='\e[1;32m'  # Bold Green
+OFF='\e[0m'
 
-# Add path to .profile
-if ! grep -q "export PATH=$PATH:~/config/scripts" ~/.profile
-then
-	echo "export PATH=$PATH:~/config/scripts" >> ~/.profile
-fi
+function HELP {
+  echo -e "${BOLDGREEN}Basic usage:${OFF} ${BOLDRED}$SCRIPT -d helloworld ${OFF}"\\n
+  echo -e "${BOLDGREEN}The following switches are recognized. $OFF "
+  echo -e "${BOLDGREEN}-a ${OFF}  --Installs all systems"
+  echo -e "${BOLDGREEN}-c ${OFF}  --Installs core terminal utilities"
+  echo -e "${BOLDGREEN}-t ${OFF}  --Installs bonus terminal utilities"
+  echo -e "${BOLDGREEN}-g ${OFF}  --Installs core gui utilities"
+  echo -e "${BOLDGREEN}-e ${OFF}  --Installs all extra utilities"
+  exit 1
+}
 
-# Custom builds
-cd apps/dmenu; make;  sudo make; sudo make install; cd ../..;
-cd apps/dunst;  sudo make; sudo make install; cd ../..;
-cd apps/dwm; sudo make; sudo make install; cd ../..;
-cd apps/slock;  sudo make; sudo make install; cd ../..;
-cd apps/st;  sudo make; sudo make install; cd ../..;
-cd apps/tabbed;  sudo make; sudo make install; cd ../..;
+function FINISHED {
+	echo "Finished Setup"
+	exit 0
+}
 
+function UPDATE {
+	sudo pacman -Syu
+	yay -Syu
+}
 
-## Setup config
-[ ! -f ~/.tmux.conf ] && ln -s ~/config/.tmux.conf ~/.tmux.conf
-[ ! -d ~/.tmux ] && ln -s ~/config/.config/.tmux ~/.tmux
-[ ! -f ~/.config/dunst ] && ln -s ~/config/.config/dunst/ ~/.config/dunst
-[ ! -f ~/.dir_colors ] && ln -s ~/config/.config/.dir_colors ~/.dir_colors
-[ ! -f ~/.emacs.d ] && ln -s ~/config/.emacs.d ~/.emacs.d
-[ ! -d ~/.config/ranger ] && ln -s ~/config/.config/ranger ~/.config/ranger
-
-## Scripts
-#### Moved to path
-
-## Micro
-[ ! -d ~/.config/micro ] && mkdir ~/.config/micro
-[ ! -f ~/.config/micro/bindings.json ] && sudo ln -s ~/config/.config/micro/bindings.json ~/.config/micro/bindings.json
-[ ! -f ~/.config/micro/colorschemes ] && sudo ln -s ~/config/.config/micro/colorschemes ~/.config/micro/colorschemes
-[ ! -f ~/.config/micro/settings.json ] && sudo ln -s ~/config/.config/micro/settings.json ~/.config/micro/settings.json
-
-## Jupyter
-[ ! -d ~/.jupyter ] && mkdir ~/.jupyter
-[ ! -d ~/.jupyter/custom ] && ln -s ~/config/.config/.jupyter/custom ~/.jupyter/custom
-
-## Rofi
-[ ! -f ~/.config/rofi ] && sudo ln -s ~/config/.config/rofi ~/.config/rofi
-
-## Xsessions (lightdm)
-[ ! -f /usr/share/xsessions/dwm.desktop ] && sudo cp ~/config/.config/xsessions/dwm.desktop /usr/share/xsessions/dwm.desktop
-
-## DWM
-[ ! -d ~/.dwm ] && ln -s ~/config/.config/.dwm ~/.dwm
-
-## Zathura (pdf)
-[ ! -d ~/.config/zathura ] && ln -s ~/config/.config/zathura ~/.config/zathura
-
-## Vim
-[ ! -d ~/.vim ] && ln -s ~/config/.config/.vim ~/.vim
-[ ! -f ~/.vimrc ] && ln -s ~/config/.config/.vimrc ~/.vimrc
-
-
-## Other packages
-$ins ack the_silver_searcher  # grep for code
-$ins acpi  # battery
-$ins arandr  # xrandr display gui
-$ins bat  # a cooler cat
-$ins cheese  # webcame recorder
-$ins cmus  # terminal music player
-$ins colordiff  # color diff viewer
-$ins dictd  # cli dictionary
-$ins discord  # discord, man
-$ins emacs  # life
-$ins entr  # run script on file change
-$ins evince  # pdf viewer
-$ins feh  # image viewer
-$ins gamemode  # steam optimizer
-$ins graphviz  # graphing
-$ins htop  # Top
-$ins ipython  # better python
-$ins jupyter  # python notebook
-$ins libxss lib32-libxss  # for dunst, xscreensaver
-$ins lxappearance  # set gtk
-$ins mdp  # markdown presentation tool
-$ins nautilus  # file browser
-$ins obs-studio # Screen recording
-$ins papirus-icon-theme  # papirus icons
-$ins polybar  # custom status bar
-$ins pulsemixer  # audio control
-$ins puzzles  # Simon Tatham's portable puzzle collection
-$ins python-pip  # install python libraries
-$ins ranger  # File manager
-$ins rofi  # app launcher and more
-$ins scrot  # screenshots
-$ins stow  # GNU stowing program
-$ins tldr  # easy man pages
-$ins tmux  # Terminal multiplexer
-$ins ttf-hack  # Hack font
-$ins vim  # text editor
-$ins vlc  # vlc player
-$ins w3m  # browser/image viewer
-$ins xclip  # cliboard stuff
-$ins xorg-xsetroot  # set name of x root
-$ins yajl  # yet another json lib
-$ins zathura zathura-pdf-poppler  # Document viewer (pdf)
-
-## Emacs Linting
-$ins cppcheck  # python
-$ins eslint  # javascript
-$ins python-pylint  # pytho
-
-
-## AUR
-$yns grabc-git  # grab color
-#$yns aur/micro-git  # micro text editor
-$yns picom-tryone-git  # compositor
-$yns aur/slack-desktop  # Slack
-$yns aur/tad-bin  # Tabular data viewer
-$yns aur/teams  # Microsoft teams
-$yns aur/zoom  # Zoom
-
-## Misc
-# digimend is for non-wacom drawing tablets on linux
-
-## PIP
-sudo pip install jupyterthemes  # Jupyter themes
-jt -t chesterish -dfonts -T  # Dark blue jupyter theme
-
-## Pandoc
-$ins pandoc
-$ins texlive-core
+while getopts acetgq: FLAG; do
+	case $FLAG in
+		a)
+			UPDATE
+			source installation/core.sh
+			source installation/terminal.sh
+			source installation/gui.sh
+			source installation/extra.sh
+			FINISHED
+			;;
+		c)
+			UPDATE
+			source installation/core.sh
+			FINISHED
+			;;
+		e)
+			UPDATE
+			source installation/extra.sh
+			FINISHED
+			;;
+		t)
+			UPDATE
+			source installation/terminal.sh
+			FINISHED
+			;;
+		g)
+			UPDATE
+			source installation/gui.sh
+			FINISHED
+			;;
+		q)
+			echo "Used this argument <$OPTARG>"
+			exit 0
+			;;
+		\?) #unrecognized option - show help
+			echo -e \\n"Option -${BOLDRED}$OPTARG${OFF} not allowed."
+			HELP
+			;;
+	esac
+done
