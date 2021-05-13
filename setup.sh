@@ -10,14 +10,14 @@ BOLDGREEN='\e[1;32m'  # Bold Green
 OFF='\e[0m'
 
 function HELP {
-  echo -e "${BOLDGREEN}Basic usage:${OFF} ${BOLDRED}$SCRIPT -d helloworld ${OFF}"\\n
-  echo -e "${BOLDGREEN}The following switches are recognized. $OFF "
-  echo -e "${BOLDGREEN}-a ${OFF}  --Installs all systems"
-  echo -e "${BOLDGREEN}-c ${OFF}  --Installs core terminal utilities"
-  echo -e "${BOLDGREEN}-t ${OFF}  --Installs bonus terminal utilities"
-  echo -e "${BOLDGREEN}-g ${OFF}  --Installs core gui utilities"
-  echo -e "${BOLDGREEN}-e ${OFF}  --Installs all extra utilities"
-  exit 1
+	echo -e "${BOLDGREEN}Basic usage:${OFF} ${BOLDRED}$SCRIPT -c ${OFF}"\\n
+	echo -e "${BOLDGREEN}The following switches are recognized. $OFF "
+	echo -e "${BOLDGREEN}-a ${OFF}  --Installs all systems"
+	echo -e "${BOLDGREEN}-c ${OFF}  --Installs core terminal utilities"
+	echo -e "${BOLDGREEN}-t ${OFF}  --Installs bonus terminal utilities"
+	echo -e "${BOLDGREEN}-g ${OFF}  --Installs core gui utilities"
+	echo -e "${BOLDGREEN}-e ${OFF}  --Installs all extra utilities"
+	exit 1
 }
 
 function FINISHED {

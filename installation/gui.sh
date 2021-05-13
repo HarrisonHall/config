@@ -51,6 +51,7 @@ cd apps/tabbed;  sudo make; sudo make install; cd ../..;
 
 ### DWM
 [ ! -d ~/.dwm ] && ln -s ~/config/.config/.dwm ~/.dwm
+al;kdsfj;laksdfj;laksdj
 
 ### Zathura (pdf)
 [ ! -d ~/.config/zathura ] && ln -s ~/config/.config/zathura ~/.config/zathura

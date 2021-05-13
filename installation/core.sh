@@ -37,6 +37,7 @@ fi
 $ins ack the_silver_searcher  # grep for code
 $ins bat  # a cooler cat
 $ins colordiff  # color diff viewer
+$ins doas  # better sudo
 $ins htop  # Top
 $ins python-pip  # install python libraries
 $ins ranger  # File manager

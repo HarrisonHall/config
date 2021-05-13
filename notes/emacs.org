@@ -1,5 +1,5 @@
 * Emacs
-Harrison's build of emacs. 
+Harrison's build of emacs.
 ** Benefits
 - All requirements are saved locally
 - Emacs runs in client-server mode, so all instances are connected
@@ -33,6 +33,7 @@ M-up/down/left/right resize windows
 Bookmarks allow you to globally save and follow lines of code
 C-x r m allows you to make a bookmark
 C-x r l allows you to list and follow bookmarks
+
 
 *** Code following
 Dumb-jumping to function definitions can be done with M-.
@@ -91,7 +92,7 @@ Code block example:
 *** Mark
 While the point is the position of the curser in emacs, the mark is a seperate
 position in each buffer. C-space marks the buffer at a position by adding it to
-the mark-ring. 
+the mark-ring. C-x C-space jumps to the mark.
 
 ** TODOs
 - eyebrowse mode

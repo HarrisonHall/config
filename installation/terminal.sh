@@ -18,7 +18,7 @@
 $ins acpi  # battery
 $ins cmus  # terminal music player
 $ins dictd  # cli dictionary
-$ins emacs  # life
+$ins emacs-nox  # life
 $ins entr  # run script on file change
 $ins mdp  # markdown presentation tool
 $ins pulsemixer  # cli audio control

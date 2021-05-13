@@ -1,6 +1,7 @@
 #!/bin/bash
 alias emacs='emacsclient -a "" -t'
 alias emasc='emacsclient -a "" -t'
+alias sudoemacs='sudo -u harrison emacs -nw'
 alias x='exit'
 alias c='clear'
 alias d='tmux detach-client'
@@ -33,4 +34,5 @@ PS1='\[\033[34m\]\w\n\[\033[37m\]-> '
 
 export PATH=$PATH:/opt/anaconda/bin/
 export PATH=$PATH:/home/harrison/.local/bin
-export PATH=$PATH:/home/harrison/dev/mivs
+export PATH=$PATH:/home/harrison/dev/one-offs/mivs
+export PATH=$PATH:/home/harrison/config/scripts

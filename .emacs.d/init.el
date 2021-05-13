@@ -6,21 +6,26 @@
       scroll-conservatively 10000)
 
 (setq make-backup-files nil)
-(setq mouse-wheel-scroll-amount '(3 ((shift) . 1))) ;; one line at a time
-(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
-(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
-(setq scroll-step 1) ;; keyboard scroll one line at a time
+
+
 (xterm-mouse-mode 1)
-(setq mouse-wheel-progressive-speed nil)
+(global-set-key (kbd "<mouse-5>") (lambda () (interactive) (scroll-up 3)))
+(global-set-key (kbd "<mouse-4>") (lambda () (interactive) (scroll-down 3)))
+;(setq mouse-wheel-scroll-amount '(3 ((shift) . 1))) ;; one line at a time
+;(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+;(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+(setq scroll-step 1) ;; keyboard scroll one line at a time
+;(setq mouse-wheel-progressive-speed nil)
 (electric-pair-mode 1)
 (column-number-mode)
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 ;;(setq warning-minimum-level :emergency)
 
+
 (menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
+;(tool-bar-mode -1)
+;(scroll-bar-mode -1)
 (require 'linum)
 (global-linum-mode t)
 (add-hook 'prog-mode-hook 'hl-line-mode)
@@ -33,7 +38,6 @@
 (global-set-key (kbd "C-x \\") 'split-window-right)
 (global-set-key (kbd "C-x -") 'split-window-below)
 (global-set-key (kbd "C-x _") 'split-window-below)
-(global-set-key (kbd "C-x x") 'delete-window)
 (global-set-key (kbd "C-x C-x") 'delete-window)
 ;;(global-set-key (kbd "C-x r") 'query-replace)
 (global-set-key (kbd "C-x q") 'keyboard-quit)
@@ -191,6 +195,10 @@
           (lambda()
             (local-set-key (kbd "u") 'elfeed-update-feed)))
 
+;; annotate.el mode
+;(require 'annotate)
+;(add-hook 'prog-mode-hook 'annotate-mode)
+
 ;; Use smex instead of M-x for commands
 (require 'smex)
 (smex-initialize)
@@ -219,6 +227,11 @@
 (require 'dumb-jump)
 (add-to-list 'xref-backend-functions #'dumb-jump-xref-activate)
 ;; Use dumb-jump with M-.
+
+;; bookmark modes
+;(require 'bookmark+)
+;(setq bmkp-auto-light-when-set 'all-in-buffer)
+;(setq bmkp-auto-light-when-jump 'all-in-buffer)
 
 ;; imenu-list
 (require 'imenu-list)
@@ -269,3 +282,18 @@
   (selected-frame))))
 (add-hook 'window-setup-hook 'on-after-init)
 (put 'narrow-to-region 'disabled nil)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.p
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(bmkp-last-as-first-bookmark-file "/home/harrison/.emacs.d/bookmarks"))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+;; Rebind keys modified by other packages
+(global-set-key (kbd "C-x x") 'delete-window)
