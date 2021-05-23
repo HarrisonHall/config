@@ -2,29 +2,45 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("Japanese Verbs"
- (filename . "~/workspace/notes/japanese/verbs.org")
- (front-context-string)
- (rear-context-string . "* Japanese Verbs")
- (position . 17))
-("Cloud Computing"
- (filename . "~/workspace/classes/sen/cloud/cloud.org")
- (front-context-string . "* Cloud computin")
- (rear-context-string)
- (position . 1))
-("Emacs Howto"
- (filename . "~/.emacs.d/emacs.org")
- (front-context-string . "* Emacs\nHarrison")
- (rear-context-string)
- (position . 1))
-("Config setup"
- (filename . "~/config/setup.sh")
- (front-context-string . "# Generic setup ")
- (rear-context-string)
- (position . 1))
-("Emacs config"
- (filename . "~/config/.emacs.d/init.el")
- (front-context-string . ";; Harrison Hall")
- (rear-context-string)
- (position . 1))
+(#1=(#("org window control" 0 18
+	  (bmkp-full-record #1#))
+	(filename . "~/config/notes/emacs.org")
+	(buffer-name . "emacs.org")
+	(front-context-string . "*** Bookmarks\nBo")
+	(rear-context-string . "resize windows\n\n")
+	(front-context-region-string)
+	(rear-context-region-string)
+	(visits . 1)
+	(time 24710 7084 403516 715000)
+	(created 24710 5192 622031 990000)
+	(position . 830))
+#1=(#("Cloud Computing" 0 15
+	  (bmkp-full-record #1#))
+	(filename . "~/workspace/classes/sen/cloud/cloud.org")
+	(front-context-string . "* Cloud computin")
+	(rear-context-string)
+	(position . 1))
+#1=(#("Emacs Howto" 0 11
+	  (bmkp-full-record #1#))
+	(annotation . "Harrison's build of emacs.\n\nTells you to:\n1. What my emacs does\n2. How to use my emacs\n3. Possible additions to my emacs\n   \n")
+	(time 24710 5186 525952 144000)
+	(visits . 0)
+	(filename . "~/.emacs.d/emacs.org")
+	(front-context-string . "* Emacs\nHarrison")
+	(rear-context-string)
+	(position . 1))
+#1=(#("Config setup" 0 12
+	  (bmkp-full-record #1#))
+	(filename . "~/config/setup.sh")
+	(front-context-string . "# Generic setup ")
+	(rear-context-string)
+	(position . 1))
+#1=(#("Emacs config" 0 12
+	  (bmkp-full-record #1#))
+	(time 24710 7080 541508 709000)
+	(visits . 1)
+	(filename . "~/config/.emacs.d/init.el")
+	(front-context-string . ";; Harrison Hall")
+	(rear-context-string)
+	(position . 1))
 )

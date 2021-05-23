@@ -77,6 +77,7 @@ static const char *lockscreencmd[] = { "/home/harrison/config/scripts/lockscreen
 static const char *powercmd[] = { "/home/harrison/config/scripts/powermenu", NULL};
 static const char *printscreencmd[] = { "/home/harrison/config/scripts/printscreen", NULL};
 static const char *menucmd[] = { "/home/harrison/config/scripts/menu", NULL};
+static const char *screenshotclipcmd[] = { "/home/harrison/config/scripts/screenshot_clip", NULL};
 
 static Key keys[] = {
   /* modifier                     key        function        argument */
@@ -112,6 +113,7 @@ static Key keys[] = {
   { MODKEY,                       XK_period, focusmon,       {.i = +1 } },
   { MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },  // shift focus betweeen monitors
   { MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },  // shift focus betweeen monitors
+  { MODKEY|ShiftMask,             XK_4,      spawn,          {.v = screenshotclipcmd } },  // screenshot with cmd+shift+4 like macos
   TAGKEYS(                        XK_1,                      0)
   TAGKEYS(                        XK_2,                      1)
   TAGKEYS(                        XK_3,                      2)
