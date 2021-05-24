@@ -1,0 +1,40 @@
+* Linux
+Linux (often called GNU/linux) is an OS.
+
+** History
+Unix was an intelligent OS developed at bell labs for specific computers in the
+70s. Because people wanted this super cool OS (at this time, all OSs were on
+the command line) on other PCs, they came up with the open source standard
+Portable Operating System Interface (POSIX). Over the years this has been
+updated, but it essentially states what tools need to be available on the command
+line: the minimal functionality the tools have, how they work, and the syntax
+of using commands together
+(e.g. ~cat file1.txt | grep -c $(keyword) &> output.grp~).
+
+Many operating systems are posix-complient (sometimes also called unix or
+unix-like) such as macos, bsd, plan9, and the GNU project. The GNU project's
+version of tools like ~echo~, ~diff~, and ~patch~ are by far the most
+feature-rich versions of the tools (at the cost of being a little bloated imo).
+
+Linux is a macro-kernel. This means that it is a big project that handles and
+abstracts communication between hardware and software. It handles managing
+memory, giving programs different time to execute on a processor, permissions
+of users/groups/admin, and abstracting the file system.
+
+Linux & GNU are shipped together 90% of the time and benefit from their continued
+history of being maintained by large groups of people who are able to decide
+what is best for the OS and fix issues.
+
+When installing linux you'll hear about different linux operating systems or
+"distrobutions". People choose a distrobution based on 1) the package manager
+(how they install programs) 2) the desktop environment (what the OS actually
+looks like) and 3) support. Most people want something like Linux Mint
+(windows-like) or Ubuntu (macos-like). Both are debian-based systems, which means
+that they use the debian package manager (the most popular linux package manager)
+which benefits from having stable packages (new programs are updated at a slower
+rate meaning that they'll be more stable). Enterprise companies often want
+something like Red Hat Enterprise Linux because they get a support company with
+it. Cool kids like me use arch because its 200% customizable and has packages
+that are completely up to date. Most tutorials online assume you're using
+Ubuntu (debian-based), so you'll probably want something like that. Though you
+can always go for the hacker's linux Kali or the elite Hannah-Montannah Linux.

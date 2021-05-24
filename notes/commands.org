@@ -1,0 +1,6 @@
+* Commands
+** Cron
+- ~crontab~
+** Disk
+- ~fdisk -l~: list devices
+- ~dstat -d~: report disk read

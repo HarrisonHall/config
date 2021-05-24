@@ -37,6 +37,7 @@ fi
 $ins ack the_silver_searcher  # grep for code
 $ins bat  # a cooler cat
 $ins colordiff  # color diff viewer
+$ins cronie  # cronjobs
 $ins doas  # better sudo
 $ins htop  # Top
 $ins python-pip  # install python libraries
@@ -45,3 +46,7 @@ $ins tldr  # easy man pages
 $ins tmux  # Terminal multiplexer
 $ins tree  # Terminal file heirarchy viewer
 $ins vim  # text editor
+
+
+# enable cron jobs
+sudo systemctl enable cronie
