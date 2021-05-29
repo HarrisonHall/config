@@ -30,6 +30,13 @@ then
     source ~/.screenlayout/default.sh
     feh --bg-scale ~/config/media/rdark.png
 fi
+if [ "$pc" == "archlinux" ]
+then
+    # Background
+    source ~/.screenlayout/default.sh
+	feh --bg-scale ~/media/pictures/Wallpapers/ice_village.jpg
+    
+fi
 if [ "$pc" == "harrison-archssd" ]
 then
     #feh --bg-scale ~/config/media/rdark.png
