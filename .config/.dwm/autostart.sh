@@ -19,24 +19,14 @@ fi
 
 pc=$(hostname)
 
-if [ "$pc" == "harrison-archmbp" ]
-then
-    # Laptop touch click
-    # scroll delta is inversly proportional to
-    # scroll speed
-    #synclient MaxTapTime=0
-    #synclient VertScrollDelta=-250  
-    #synclient HorizScrollDelta=-250  
-    
-    # Background
-    source ~/.screenlayout/default.sh
-    feh --bg-scale ~/config/media/rdark.png
+if lspci | grep Apple; then
+	souce ~/config/installation/custom/macbook.sh
 fi
+
 if [ "$pc" == "archlinux" ]
 then
-    #source ~/.screenlayout/default.sh
+    source ~/.screenlayout/default.sh
 	feh --bg-scale ~/media/pictures/Wallpapers/ice_village.jpg
-	source ~/config/installation/custom/macbook.sh
 fi
 if [ "$pc" == "harrison-archssd" ]
 then
@@ -83,7 +73,7 @@ while true; do
     name="^c${a4}^$(dte) "
     name="^c${a3}^$(vol)^c${w1}^ | ${name}"
     
-    if [ "$pc" == "harrison-archmbp" ]
+    if [ "$pc" == "archlinux" ]
     then
         name="^c${a5}^$(bat0)^c${w1}^ | ${name}";
     fi
