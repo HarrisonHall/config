@@ -12,6 +12,8 @@ alias diff='colordiff'
 alias less='less --mouse --wheel-lines=3'
 alias bat='bat --theme Nord'
 alias o='xdg-open'
+alias pacman='pacman --color=always'
+alias yay='yay --color=always'
 #alias discord='discord --no-sandbox'
 alias testalias='echo success'
 
