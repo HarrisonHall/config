@@ -13,6 +13,8 @@ dunst &
 # Start compositor
 if pacman -Qs picom-tryone-git; then
 	picom --experimental-backends --backend glx --config ~/config/.config/picom/picom.conf --daemon &
+elif pacman -Qs picom; then
+	picom --config ~/config/.config/picom/picom.conf --daemon &
 fi
 
 pc=$(hostname)
@@ -32,15 +34,14 @@ then
 fi
 if [ "$pc" == "archlinux" ]
 then
-    # Background
-    source ~/.screenlayout/default.sh
+    #source ~/.screenlayout/default.sh
 	feh --bg-scale ~/media/pictures/Wallpapers/ice_village.jpg
-    
+	source ~/config/installation/custom/macbook.sh
 fi
 if [ "$pc" == "harrison-archssd" ]
 then
     #feh --bg-scale ~/config/media/rdark.png
-	feh --bg-scale ~/media/pictures/Wallpapers/ice_village.jpg &
+	feh --bg-scale ~/media/pictures/Wallpapers/clear_mountain.jpg &
     source ~/.screenlayout/default.sh &
 fi
 

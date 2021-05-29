@@ -18,7 +18,11 @@
 $ins acpi  # battery
 $ins cmus  # terminal music player
 $ins dictd  # cli dictionary
+<<<<<<< HEAD
 $ins dstat  # disk usage
+=======
+$ins dstat  # disk utility
+>>>>>>> dc4ae700660cf4bda4d0e8d6c2f696225e589299
 $ins emacs-nox  # life
 $ins entr  # run script on file change
 $ins mdp  # markdown presentation tool
@@ -38,3 +42,7 @@ $ins python-pylint  # python
 ### Pandoc
 $ins pandoc
 $ins texlive-core
+
+
+### Python packages
+$ins python-notify2
