@@ -94,6 +94,9 @@ While the point is the position of the curser in emacs, the mark is a seperate
 position in each buffer. C-space marks the buffer at a position by adding it to
 the mark-ring. C-x C-space jumps to the mark.
 
+*** ido-mode
+Find files easier (C-x C-f & C-x b).
+
 ** TODOs
 - eyebrowse mode
 - bookmark+

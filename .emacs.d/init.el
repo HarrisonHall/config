@@ -106,6 +106,10 @@
 (autoload 'go-mode "go-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
 
+;; ido-mode - find files easier
+(ido-mode t)
+(ido-everywhere)
+(setq ido-enable-flex-matching t)
 
 ;; code folding (hide-show mode)
 (add-hook 'prog-mode-hook 'hs-minor-mode)

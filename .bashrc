@@ -12,6 +12,8 @@ alias diff='colordiff'
 alias less='less --mouse --wheel-lines=3'
 alias bat='bat --theme Nord'
 alias o='xdg-open'
+alias pacman='pacman --color=always'
+alias yay='yay --color=always'
 alias tzsh='tmux set-option -g default-command /usr/bin/zsh'
 alias tbash='tmux set-option -g default-command /usr/bin/bash'
 alias dd="dd status=progress"

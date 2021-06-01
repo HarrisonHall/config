@@ -1,4 +1,6 @@
 * Linux
+<<<<<<< HEAD
+=======
 Linux (often called GNU/linux) is an OS.
 
 ** History
@@ -38,3 +40,4 @@ it. Cool kids like me use arch because its 200% customizable and has packages
 that are completely up to date. Most tutorials online assume you're using
 Ubuntu (debian-based), so you'll probably want something like that. Though you
 can always go for the hacker's linux Kali or the elite Hannah-Montannah Linux.
+>>>>>>> dc4ae700660cf4bda4d0e8d6c2f696225e589299

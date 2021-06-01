@@ -19,12 +19,14 @@
 
 ## Other packages
 $ins acpi  # battery
+$ins alsa-utils  # volume
 $ins cmus  # terminal music player
 $ins dictd  # cli dictionary
 $ins dstat  # disk utility
 $ins emacs-nox  # life
 $ins entr  # run script on file change
 $ins mdp  # markdown presentation tool
+$ins net-tools  # ifconfig, etc.
 $ins pulsemixer  # cli audio control
 $ins stow  # GNU stowing program
 $ins ttf-hack  # Hack font
