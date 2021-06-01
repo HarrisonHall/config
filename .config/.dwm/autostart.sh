@@ -17,6 +17,11 @@ elif pacman -Qs picom; then
 	picom --config ~/config/.config/picom/picom.conf --daemon &
 fi
 
+# Start polkit poller
+## This is important in case a user applicaiton needs to run something with higher
+## priveleges
+lxqt-policykit-agent &
+
 pc=$(hostname)
 
 if [ "$pc" == "harrison-archmbp" ]
