@@ -14,8 +14,8 @@ alias bat='bat --theme Nord'
 alias o='xdg-open'
 alias tzsh='tmux set-option -g default-command /usr/bin/zsh'
 alias tbash='tmux set-option -g default-command /usr/bin/bash'
-#alias discord='discord --no-sandbox'
-alias testalias='echo success'
+alias dd="dd status=progress"
+
 
 scrollable_man () {
 	man $@ | less --mouse --wheel-lines=3

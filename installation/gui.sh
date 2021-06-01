@@ -9,6 +9,7 @@ $ins ipython  # better python
 $ins jupyter  # python notebook
 $ins libxss lib32-libxss  # for dunst, xscreensaver
 $ins lxappearance  # set gtk
+$ins lxqt-policykit-agent  # authentication
 $ins nautilus  # file browser
 $ins obs-studio # Screen recording
 $ins papirus-icon-theme  # papirus icons

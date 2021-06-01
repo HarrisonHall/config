@@ -4,6 +4,9 @@
 
 ## Fit simlinks
 
+### bat
+[ ! -f ~/.config/bat ] && ln -s ~/config/.config/bat ~/.config/bat
+
 ### emacs
 [ ! -f ~/.emacs.d ] && ln -s ~/config/.emacs.d ~/.emacs.d
 
