@@ -18,6 +18,7 @@ alias tzsh='tmux set-option -g default-command /usr/bin/zsh'
 alias tbash='tmux set-option -g default-command /usr/bin/bash'
 alias dd="dd status=progress"
 
+alias cdtest="mkdir -p /tmp/test && cd /tmp/test"
 
 scrollable_man () {
 	man $@ | less --mouse --wheel-lines=3

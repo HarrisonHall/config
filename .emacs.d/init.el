@@ -106,6 +106,21 @@
 (autoload 'go-mode "go-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
 
+;; use plantuml mode
+;;(add-to-list 'load-path "~/.emacs.d/plugins/plantuml-mode/")
+(require 'plantuml-mode)
+(add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
+(add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
+;;(setq plantuml-jar-path (expand-file-name "/usr/share/java/plantuml/plantuml.jar"))
+(setq plantuml-jar-path "/usr/share/java/plantuml/plantuml.jar")
+(setq plantuml-default-exec-mode 'jar)
+;;(add-hook 'plantuml-mode-hook
+;;		  (lambda ()
+;;			local-set-key (kbd "C-c C-c") 'plantuml-preview-buffer))
+;;(add-to-list
+;;  'org-src-lang-modes '("plantuml" . plantuml))
+
+
 ;; ido-mode - find files easier
 (ido-mode t)
 (ido-everywhere)
