@@ -38,6 +38,7 @@ $yns aur/micro-git  # micro text editor
 
 ### Emacs Linting
 $ins cppcheck  # cpp
+$ins python-pylint  # cpp (google style)
 $ins eslint  # javascript
 $ins python-pylint  # python
 

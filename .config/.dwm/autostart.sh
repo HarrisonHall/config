@@ -12,9 +12,9 @@ dunst &
 
 # Start compositor
 if pacman -Qs picom-tryone-git; then
-	picom --experimental-backends --backend glx --config ~/config/.config/picom/picom.conf --daemon &
+	sleep 2 && picom --experimental-backends --backend glx --config ~/config/.config/picom/picom.conf --daemon &
 elif pacman -Qs picom; then
-	picom --config ~/config/.config/picom/picom.conf --daemon &
+	sleep 2 && picom --config ~/config/.config/picom/picom.conf --daemon &
 fi
 
 # Start polkit poller

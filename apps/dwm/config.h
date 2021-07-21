@@ -33,10 +33,10 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",  NULL,       NULL,       0,            0,           -1 },
-    { "Microsoft Teams Notification",  NULL,       NULL,       0,            1,           -1 },
-    { "zoom",     NULL,       NULL,       0,            1,           -1 },
-    { "microsoft teams - preview",  NULL,       NULL,       0,            1,           -1 },
-    { "Counter-Strike: Global Offensive - OpenGL", NULL, NULL, 0, 0, -1},
+  { "Microsoft Teams Notification",  NULL,       NULL,       0,            1,           -1 },
+  { "zoom",     NULL,       NULL,       0,            1,           -1 },
+  { "microsoft teams - preview",  NULL,       NULL,       0,            1,           -1 },
+  { "Counter-Strike: Global Offensive - OpenGL", NULL, NULL, 0, 0, -1},
 };
 
 /* layout(s) */
@@ -113,7 +113,7 @@ static Key keys[] = {
   { MODKEY,                       XK_period, focusmon,       {.i = +1 } },
   { MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },  // shift focus betweeen monitors
   { MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },  // shift focus betweeen monitors
-  { MODKEY|ShiftMask,             XK_4,      spawn,          {.v = screenshotclipcmd } },  // screenshot with cmd+shift+4 like macos
+  { MODKEY|ControlMask,           XK_4,      spawn,          {.v = screenshotclipcmd } },  // screenshot with cmd+shift+4 like macos
   TAGKEYS(                        XK_1,                      0)
   TAGKEYS(                        XK_2,                      1)
   TAGKEYS(                        XK_3,                      2)

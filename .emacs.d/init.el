@@ -83,6 +83,19 @@
 (require 'flycheck)
 (global-flycheck-mode)
 
+;; flycheck bonus
+(add-hook 'c-mode-common-hook 'google-set-c-style)
+(add-hook 'c-mode-common-hook 'google-make-newline-indent)
+(eval-after-load 'flycheck
+  '(progn
+     (require 'flycheck-google-cpplint)
+     ;; Add Google C++ Style checker.
+     ;; In default, syntax checked by Clang and Cppcheck.
+     (flycheck-add-next-checker 'c/c++-cppcheck
+                                '(warning . c/c++-googlelint))))
+(setq c-default-style "google")
+(add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++20")))
+
 ;; toggle evil mode with C-z
 (define-key evil-normal-state-map (kbd "C-z") 'evil-mode)
 (global-set-key (kbd "C-z") 'evil-mode)
@@ -105,6 +118,14 @@
 (add-to-list 'load-path "~/.emacs.d/plugins/go-mode/")
 (autoload 'go-mode "go-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
+
+;; use rust
+(add-to-list 'load-path "~/.emacs.d/plugins/rust-mode")
+(autoload 'rust-mode "rust-mode" nil t)
+(add-hook 'rust-mode-hook
+          (lambda () (setq indent-tabs-mode nil)))
+(setq rust-format-on-save t)
+;(define-key rust-mode-map (kbd "C-c C-c") 'rust-run)
 
 ;; use plantuml mode
 ;;(add-to-list 'load-path "~/.emacs.d/plugins/plantuml-mode/")
@@ -189,6 +210,8 @@
 (add-hook 'org-mode-hook 'org-toggle-pretty-entities)
 ;;(setq org-agenda-files '("~/workspace/classes/about/todo/misc.org"))
 (setq org-agenda-files (directory-files-recursively "~/workspace/classes" "\\.org$"))
+(setq org-adapt-indentation nil)
+(setq org-list-description-max-indent 5)
 
 ;;;; Org coding
 (org-babel-do-load-languages
@@ -272,9 +295,9 @@
   (kill-emacs))
 
 ;; tabbing
-(setq-default c-basic-offset 4
-              tab-width 4
-              indent-tabs-mode t)
+(setq-default c-basic-offset 2
+              tab-width 2
+              indent-tabs-mode nil)
 (c-set-offset 'case-label '+)
 (add-hook 'python-mode-hook 'guess-style-guess-tabs-mode)
 (add-hook 'python-mode-hook (lambda ()

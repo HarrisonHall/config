@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(#1=(#("org window control" 0 18
+(("Todo"
+ (filename . "~/workspace/notes/todo.org")
+ (front-context-string)
+ (rear-context-string)
+ (position . 1))
+#1=(#("org window control" 0 18
 	  (bmkp-full-record #1#))
 	(filename . "~/config/notes/emacs.org")
 	(buffer-name . "emacs.org")
@@ -14,12 +19,6 @@
 	(time 24710 7084 403516 715000)
 	(created 24710 5192 622031 990000)
 	(position . 830))
-#1=(#("Cloud Computing" 0 15
-	  (bmkp-full-record #1#))
-	(filename . "~/workspace/classes/sen/cloud/cloud.org")
-	(front-context-string . "* Cloud computin")
-	(rear-context-string)
-	(position . 1))
 #1=(#("Emacs Howto" 0 11
 	  (bmkp-full-record #1#))
 	(annotation . "Harrison's build of emacs.\n\nTells you to:\n1. What my emacs does\n2. How to use my emacs\n3. Possible additions to my emacs\n   \n")

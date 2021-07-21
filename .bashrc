@@ -33,6 +33,9 @@ export MANPAGER="sh -c 'col -bx | bat --theme Nord -l man -p'"
 export COLORTERM="truecolor"
 export MICRO_TRUECOLOR=1
 
+export HISTSIZE=10000
+export HISTFILESIZE=10000
+
 eval $(dircolors ~/.dir_colors)
 
 PS1='\[\033[34m\]\w\n\[\033[37m\]-> '
