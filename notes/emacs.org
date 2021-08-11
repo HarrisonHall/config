@@ -74,6 +74,7 @@ C-c C-e Export file
 
 **** Coding
 C-c     Evaluate code buffer
+C-c C-! l View errors
 
 Code block example:
 #+begin_src python :results output

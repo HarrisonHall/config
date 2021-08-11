@@ -11,11 +11,7 @@
 (xterm-mouse-mode 1)
 (global-set-key (kbd "<mouse-5>") (lambda () (interactive) (scroll-up 3)))
 (global-set-key (kbd "<mouse-4>") (lambda () (interactive) (scroll-down 3)))
-;(setq mouse-wheel-scroll-amount '(3 ((shift) . 1))) ;; one line at a time
-;(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
-;(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
 (setq scroll-step 1) ;; keyboard scroll one line at a time
-;(setq mouse-wheel-progressive-speed nil)
 (electric-pair-mode 1)
 (column-number-mode)
 (setq-default indent-tabs-mode nil)
@@ -24,8 +20,6 @@
 
 
 (menu-bar-mode -1)
-;(tool-bar-mode -1)
-;(scroll-bar-mode -1)
 (require 'linum)
 (global-linum-mode t)
 (add-hook 'prog-mode-hook 'hl-line-mode)
@@ -43,7 +37,7 @@
 (global-set-key (kbd "C-x q") 'keyboard-quit)
 (global-set-key (kbd "C-u") 'undo)
 (global-set-key (kbd "C-t") 'dired-sidebar-toggle-sidebar)
-(global-set-key (kbd "C-h") 'hs-toggle-hiding)
+;;(global-set-key (kbd "C-h") 'hs-toggle-hiding)
 (windmove-default-keybindings)  ;; shift to move between windows
 (global-set-key (kbd "<C-up>") 'buf-move-up)  ;; moving windows
 (global-set-key (kbd "<C-down>") 'buf-move-down)
@@ -125,22 +119,14 @@
 (add-hook 'rust-mode-hook
           (lambda () (setq indent-tabs-mode nil)))
 (setq rust-format-on-save t)
-;(define-key rust-mode-map (kbd "C-c C-c") 'rust-run)
 
 ;; use plantuml mode
-;;(add-to-list 'load-path "~/.emacs.d/plugins/plantuml-mode/")
 (require 'plantuml-mode)
 (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
 (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
 ;;(setq plantuml-jar-path (expand-file-name "/usr/share/java/plantuml/plantuml.jar"))
 (setq plantuml-jar-path "/usr/share/java/plantuml/plantuml.jar")
 (setq plantuml-default-exec-mode 'jar)
-;;(add-hook 'plantuml-mode-hook
-;;		  (lambda ()
-;;			local-set-key (kbd "C-c C-c") 'plantuml-preview-buffer))
-;;(add-to-list
-;;  'org-src-lang-modes '("plantuml" . plantuml))
-
 
 ;; ido-mode - find files easier
 (ido-mode t)
@@ -148,41 +134,52 @@
 (setq ido-enable-flex-matching t)
 
 ;; code folding (hide-show mode)
-(add-hook 'prog-mode-hook 'hs-minor-mode)
-(global-set-key (kbd "C-x C-u") 'hs-hide-all)
-(global-set-key (kbd "C-x C-d") 'hs-show-all)
-(setq hs-special-modes-alist
-  (mapcar 'purecopy
-  '((c-mode "{" "}" "/[*/]" nil nil)
-    (c++-mode "{" "}" "/[*/]" nil nil)
-    (bibtex-mode ("@\\S(*\\(\\s(\\)" 1))
-    (java-mode "{" "}" "/[*/]" nil nil)
-    (js-mode "{" "}" "/[*/]" nil)
-    ;; (html-mode "<!-- {{{ " "<!-- }}} -->" " -->" nil t)
-    (html-mode "<\([A-Za-z][A-Za-z0-9]*\)[^>]*>.*?"  "</\1>" "-->" nil nil) ;gw: self edited, see blw ref:
-	(mhtml-mode "<\([A-Za-z][A-Za-z0-9]*\)[^>]*>.*?"  "</\1>" "-->" nil nil) ;gw: self edited, see blw ref:
-    ;; http://www.regular-expressions.info/examples.html
-    )))
-;; hideshowvis
-(autoload 'hideshowvis-enable "hideshowvis" "Highlight foldable regions")
-(require 'hideshowvis)
-(autoload 'hideshowvis-minor-mode
-  "hideshowvis"
-  "Will indicate regions foldable with hideshow in the fringe."
-  'interactive)
-(dolist (hook (list 'emacs-lisp-mode-hook
-                    'c++-mode-hook))
-  (add-hook hook 'hideshowvis-enable))
-(hideshowvis-symbols)
+;; (add-hook 'prog-mode-hook 'hs-minor-mode)
+;; (global-set-key (kbd "C-x C-u") 'hs-hide-all)
+;; (global-set-key (kbd "C-x C-d") 'hs-show-all)
+;; (setq hs-special-modes-alist
+;;   (mapcar 'purecopy
+;;   '((c-mode "{" "}" "/[*/]" nil nil)
+;;     (c++-mode "{" "}" "/[*/]" nil nil)
+;;     (bibtex-mode ("@\\S(*\\(\\s(\\)" 1))
+;;     (java-mode "{" "}" "/[*/]" nil nil)
+;;     (js-mode "{" "}" "/[*/]" nil)
+;;     ;; (html-mode "<!-- {{{ " "<!-- }}} -->" " -->" nil t)
+;;     (html-mode "<\([A-Za-z][A-Za-z0-9]*\)[^>]*>.*?"  "</\1>" "-->" nil nil) ;gw: self edited, see blw ref:
+;; 	(mhtml-mode "<\([A-Za-z][A-Za-z0-9]*\)[^>]*>.*?"  "</\1>" "-->" nil nil) ;gw: self edited, see blw ref:
+;;     ;; http://www.regular-expressions.info/examples.html
+;;     )))
+;; ;; hideshowvis
+;; (autoload 'hideshowvis-enable "hideshowvis" "Highlight foldable regions")
+;; (require 'hideshowvis)
+;; (autoload 'hideshowvis-minor-mode
+;;   "hideshowvis"
+;;   "Will indicate regions foldable with hideshow in the fringe."
+;;   'interactive)
+;; (dolist (hook (list 'emacs-lisp-mode-hook
+;;                     'c++-mode-hook))
+;;   (add-hook hook 'hideshowvis-enable))
+;; (hideshowvis-symbols)
 
-;; magit
-(add-to-list 'load-path "~/.emacs.d/site-lisp/magit/lisp")
-(require 'magit)
-(with-eval-after-load 'info
-  (info-initialize)
-  (add-to-list 'Info-directory-list
-               "~/.emacs.d/site-lisp/magit/Documentation/"))
-(add-hook 'after-save-hook 'magit-after-save-refresh-status)
+;; ;; magit
+;; (add-to-list 'load-path "~/.emacs.d/site-lisp/magit/lisp")
+;; (require 'magit)
+;; (with-eval-after-load 'info
+;;   (info-initialize)
+;;   (add-to-list 'Info-directory-list
+;;                "~/.emacs.d/site-lisp/magit/Documentation/"))
+;; (add-hook 'after-save-hook 'magit-after-save-refresh-status)
+;;(add-to-list 'load-path "~/.emacs.d/plugins/outshine/")
+;;(autoload 'outshine-mode "outshine-mode" nil t)
+;;(require 'outshine)
+;;(require 'outshine)
+;;(load "outshine-mode")
+;;(add-hook 'outline-minor-mode-hook 'outshine-hook-function)
+;;(require 'outshine)
+(add-hook 'prog-mode-hook 'outline-minor-mode)
+;;(add-hook 'prog-mode-hook 'outshine-mode)
+(global-set-key (kbd "C-h") 'outline-hide-subtree)
+(global-set-key (kbd "M-h") 'outline-show-subtree)
 
 ;; move windows
 (require 'buffer-move)
