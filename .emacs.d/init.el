@@ -119,6 +119,7 @@
 (add-hook 'rust-mode-hook
           (lambda () (setq indent-tabs-mode nil)))
 (setq rust-format-on-save t)
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
 
 ;; use plantuml mode
 (require 'plantuml-mode)
@@ -133,49 +134,7 @@
 (ido-everywhere)
 (setq ido-enable-flex-matching t)
 
-;; code folding (hide-show mode)
-;; (add-hook 'prog-mode-hook 'hs-minor-mode)
-;; (global-set-key (kbd "C-x C-u") 'hs-hide-all)
-;; (global-set-key (kbd "C-x C-d") 'hs-show-all)
-;; (setq hs-special-modes-alist
-;;   (mapcar 'purecopy
-;;   '((c-mode "{" "}" "/[*/]" nil nil)
-;;     (c++-mode "{" "}" "/[*/]" nil nil)
-;;     (bibtex-mode ("@\\S(*\\(\\s(\\)" 1))
-;;     (java-mode "{" "}" "/[*/]" nil nil)
-;;     (js-mode "{" "}" "/[*/]" nil)
-;;     ;; (html-mode "<!-- {{{ " "<!-- }}} -->" " -->" nil t)
-;;     (html-mode "<\([A-Za-z][A-Za-z0-9]*\)[^>]*>.*?"  "</\1>" "-->" nil nil) ;gw: self edited, see blw ref:
-;; 	(mhtml-mode "<\([A-Za-z][A-Za-z0-9]*\)[^>]*>.*?"  "</\1>" "-->" nil nil) ;gw: self edited, see blw ref:
-;;     ;; http://www.regular-expressions.info/examples.html
-;;     )))
-;; ;; hideshowvis
-;; (autoload 'hideshowvis-enable "hideshowvis" "Highlight foldable regions")
-;; (require 'hideshowvis)
-;; (autoload 'hideshowvis-minor-mode
-;;   "hideshowvis"
-;;   "Will indicate regions foldable with hideshow in the fringe."
-;;   'interactive)
-;; (dolist (hook (list 'emacs-lisp-mode-hook
-;;                     'c++-mode-hook))
-;;   (add-hook hook 'hideshowvis-enable))
-;; (hideshowvis-symbols)
-
-;; ;; magit
-;; (add-to-list 'load-path "~/.emacs.d/site-lisp/magit/lisp")
-;; (require 'magit)
-;; (with-eval-after-load 'info
-;;   (info-initialize)
-;;   (add-to-list 'Info-directory-list
-;;                "~/.emacs.d/site-lisp/magit/Documentation/"))
-;; (add-hook 'after-save-hook 'magit-after-save-refresh-status)
-;;(add-to-list 'load-path "~/.emacs.d/plugins/outshine/")
-;;(autoload 'outshine-mode "outshine-mode" nil t)
-;;(require 'outshine)
-;;(require 'outshine)
-;;(load "outshine-mode")
-;;(add-hook 'outline-minor-mode-hook 'outshine-hook-function)
-;;(require 'outshine)
+;; outline mode
 (add-hook 'prog-mode-hook 'outline-minor-mode)
 ;;(add-hook 'prog-mode-hook 'outshine-mode)
 (global-set-key (kbd "C-h") 'outline-hide-subtree)
@@ -196,6 +155,7 @@
 
 ;; org-mode
 (require 'org)
+(setq org-roam-v2-ack t)
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-log-done t)
@@ -214,6 +174,11 @@
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((python . t)))
+
+;;;; Org Roam
+(add-to-list 'load-path "/plugins/org-roam/")
+(add-to-list 'load-path "/plugins/extensions/")
+(require 'org-roam)
 
 (require 'eyebrowse)
 (eyebrowse-mode t)
@@ -294,12 +259,13 @@
 ;; tabbing
 (setq-default c-basic-offset 2
               tab-width 2
-              indent-tabs-mode nil)
+              indent-tabs-mode t)
 (c-set-offset 'case-label '+)
 (add-hook 'python-mode-hook 'guess-style-guess-tabs-mode)
 (add-hook 'python-mode-hook (lambda ()
                               (guess-style-guess-tab-width)))
 
+(c-set-offset 'innamespace 0)
 
 ;; Shutdown
 (global-set-key (kbd "M-Q") 'server-shutdown)

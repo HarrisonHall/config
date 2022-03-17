@@ -1,0 +1,104 @@
+;;; -*- coding: utf-8 -*-
+
+;; ----- ido-last-directory-list -----
+(
+ ("/home/harrison/dev/fpsi/plugins/examples/" . "counter/")
+ ("/home/harrison/dev/fpsi/plugins/" . "examples/")
+ ("/home/harrison/" . "Downloads/")
+ ("/home/harrison/dev/fpsi/src/" . "util/")
+ ("/home/harrison/dev/fpsi/" . "src/")
+)
+
+;; ----- ido-work-directory-list -----
+(
+ "/home/harrison/dev/fpsi/src/util/"
+ "/home/harrison/dev/fpsi/src/session/"
+ "/home/harrison/dev/fpsi/src/"
+ "/home/harrison/dev/ow/engine/modules/bullet/"
+ "/home/harrison/dev/fpsi/src/data/"
+ "/home/harrison/dev/fpsi/src/plugin/"
+ "/home/harrison/dev/fpsi/plugins/examples/counter/"
+ "/home/harrison/dev/fpsi/plugins/imgui-gui/"
+ "/home/harrison/dev/ow/engine/modules/energybar/"
+ "/home/harrison/dev/ow/engine/modules/squish/"
+ "/home/harrison/dev/ow/engine/modules/upnp/"
+ "/home/harrison/dev/ow/engine/modules/bmp/"
+ "/tmp/test/scope/"
+ "/home/harrison/dev/fpsi/src/gui/"
+)
+
+;; ----- ido-work-file-list -----
+(
+ "time.hpp"
+ "session.hpp"
+ "session.cpp"
+ "fpsi.hpp"
+ "logging.hpp"
+ "godot_collision_configuration.cpp"
+ "datahandler.cpp"
+ "dataframe.cpp"
+ "datahandler.hpp"
+ "plugin_handler.hpp"
+)
+
+;; ----- ido-dir-file-cache -----
+(
+ ("/home/harrison/dev/fpsi/src/util/" (25137 87 887017 373000) "time.hpp" "yaml_json.hpp" "time.cpp" "./" "logging.cpp" "logging.hpp" "../")
+
+ ("/home/harrison/dev/fpsi/src/" (25137 456 108303 454000) "session/" "data/" "fpsi.hpp" "./" "config/" "util/" "main.cpp" "../" "plugin/")
+
+ ("/home/harrison/dev/fpsi/src/session/" (25138 31203 674276 208000) "./" "session.hpp" "../" "session.cpp")
+
+ ("/home/harrison/dev/fpsi/src/config/" (25136 37887 334558 978000) "./" "config.cpp" "config.hpp" "../")
+
+ ("/home/harrison/dev/fpsi/plugins/imgui-gui/" (25135 54741 411571 30000) "Makefile" "imdialog.o" ".gitignore" "config.yaml" "fpsi" "imgui-gfx.o" "imgui.ini" "./" "imgui-gui.cpp" "imgui-gui.so" "imgui-gui.hpp" "implot.o" "imgui-general.o" "imgui-draw.o" "imgui-tables.o" "implot-raw.o" "include/" "imgui.o" "../" "imgui-widgets.o" "imgui-rend.o" "implot-items.o")
+
+ ("/home/harrison/dev/fpsi/plugins/examples/counter/" (25136 37191 283446 992000) "Makefile" "counter.so" "config.yaml" "fpsi" "imgui.ini" "./" "config-gui.yaml" "counter.cpp" "counter.o" "include/" "../")
+
+ ("/home/harrison/dev/fpsi/src/data/" (25135 51566 103649 942000) "datahandler.cpp" "dataframe.hpp" "datahandler.hpp" "./" "datasource.hpp" "datasource.cpp" "dataframe.cpp" "../")
+
+ ("/home/harrison/dev/fpsi/src/plugin/" (25135 48826 413225 143000) "./" "plugin.hpp" "../")
+
+ ("/home/harrison/dev/fpsi/" (25134 18325 320674 648000) "Makefile" "LICENSE" "plugin.o" ".gitignore" "fpsi" "dataframe.o" "./" "datahandler.o" ".git/" "session.o" "util.o" "time.o" "plugins/" "TODO.md" ".gitmodules" "README.md" "include/" "src/" "../" "logging.o")
+
+ ("/home/harrison/dev/fpsi/plugins/examples/" (25134 28784 15091 337000) "echoecho/" "./" "counter/" "../" "template/")
+
+ ("/home/harrison/dev/fpsi/plugins/examples/template/" (25134 28855 540906 373000) "Makefile" "config.yaml" "fpsi" "./" "template.cpp" "include/" "../")
+
+ ("/home/harrison/dev/fpsi/plugins/" (25132 65523 248497 733000) "imgui-gui/" "./" "examples/" "zeromq/" "../" "sqlite-db/")
+
+ ("/home/harrison/dev/fpsi/plugins/counter/" (25122 44181 79534 979000) "Makefile" "counter.so" "config.yaml" "fpsi/" "./" "counter.cpp" "counter.o" "bin" "../")
+
+ ("/home/harrison/dev/fpsi/plugins/sqlite-db/" (25125 30959 714909 670000) "Makefile" "sqlite-db.o" "config.yaml" "sqlite-db.cpp" "fpsi/" "./" "commands.sql" "bin" "include/" "sqlite-db.so" "../" "sqlite.o")
+
+ ("/home/harrison/Downloads/" (25121 39423 183484 599000) "document.pdf" "takeout-20210823T230549Z-002.zip" "fuckufranky.png" "technical_drawing_engineering_grpahics.pdf" "fundamentals_of_fluid_mechanics.pdf" "takeout-20210823T230549Z-004.zip" "ccu_transcript2.pdf" "Harrison_Hall_Resume_b.pdf" "marks_handbook_mechanical_engineers.pdf" "ccu_transcript.pdf" "42 20211011.zip" "Feb 11, 15.33​.aac" "ghidra_10.1.2_PUBLIC_20220125.zip" "takeout-20210823T230549Z-001.zip" "fundamentals_of_thermodynamics.pdf" "radio_systems_engr.pdf" "Final Report.pdf" "./" "dust3d-1.0.0-rc.6.AppImage" "offensive_security.pdf" "baller.tar.gz" "lsb-app-checker-5.0.0-3.x86_64.tar.gz" "ghidra_10.1.2_PUBLIC/" "Driver's License.pdf" "TempleOS.ISO" "Render96_DynOs_v3.2.7z" "kiki.mp4" "geico_insurance_2021.pdf" "Capstone-20211117T233852Z-001.zip" "Feb 13, 21.43​.aac" "Mar 3, 23.43​.aac" "alumni_information_harrison_hall.pdf" "../" "Statement of Intent - tamu.pdf" "clemson_transcript.pdf")
+
+ ("/home/harrison/" (25122 48696 243407 150000) ".icons/" ".root_hist" ".android/" ".thunderbird/" ".xsession-errors.old" ".nano-savehist" ".vscode-oss/" ".bash_logout" ".swt/" "media/" ".zcompdump" ".config/" "go/" ".cache/" ".gnome/" ".zsh_history" ".nvm/" ".plastic4/" ".sh_history" ".backups/" ".gradle/" ".steampath" ".octave_hist" ".themes/" "workspace/" ".bash_history" ".pylint.d/" ".vimrc" ".lesshst" ".r/" ".gdbinit" ".emacs-bmk-bmenu-state.el" ".sqlite_history" ".zshrc" "apply.md" "dev/" ".temp/" ".rustup/" ".minecraft/" ".octaverc" ".nvidia-settings-rc" ".tmux/" "./" ".fltk/" ".gnupg/" ".profile" "config/" ".ssh/" ".Rhistory" ".gitconfig" ".mozilla/" ".FreeCAD/" ".steampid" ".Xauthority" ".node_repl_history" ".librewolf/" ".gtkrc-2.0" ".local/" "steam-1794680.log" ".vim/" ".bash_profile" "Downloads/" ".bashrc" ".mono/" ".dillo/" ".python_history" ".Xresources" ".parallel/" ".cargo/" ".viminfo" ".dir_colors" ".tmux.conf" ".xsession-errors" ".screenlayout/" ".audacity-data/" ".oracle_jre_usage/" ".dmrc" ".elfeed/" ".netrc" ".octave_packages" ".emacs.d/" ".idapro/" ".nv/" ".java/" ".zoom/" ".steam/" ".git-credentials" ".factorio/" ".jupyter/" ".pulse-cookie" ".var/" ".wine/" ".zip" ".fehbg" ".wget-hsts" "../" ".w3m/" ".electron-gyp/" ".emulator_console_auth_token" ".nano-recentf" ".#apply.md" ".pki/" ".ssr/" ".eclipse/" ".ipython/" ".npm/" "#apply.md#" ".screenrc" ".ICEauthority" ".dwm/")
+
+ ("/home/harrison/dev/" (25122 46367 999624 899000) "one-offs/" "msg/" "cli-utils/" "web/" "fpsi/" "test/" "./" "sm64/" "simple_game_server/" "art/" "edu/" "mkern/" "srock/" "README.md" "ow/" "../" "cevac/" "unity/" "pyker/" "games/" "cure/")
+
+ ("/tmp/test/" (25098 37077 302751 59000) "test.c" "a.out" "../" "./")
+
+ ("/home/harrison/dev/fpsi/src/gui/" (24937 65160 632509 328000) "logo.png" "gui.hpp" ".gitignore" "fpsi_gui.glade" "./" "logo.svg" "fpsi_gui.glade~" "fpsi.png" "gui.cpp" "../" "logo.c" "#fpsi_gui.glade#" "logo.xml")
+
+ ("/tmp/test/scope/" (24975 19828 316363 863000) "includes.hpp" "main.cpp" "a.out" "../" "./")
+
+ ("/home/harrison/dev/ow/engine/modules/bmp/" (24984 14990 199533 653000) "image_loader_bmp.linuxbsd.opt.tools.64.o" "config.py" "SCsub" "register_types.linuxbsd.tools.64.o" "image_loader_bmp.h" "register_types.linuxbsd.opt.tools.64.o" "register_types.cpp" "./" "__pycache__/" "register_types.h" "image_loader_bmp.linuxbsd.tools.64.o" "image_loader_bmp.cpp" "../")
+
+ ("/home/harrison/dev/ow/engine/modules/upnp/" (24984 14865 669142 937000) "upnp_device.linuxbsd.opt.tools.64.o" "config.py" "upnp.linuxbsd.tools.64.o" "SCsub" "upnp.cpp" "register_types.linuxbsd.tools.64.o" "upnp.linuxbsd.opt.tools.64.o" "upnp_device.h" "register_types.linuxbsd.opt.tools.64.o" "register_types.cpp" "./" "upnp_device.linuxbsd.tools.64.o" "__pycache__/" "register_types.h" "upnp.h" "doc_classes/" "../" "upnp_device.cpp")
+
+ ("/home/harrison/dev/ow/engine/modules/squish/" (24984 14873 748893 498000) "config.py" "SCsub" "image_decompress_squish.linuxbsd.tools.64.o" "register_types.linuxbsd.tools.64.o" "register_types.linuxbsd.opt.tools.64.o" "register_types.cpp" "./" "image_decompress_squish.h" "image_decompress_squish.linuxbsd.opt.tools.64.o" "image_decompress_squish.cpp" "__pycache__/" "register_types.h" "../")
+
+ ("/home/harrison/dev/ow/engine/modules/bullet/" (24984 14804 946936 441000) "slider_joint_bullet.h" "config.py" "godot_collision_configuration.cpp" "shape_bullet.cpp" "SCsub" "joint_bullet.h" "generic_6dof_joint_bullet.cpp" "constraint_bullet.h" "soft_body_bullet.h" "bullet_utilities.h" "pin_joint_bullet.cpp" "bullet_types_converter.h" "joint_bullet.cpp" "cone_twist_joint_bullet.cpp" "register_types.cpp" "./" "slider_joint_bullet.cpp" "btRayShape.h" "shape_owner_bullet.h" "pin_joint_bullet.h" "collision_object_bullet.h" "space_bullet.cpp" "hinge_joint_bullet.h" "__pycache__/" "register_types.h" "rid_bullet.h" "godot_result_callbacks.cpp" "godot_collision_configuration.h" "godot_ray_world_algorithm.cpp" "btRayShape.cpp" "cone_twist_joint_bullet.h" "space_bullet.h" "collision_object_bullet.cpp" "godot_ray_world_algorithm.h" "godot_collision_dispatcher.h" "shape_bullet.h" "godot_motion_state.h" "area_bullet.h" "constraint_bullet.cpp" "area_bullet.cpp" "bullet_physics_server.h" "rigid_body_bullet.cpp" "shape_owner_bullet.cpp" "generic_6dof_joint_bullet.h" "hinge_joint_bullet.cpp" "rigid_body_bullet.h" "../" "godot_result_callbacks.h" "godot_collision_dispatcher.cpp" "bullet_types_converter.cpp" "soft_body_bullet.cpp" "bullet_physics_server.cpp")
+
+ ("/home/harrison/dev/ow/engine/modules/energybar/" (24984 14980 59718 533000) "config.py" "SCsub" "register_types.linuxbsd.tools.64.o" "energybar.linuxbsd.tools.64.o" "register_types.linuxbsd.opt.tools.64.o" "register_types.cpp" "./" "__pycache__/" "register_types.h" "energybar.linuxbsd.opt.tools.64.o" ".mypy_cache/" "energybar.h" "energybar.cpp" "../")
+
+ ("/tmp/" (24989 47847 55096 823000) ".X11-unix/" ".ICE-unix/" ".XIM-unix/" ".font-unix/" ".Test-unix/" "systemd-private-d8486508b9ed4f40bd54074bb0a27683-systemd-resolved.service-ArjZjp/" "systemd-private-d8486508b9ed4f40bd54074bb0a27683-systemd-timesyncd.service-ibrQoo/" "systemd-private-d8486508b9ed4f40bd54074bb0a27683-iwd.service-wffEXg/" "systemd-private-d8486508b9ed4f40bd54074bb0a27683-systemd-logind.service-caUKV3/" ".X0-lock" "checkup-db-1000/" "dumps/" "systemd-private-d8486508b9ed4f40bd54074bb0a27683-upower.service-j0hPMS/" ".wine-1000/" "steam_chrome_overlay_uid1000_spid10950" "Temp-abdae8c5-2911-49c8-b883-813b056eedb7/" "tmux-1000/" "steam_chrome_overlay_uid1000_spid30559" "test/" "babel-a7TOaT/" "steam_chrome_overlay_uid1000_spid63678" "steam_chrome_overlay_uid1000_spid142825" "steam_chrome_overlay_uid1000_spid178892" "dbus-K4G2FdhjkT" "mozilla_harrison0/" "steam_chrome_overlay_uid1000_spid226183" "Godette_231936_autosave.blend" "quit.blend" "steam_chrome_overlay_uid1000_spid266080" "steam_chrome_overlay_uid1000_spid273902" "steam_chrome_overlay_uid1000_spid273969" "steam_chrome_overlay_uid1000_spid321512" ".org.chromium.Chromium.6VvXpl/" ".org.chromium.Chromium.OS48Fz/" ".org.chromium.Chromium.J8nBjC/" ".org.chromium.Chromium.jY4TzV/" ".org.chromium.Chromium.NzVxx8/" ".org.chromium.Chromium.eUjHIC/" ".org.chromium.Chromium.Azo176/" ".org.chromium.Chromium.4DRhEX/" ".org.chromium.Chromium.yCMlri/" ".org.chromium.Chromium.iG24mG/" "tmpaddon" "steam_chrome_overlay_uid1000_spid378323" "steam_chrome_overlay_uid1000_spid401400" "MinecraftLauncher.1000/" "ScribbleIt-Linux-Shipping" "steam_chrome_overlay_uid1000_spid426176" "hsperfdata_harrison/" "steam_chrome_overlay_uid1000_spid438065" "steam_chrome_overlay_uid1000_spid530104" "steam_chrome_shmem_uid1000_spid591799" "SteamPVSockets.izLhdc/" "steam_chrome_overlay_uid1000_spid592071" "tmp.png" ".org.chromium.Chromium.Vc6rU2/" "steam_chrome_overlay_uid1000_spid653268" "steam_chrome_overlay_uid1000_spid665970" "eos-update-notifier.log.fh6iUeRM" "gameoverlayui.log.last" "gameoverlayui.log" "steam_chrome_overlay_uid1000_spid687770" "tmp-7pr.xpi" ".org.chromium.Chromium.0OCHLQ/" "../" "./")
+
+ ("/home/harrison/dev/ow/engine/modules/denoise/" (24979 10380 936391 903000) "config.py" "denoise_wrapper.cpp" "SCsub" "lightmap_denoiser.cpp" "register_types.linuxbsd.tools.64.o" "register_types.cpp" "./" "denoise_wrapper.h" "__pycache__/" "register_types.h" "resource_to_cpp.py" "denoise_wrapper.linuxbsd.tools.64.o" "lightmap_denoiser.linuxbsd.tools.64.o" "../" "lightmap_denoiser.h")
+
+ ("/home/harrison/dev/ow/engine/modules/websocket/" (24981 44436 399681 422000) "packet_buffer.h" "websocket_multiplayer_peer.cpp" "config.py" "wsl_client.cpp" "websocket_client.linuxbsd.tools.64.o" "SCsub" "library_godot_websocket.js" "emws_server.h" "remote_debugger_peer_websocket.linuxbsd.tools.64.o" "wsl_server.h" "register_types.linuxbsd.tools.64.o" "emws_server.cpp" "wsl_peer.linuxbsd.tools.64.o" "register_types.cpp" "./" "websocket_macros.h" "remote_debugger_peer_websocket.cpp" "emws_peer.linuxbsd.tools.64.o" "websocket_peer.cpp" "editor_debugger_server_websocket.h" "websocket_server.cpp" "editor_debugger_server_websocket.linuxbsd.tools.64.o" "wsl_client.h" "__pycache__/" "register_types.h" "websocket_peer.h" "emws_client.linuxbsd.tools.64.o" "wsl_server.cpp" "editor_debugger_server_websocket.cpp" "wsl_peer.h" "doc_classes/" "websocket_server.h" "wsl_server.linuxbsd.tools.64.o" "wsl_peer.cpp" "websocket_client.h" "emws_client.h" "websocket_multiplayer_peer.h" "emws_peer.cpp" "websocket_peer.linuxbsd.tools.64.o" "websocket_multiplayer_peer.linuxbsd.tools.64.o" "emws_server.linuxbsd.tools.64.o" "websocket_server.linuxbsd.tools.64.o" "wsl_client.linuxbsd.tools.64.o" "../" "remote_debugger_peer_websocket.h" "websocket_client.cpp" "emws_client.cpp" "emws_peer.h")
+)
+
+;; ----- ido-unc-hosts-cache -----
+t

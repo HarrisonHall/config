@@ -13,11 +13,14 @@ alias diff='colordiff'
 alias less='less --mouse --wheel-lines=3'
 alias bat='bat --theme Nord'
 alias o='xdg-open'
+alias gitfetch='onefetch'
 alias pacman='pacman --color=always'
 alias yay='yay --color=always'
 alias tzsh='tmux set-option -g default-command /usr/bin/zsh'
 alias tbash='tmux set-option -g default-command /usr/bin/bash'
 alias dd="dd status=progress"
+alias anki="ANKI_NOHIGHDPI=1 anki"
+alias ack="ag"
 
 alias cdtest="mkdir -p /tmp/test && cd /tmp/test"
 
@@ -41,7 +44,10 @@ eval $(dircolors ~/.dir_colors)
 
 PS1='\[\033[34m\]\w\n\[\033[37m\]-> '
 
+export _JAVA_AWT_WM_NONREPARENTING=1
+
 export PATH=$PATH:/opt/anaconda/bin/
 export PATH=$PATH:/home/harrison/.local/bin
 export PATH=$PATH:/home/harrison/dev/one-offs/mivs
 export PATH=$PATH:/home/harrison/config/scripts
+export PATH=$PATH:/home/harrison/config/scripts/cli-utils/src

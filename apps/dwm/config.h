@@ -6,6 +6,7 @@ static const unsigned int gappx     = 6;        /* gaps between windows */
 static const unsigned int snap      = 4;        /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
+static const int scalepreview       = 4;        /* Tag preview scaling */
 static const char *fonts[]          = { "Hack:size=14" };  // 14,18
 static const char dmenufont[]       = "Hack:size=14";
 static const char col_gray1[]       = "#2e3440";
@@ -92,8 +93,8 @@ static Key keys[] = {
   { MODKEY,                       XK_b,      togglebar,      {0} },  // toggle the status bar
   { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },  // Rotate focus
   { MODKEY,                       XK_k,      focusstack,     {.i = -1 } },  // Rotate focus
-  { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },  // 
-  { MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },  // 
+  { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },  // Incriment on left
+  { MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },  // Decrement on left
   { MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },  // Shift size of master
   { MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },  // Shift size of master
   { MODKEY|ShiftMask,             XK_l,      spawn,          {.v = menucmd} },  // script menu
@@ -103,10 +104,10 @@ static Key keys[] = {
   { MODKEY,                       XK_Tab,    spawn,          {.v = windowcmd} },  // window switcher
   { MODKEY|ShiftMask,             XK_s,      spawn,          {.v = sshcmd} },  // ssh holder
   { MODKEY|ShiftMask,             XK_w,      killclient,     {0} },  // close window
-  { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },  // tiling mode
-  { MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },  // floating mode
+  { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[1]} },  // tiling mode
+  { MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },  // floating mode
   { MODKEY,                       XK_F,      togglefloating, {0} },  // ?
-  { MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },  // monicle mode
+  { MODKEY,                       XK_m,      setlayout,      {.v = &layouts[0]} },  // monicle mode
   { MODKEY,                       XK_space,  setlayout,      {0} },  // change layout back
   { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },  // ?
   { MODKEY,                       XK_0,      view,           {.ui = ~0 } },  // view all tags

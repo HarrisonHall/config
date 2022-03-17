@@ -2,8 +2,8 @@
 # Setup script
 # Harrison Hall
 
-ins="sudo pacman -Sq --needed"
-yns="yay -Sq --needed"
+ins="sudo pacman -Sq --needed --noconfirm"
+yns="yay -Sq --needed --noconfirm"
 
 BOLDRED='\e[1;31m'  # Bold Red
 BOLDGREEN='\e[1;32m'  # Bold Green

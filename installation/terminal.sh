@@ -22,11 +22,13 @@ $ins acpi  # battery
 $ins alsa-utils  # volume
 $ins cmus  # terminal music player
 $ins dictd  # cli dictionary
+$ins dos2unix  # windows->unix file (line-endings) converter
 $ins dstat  # disk utility
 $ins emacs-nox  # life
 $ins entr  # run script on file change
 $ins mdp  # markdown presentation tool
 $ins net-tools  # ifconfig, etc.
+$ins onefetch  # git status
 $ins plantuml  # uml program
 $ins pulsemixer  # cli audio control
 $ins stow  # GNU stowing program
@@ -44,7 +46,7 @@ $ins eslint  # javascript
 $ins python-pylint  # python
 
 ### Pandoc
-$ins pandoc
+$yns pandoc-bin
 $ins texlive-core
 
 
