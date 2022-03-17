@@ -14,6 +14,7 @@ $ins nautilus  # file browser
 $ins obs-studio # Screen recording
 $ins papirus-icon-theme  # papirus icons
 $ins pavucontrol  # volume & audio devices
+$ins picom  # DWM compositor
 $ins polybar  # custom status bar
 $ins rofi  # app launcher and more
 $ins scrot  # screenshots
@@ -23,8 +24,6 @@ $ins xorg-xsetroot  # set name of x root
 $ins zathura zathura-pdf-poppler  # Document viewer (pdf)
 
 $yns grabc-git  # grab color
-$yns lightcord  # customizable discord
-$yns picom-tryone-git  # compositor
 
 ### PIP
 sudo pip install jupyterthemes  # Jupyter themes

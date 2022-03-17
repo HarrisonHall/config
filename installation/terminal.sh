@@ -36,7 +36,6 @@ $ins ttf-hack  # Hack font
 $ins w3m  # browser/image viewer
 $ins yajl  # yet another json lib
 
-$yns aur/micro-git  # micro text editor
 $yns pacolog  # get update logs on packages
 
 ### Emacs Linting
