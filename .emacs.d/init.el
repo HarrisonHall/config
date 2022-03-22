@@ -98,6 +98,14 @@
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-mode))
 
+;; use json-mode for json files
+(require 'json-mode)
+(add-to-list 'auto-mode-alist '("\\.json\\'" . json-mode))
+
+;; use cmake-mode
+(require 'cmake-mode)
+(add-to-list 'auto-mode-alist '("\\CMakeLists.txt\\'" . cmake-mode))
+
 ;; use dockerfile mode
 (require 'dockerfile-mode)
 (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
@@ -109,12 +117,12 @@
 (require 'markdown-mode)
 
 ;; use go mode
-(add-to-list 'load-path "~/.emacs.d/plugins/go-mode/")
+(require 'go-mode)
 (autoload 'go-mode "go-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.go\\'" . go-mode))
 
 ;; use rust
-(add-to-list 'load-path "~/.emacs.d/plugins/rust-mode")
+(require 'rust-mode)
 (autoload 'rust-mode "rust-mode" nil t)
 (add-hook 'rust-mode-hook
           (lambda () (setq indent-tabs-mode nil)))
@@ -200,8 +208,11 @@
             (local-set-key (kbd "u") 'elfeed-update-feed)))
 
 ;; annotate.el mode
-;(require 'annotate)
-;(add-hook 'prog-mode-hook 'annotate-mode)
+;;(require 'annotate)
+;;(add-hook 'prog-mode-hook 'annotate-mode)
+
+;; Magit
+(require 'magit)
 
 ;; Use smex instead of M-x for commands
 (require 'smex)

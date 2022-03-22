@@ -11,11 +11,11 @@
 
 ;; ----- ido-work-directory-list -----
 (
- "/home/harrison/dev/fpsi/src/util/"
  "/home/harrison/dev/fpsi/src/session/"
+ "/home/harrison/dev/fpsi/src/data/"
+ "/home/harrison/dev/fpsi/src/util/"
  "/home/harrison/dev/fpsi/src/"
  "/home/harrison/dev/ow/engine/modules/bullet/"
- "/home/harrison/dev/fpsi/src/data/"
  "/home/harrison/dev/fpsi/src/plugin/"
  "/home/harrison/dev/fpsi/plugins/examples/counter/"
  "/home/harrison/dev/fpsi/plugins/imgui-gui/"
@@ -29,33 +29,33 @@
 
 ;; ----- ido-work-file-list -----
 (
- "time.hpp"
  "session.hpp"
+ "dataframe.cpp"
+ "dataframe.hpp"
+ "time.hpp"
  "session.cpp"
  "fpsi.hpp"
  "logging.hpp"
  "godot_collision_configuration.cpp"
  "datahandler.cpp"
- "dataframe.cpp"
  "datahandler.hpp"
- "plugin_handler.hpp"
 )
 
 ;; ----- ido-dir-file-cache -----
 (
+ ("/home/harrison/dev/fpsi/src/session/" (25139 52370 113885 77000) "./" "session.hpp" "../" "session.cpp")
+
+ ("/home/harrison/dev/fpsi/src/data/" (25138 31376 186010 39000) "datahandler.cpp" "dataframe.hpp" "datahandler.hpp" "./" "datasource.hpp" "datasource.cpp" "dataframe.cpp" "../")
+
  ("/home/harrison/dev/fpsi/src/util/" (25137 87 887017 373000) "time.hpp" "yaml_json.hpp" "time.cpp" "./" "logging.cpp" "logging.hpp" "../")
 
  ("/home/harrison/dev/fpsi/src/" (25137 456 108303 454000) "session/" "data/" "fpsi.hpp" "./" "config/" "util/" "main.cpp" "../" "plugin/")
-
- ("/home/harrison/dev/fpsi/src/session/" (25138 31203 674276 208000) "./" "session.hpp" "../" "session.cpp")
 
  ("/home/harrison/dev/fpsi/src/config/" (25136 37887 334558 978000) "./" "config.cpp" "config.hpp" "../")
 
  ("/home/harrison/dev/fpsi/plugins/imgui-gui/" (25135 54741 411571 30000) "Makefile" "imdialog.o" ".gitignore" "config.yaml" "fpsi" "imgui-gfx.o" "imgui.ini" "./" "imgui-gui.cpp" "imgui-gui.so" "imgui-gui.hpp" "implot.o" "imgui-general.o" "imgui-draw.o" "imgui-tables.o" "implot-raw.o" "include/" "imgui.o" "../" "imgui-widgets.o" "imgui-rend.o" "implot-items.o")
 
  ("/home/harrison/dev/fpsi/plugins/examples/counter/" (25136 37191 283446 992000) "Makefile" "counter.so" "config.yaml" "fpsi" "imgui.ini" "./" "config-gui.yaml" "counter.cpp" "counter.o" "include/" "../")
-
- ("/home/harrison/dev/fpsi/src/data/" (25135 51566 103649 942000) "datahandler.cpp" "dataframe.hpp" "datahandler.hpp" "./" "datasource.hpp" "datasource.cpp" "dataframe.cpp" "../")
 
  ("/home/harrison/dev/fpsi/src/plugin/" (25135 48826 413225 143000) "./" "plugin.hpp" "../")
 

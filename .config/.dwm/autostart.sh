@@ -75,8 +75,8 @@ vol() {
 
 # Custom title
 while true; do
-    name="^c${a4}^$(dte) "
-    name="^c${a3}^$(vol)^c${w1}^ | ${name}"
+    name="^c${bl4}^$(dte) "
+    name="^c${bl3}^$(vol)^c${w1}^ | ${name}"
     
     if [ "$pc" == "archlinux" ]
     then
