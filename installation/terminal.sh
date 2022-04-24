@@ -5,16 +5,16 @@
 ## Fit simlinks
 
 ### bat
-[ ! -f ~/.config/bat ] && ln -s ~/config/.config/bat ~/.config/bat
+[ ! -f ~/.config/bat ] && ln -s ${CONFIG_DIR}/.config/bat ~/.config/bat
 
 ### emacs
-[ ! -f ~/.emacs.d ] && ln -s ~/config/.emacs.d ~/.emacs.d
+[ ! -f ~/.emacs.d ] && ln -s ${CONFIG_DIR}/.config/.emacs.d ~/.emacs.d
 
 ### Micro
 [ ! -d ~/.config/micro ] && mkdir ~/.config/micro
-[ ! -f ~/.config/micro/bindings.json ] && sudo ln -s ~/config/.config/micro/bindings.json ~/.config/micro/bindings.json
-[ ! -f ~/.config/micro/colorschemes ] && sudo ln -s ~/config/.config/micro/colorschemes ~/.config/micro/colorschemes
-[ ! -f ~/.config/micro/settings.json ] && sudo ln -s ~/config/.config/micro/settings.json ~/.config/micro/settings.json
+[ ! -f ~/.config/micro/bindings.json ] && sudo ln -s ${CONFIG_DIR}/.config/micro/bindings.json ~/.config/micro/bindings.json
+[ ! -f ~/.config/micro/colorschemes ] && sudo ln -s ${CONFIG_DIR}/.config/micro/colorschemes ~/.config/micro/colorschemes
+[ ! -f ~/.config/micro/settings.json ] && sudo ln -s ${CONFIG_DIR}/.config/micro/settings.json ~/.config/micro/settings.json
 
 
 ## Other packages

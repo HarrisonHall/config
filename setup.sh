@@ -5,18 +5,16 @@
 ins="sudo pacman -Sq --needed --noconfirm"
 yns="yay -Sq --needed --noconfirm"
 
-BOLDRED='\e[1;31m'  # Bold Red
-BOLDGREEN='\e[1;32m'  # Bold Green
-OFF='\e[0m'
+source ./config.sh
 
 function HELP {
-	echo -e "${BOLDGREEN}Basic usage:${OFF} ${BOLDRED}$SCRIPT -c ${OFF}"\\n
-	echo -e "${BOLDGREEN}The following switches are recognized. $OFF "
-	echo -e "${BOLDGREEN}-a ${OFF}  --Installs all systems"
-	echo -e "${BOLDGREEN}-c ${OFF}  --Installs core terminal utilities"
-	echo -e "${BOLDGREEN}-t ${OFF}  --Installs bonus terminal utilities"
-	echo -e "${BOLDGREEN}-g ${OFF}  --Installs core gui utilities"
-	echo -e "${BOLDGREEN}-e ${OFF}  --Installs all extra utilities"
+	echo -e "${BOLD_PRIM}Basic usage:${OFF} ${BOLD_ERR}$SCRIPT -c ${OFF}"\\n
+	echo -e "${BOLD_PRIM}The following switches are recognized. $OFF "
+	echo -e "${BOLD_PRIM}-a ${OFF}  --Installs all systems"
+	echo -e "${BOLD_PRIM}-c ${OFF}  --Installs core terminal utilities"
+	echo -e "${BOLD_PRIM}-t ${OFF}  --Installs bonus terminal utilities"
+	echo -e "${BOLD_PRIM}-g ${OFF}  --Installs core gui utilities"
+	echo -e "${BOLD_PRIM}-e ${OFF}  --Installs all extra utilities"
 	exit 1
 }
 
@@ -65,7 +63,7 @@ while getopts acetgq: FLAG; do
 			exit 0
 			;;
 		\?) #unrecognized option - show help
-			echo -e \\n"Option -${BOLDRED}$OPTARG${OFF} not allowed."
+			echo -e \\n"Option -${BOLD_ERR}$OPTARG${OFF} not allowed."
 			HELP
 			;;
 	esac

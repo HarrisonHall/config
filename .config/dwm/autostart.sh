@@ -3,42 +3,9 @@
 # Destroy if already running
 [ "$( pgrep autostart.sh | head -1 )" != "$$" ] && echo "Already Running" && exit 0
 
-# Start emacs
-#echo "Starting emacs"
-#emacs --daemon &
-
-# Start notifications
-dunst &
-
-# Start compositor
-if pacman -Qs picom-tryone-git; then
-	sleep 2 && picom --experimental-backends --backend glx --config ~/config/.config/picom/picom.conf --daemon &
-elif pacman -Qs picom; then
-	sleep 2 && picom --config ~/config/.config/picom/picom.conf --daemon &
-fi
-
-# Start polkit poller
-## This is important in case a user applicaiton needs to run something with higher
-## priveleges
-lxqt-policykit-agent &
-
 pc=$(hostname)
 
-if lspci | grep Apple; then
-	souce ~/config/installation/custom/macbook.sh
-fi
 
-if [ "$pc" == "archlinux" ]
-then
-    source ~/.screenlayout/default.sh
-	feh --bg-scale ~/media/pictures/Wallpapers/ice_village.jpg
-fi
-if [ "$pc" == "harrison-archssd" ]
-then
-    #feh --bg-scale ~/config/media/rdark.png
-	feh --bg-scale ~/media/pictures/Wallpapers/clear_mountain.jpg &
-    source ~/.screenlayout/default.sh &
-fi
 
 ## Colors (Nord)
 b1="#2e3440"
@@ -73,7 +40,7 @@ vol() {
     echo -e "⏆ $vol"
 }
 
-# Custom title
+# Custom dwm bar
 while true; do
     name="^c${bl4}^$(dte) "
     name="^c${bl3}^$(vol)^c${w1}^ | ${name}"

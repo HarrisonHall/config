@@ -7,30 +7,30 @@
 
 ### Bashrc
 #### Add .bashrc to .bashrc
-if ! grep -q "source ~/config/.bashrc" ~/.bashrc
+if ! grep -q "source ${CONFIG_DIR}/.config/.bashrc" ~/.bashrc
 then
-    echo "source ~/config/.bashrc" >> ~/.bashrc
+    echo "source ${CONFIG_DIR}/.config/.bashrc" >> ~/.bashrc
 fi
 
 #### Add path to .profile
-if ! grep -q "export PATH=$PATH:~/config/scripts" ~/.profile
+if ! grep -q "export PATH=$PATH:${CONFIG_DIR}/scripts" ~/.profile
 then
-	echo "export PATH=$PATH:~/config/scripts" >> ~/.profile
+	echo "export PATH=$PATH:${CONFIG_DIR}/scripts" >> ~/.profile
 fi
 
 ### Dir Colors
-[ ! -f ~/.dir_colors ] && ln -s ~/config/.config/.dir_colors ~/.dir_colors
+[ ! -f ~/.config/.dir_colors ] && ln -s ${CONFIG_DIR}/.config/.dir_colors ~/.config/.dir_colors
 
 ### Tmux
-[ ! -f ~/.tmux.conf ] && ln -s ~/config/.tmux.conf ~/.tmux.conf
-[ ! -d ~/.tmux ] && ln -s ~/config/.config/.tmux ~/.tmux
+[ ! -f ~/.tmux.conf ] && ln -s ${CONFIG_DIR}/.config/.tmux.conf ~/.tmux.conf
+[ ! -d ~/.tmux ] && ln -s ${CONFIG_DIR}/.config/.tmux ~/.tmux
 
 ### Ranger
-[ ! -d ~/.config/ranger ] && ln -s ~/config/.config/ranger ~/.config/ranger
+[ ! -d ~/.config/ranger ] && ln -s ${CONFIG_DIR}/.config/ranger ~/.config/ranger
 
 ### Vim
-[ ! -d ~/.vim ] && ln -s ~/config/.config/.vim ~/.vim
-[ ! -f ~/.vimrc ] && ln -s ~/config/.config/.vimrc ~/.vimrc
+[ ! -d ~/.vim ] && ln -s ${CONFIG_DIR}/.config/.vim ~/.vim
+[ ! -f ~/.vimrc ] && ln -s ${CONFIG_DIR}/.config/.vimrc ~/.vimrc
 
 
 ## Other packages

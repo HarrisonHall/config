@@ -270,7 +270,7 @@
 ;; tabbing
 (setq-default c-basic-offset 2
               tab-width 2
-              indent-tabs-mode t)
+              indent-tabs-mode nil)
 (c-set-offset 'case-label '+)
 (add-hook 'python-mode-hook 'guess-style-guess-tabs-mode)
 (add-hook 'python-mode-hook (lambda ()

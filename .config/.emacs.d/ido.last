@@ -11,9 +11,13 @@
 
 ;; ----- ido-work-directory-list -----
 (
+ "/home/harrison/.config/dwm/"
+ "/home/harrison/config/.config/"
+ "/home/harrison/dev/one-offs/edll/"
+ "/home/harrison/dev/fpsi/src/config/"
+ "/home/harrison/dev/fpsi/src/util/"
  "/home/harrison/dev/fpsi/src/session/"
  "/home/harrison/dev/fpsi/src/data/"
- "/home/harrison/dev/fpsi/src/util/"
  "/home/harrison/dev/fpsi/src/"
  "/home/harrison/dev/ow/engine/modules/bullet/"
  "/home/harrison/dev/fpsi/src/plugin/"
@@ -29,29 +33,41 @@
 
 ;; ----- ido-work-file-list -----
 (
+ "autostart_blocking.sh"
+ "autostart.sh"
+ ".bashrc"
+ "test.cpp"
+ "config.cpp"
+ "logging.hpp"
  "session.hpp"
  "dataframe.cpp"
  "dataframe.hpp"
  "time.hpp"
- "session.cpp"
- "fpsi.hpp"
- "logging.hpp"
- "godot_collision_configuration.cpp"
- "datahandler.cpp"
- "datahandler.hpp"
 )
 
 ;; ----- ido-dir-file-cache -----
 (
- ("/home/harrison/dev/fpsi/src/session/" (25139 52370 113885 77000) "./" "session.hpp" "../" "session.cpp")
+ ("/home/harrison/.config/dwm/" (25189 39354 104655 801000) "autostart_blocking.sh" "./" "autostart.sh" "../")
+
+ ("/home/harrison/config/.config/" (25189 35747 294001 496000) "zathura/" "dunst/" "rofi/" "micro/" ".themes/" ".vimrc" ".tmux/" "./" "bat/" ".vim/" "ranger/" ".nanorc" ".dir_colors" ".tmux.conf" "tmux/" ".emacs.d/" "xsessions/" ".jupyter/" "polybar/" "picom/" "../" ".dwm/")
+
+ ("/home/harrison/config/" (25189 35747 294001 496000) "media/" ".config/" ".gitignore" "apps/" "./" ".git/" "scripts/" "installation/" "setup.sh" "README.md" "notes/" "../" "config.sh")
+
+ ("/home/harrison/dev/one-offs/edll/" (25187 26770 851769 885000) "./" "edll.hpp" "README.md" "a.out" "../" "test.cpp")
+
+ ("/tmp/test/franky/" (25160 52086 597596 305000) "Asg2 Spring 2022.pdf" "in1" "out1" "sched.c" "a.out" "../" "./")
+
+ ("/home/harrison/dev/fpsi/src/config/" (25150 8914 223934 169000) "./" "config.cpp" "config.hpp" "../")
+
+ ("/home/harrison/dev/fpsi/src/util/" (25150 8359 851103 0) "time.hpp" "yaml_json.hpp" "time.cpp" "./" "logging.cpp" "logging.hpp" "../")
+
+ ("/home/harrison/dev/srock/plugins/communication/radio/" (25148 58227 784317 485000) "Makefile" "config.yaml" "fpsi" "./" "template.cpp" "README.md" "include/" "../")
+
+ ("/home/harrison/dev/fpsi/src/session/" (25140 58709 876735 723000) "./" "session.hpp" "../" "session.cpp")
 
  ("/home/harrison/dev/fpsi/src/data/" (25138 31376 186010 39000) "datahandler.cpp" "dataframe.hpp" "datahandler.hpp" "./" "datasource.hpp" "datasource.cpp" "dataframe.cpp" "../")
 
- ("/home/harrison/dev/fpsi/src/util/" (25137 87 887017 373000) "time.hpp" "yaml_json.hpp" "time.cpp" "./" "logging.cpp" "logging.hpp" "../")
-
  ("/home/harrison/dev/fpsi/src/" (25137 456 108303 454000) "session/" "data/" "fpsi.hpp" "./" "config/" "util/" "main.cpp" "../" "plugin/")
-
- ("/home/harrison/dev/fpsi/src/config/" (25136 37887 334558 978000) "./" "config.cpp" "config.hpp" "../")
 
  ("/home/harrison/dev/fpsi/plugins/imgui-gui/" (25135 54741 411571 30000) "Makefile" "imdialog.o" ".gitignore" "config.yaml" "fpsi" "imgui-gfx.o" "imgui.ini" "./" "imgui-gui.cpp" "imgui-gui.so" "imgui-gui.hpp" "implot.o" "imgui-general.o" "imgui-draw.o" "imgui-tables.o" "implot-raw.o" "include/" "imgui.o" "../" "imgui-widgets.o" "imgui-rend.o" "implot-items.o")
 

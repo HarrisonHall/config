@@ -40,20 +40,20 @@ cd apps/tabbed;  sudo make; sudo make install; cd ../..;
 
 ## Fit simlinks
 ### Dunst
-[ ! -f ~/.config/dunst ] && ln -s ~/config/.config/dunst/ ~/.config/dunst
+[ ! -f ~/.config/dunst ] && ln -s ${CONFIG_DIR}/.config/dunst/ ~/.config/dunst
 
 ### Jupyter
 [ ! -d ~/.jupyter ] && mkdir ~/.jupyter
-[ ! -d ~/.jupyter/custom ] && ln -s ~/config/.config/.jupyter/custom ~/.jupyter/custom
+[ ! -d ~/.jupyter/custom ] && ln -s ${CONFIG_DIR}/.config/.jupyter/custom ~/.jupyter/custom
 
 ### Rofi
-[ ! -f ~/.config/rofi ] && sudo ln -s ~/config/.config/rofi ~/.config/rofi
+[ ! -f ~/.config/rofi ] && sudo ln -s ${CONFIG_DIR}/.config/rofi ~/.config/rofi
 
 ### Xsessions (lightdm)
-[ ! -f /usr/share/xsessions/dwm.desktop ] && sudo cp ~/config/.config/xsessions/dwm.desktop /usr/share/xsessions/dwm.desktop
+[ ! -f /usr/share/xsessions/dwm.desktop ] && sudo cp ${CONFIG_DIR}/.config/xsessions/dwm.desktop /usr/share/xsessions/dwm.desktop
 
 ### DWM
-[ ! -d ~/.dwm ] && ln -s ~/config/.config/.dwm ~/.dwm
+[ ! -d ~/.config/dwm ] && ln -s ${CONFIG_DIR}/.config/dwm ~/dwm
 
 ### Zathura (pdf)
-[ ! -d ~/.config/zathura ] && ln -s ~/config/.config/zathura ~/.config/zathura
+[ ! -d ~/.config/zathura ] && ln -s ${CONFIG_DIR}/.config/zathura ~/.config/zathura

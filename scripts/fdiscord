@@ -1,7 +1,5 @@
 #!/bin/bash
 simplenotify -t 'Discord' -m 'Running custom discord script at ~/config/scripts/fdiscord'
-#echo "Running custom discord: "
-#/home/harrison/workspace/programs/Discord/Discord
 #flatpak run com.discordapp.Discord
 #discord --no-sandbox
 discord --enable-accelerated-mjpeg-decode --enable-accelerated-video --ignore-gpu-blacklist --enable-native-gpu-memory-buffers --enable-gpu-rasterization

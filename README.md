@@ -15,11 +15,13 @@ This repo provides both a simple way for me to set my system up
 ```bash
 git clone https://github.com/harrisonhall/config
 cd config
-./setup.sh
+./setup.sh -a
 ```
 and acts as a show-and-tell for my current configs. I would not recommend
 copying it, but rather looking element-by-element and integrating my
-changes into your own configs.
+changes into your own configs. If you would like to use this repo as-is, be
+sure to edit `config.sh` and replace any instance of my name with yours or
+any paths I forgot to generalize with an accurate one.
 
 ### Forks
 Custom builds of certain programs utilizing only the patches I need. 
