@@ -1,19 +1,16 @@
-;;; magit-status.el --- the grand overview  -*- lexical-binding: t -*-
+;;; magit-status.el --- The grand overview  -*- lexical-binding:t -*-
 
-;; Copyright (C) 2010-2021  The Magit Project Contributors
-;;
-;; You should have received a copy of the AUTHORS.md file which
-;; lists all contributors.  If not, see http://magit.vc/authors.
+;; Copyright (C) 2008-2022 The Magit Project Contributors
 
 ;; Author: Jonas Bernoulli <jonas@bernoul.li>
 ;; Maintainer: Jonas Bernoulli <jonas@bernoul.li>
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
-;; Magit is free software; you can redistribute it and/or modify it
+;; Magit is free software: you can redistribute it and/or modify it
 ;; under the terms of the GNU General Public License as published by
-;; the Free Software Foundation; either version 3, or (at your option)
-;; any later version.
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
 ;;
 ;; Magit is distributed in the hope that it will be useful, but WITHOUT
 ;; ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
@@ -21,7 +18,7 @@
 ;; License for more details.
 ;;
 ;; You should have received a copy of the GNU General Public License
-;; along with Magit.  If not, see http://www.gnu.org/licenses.
+;; along with Magit.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
@@ -171,7 +168,7 @@ AUTHOR-WIDTH has to be an integer.  When the name of the author
   :group 'magit-status
   :group 'magit-margin
   :type magit-log-margin--custom-type
-  :initialize 'magit-custom-initialize-reset
+  :initialize #'magit-custom-initialize-reset
   :set-after '(magit-log-margin)
   :set (apply-partially #'magit-margin-set-variable 'magit-status-mode))
 
@@ -292,7 +289,7 @@ prefix arguments:
 (put 'magit-status 'interactive-only 'magit-status-setup-buffer)
 
 ;;;###autoload
-(defalias 'magit 'magit-status
+(defalias 'magit #'magit-status
   "An alias for `magit-status' for better discoverability.
 
 Instead of invoking this alias for `magit-status' using
@@ -309,48 +306,37 @@ also contains other useful hints.")
 
 (put 'magit-status-here 'interactive-only 'magit-status-setup-buffer)
 
-(defvar magit--remotes-using-recent-git nil)
+;;;###autoload
+(defun magit-status-quick ()
+  "Show the status of the current Git repository, maybe without refreshing.
 
-(defun magit--tramp-asserts (directory)
-  (when-let ((remote (file-remote-p directory)))
-    (unless (member remote magit--remotes-using-recent-git)
-      (if-let ((version (let ((default-directory directory))
-                          (magit-git-version))))
-          (if (version<= magit--minimal-git version)
-              (push remote magit--remotes-using-recent-git)
-            (display-warning 'magit (format "\
-Magit requires Git >= %s, but on %s the version is %s.
+If the status buffer of the current Git repository exists but
+isn't being displayed in the selected frame, then display it
+without refreshing it.
 
-If multiple Git versions are installed on the host, then the
-problem might be that TRAMP uses the wrong executable.
+If the status buffer is being displayed in the selected frame,
+then also refresh it.
 
-First check the value of `magit-git-executable'.  Its value is
-used when running git locally as well as when running it on a
-remote host.  The default value is \"git\", except on Windows
-where an absolute path is used for performance reasons.
+Prefix arguments have the same meaning as for `magit-status',
+and additionally cause the buffer to be refresh.
 
-If the value already is just \"git\" but TRAMP never-the-less
-doesn't use the correct executable, then consult the info node
-`(tramp)Remote programs'.\n" magit--minimal-git remote version) :error))
-        (display-warning 'magit (format "\
-Magit cannot find Git on %s.
-
-First check the value of `magit-git-executable'.  Its value is
-used when running git locally as well as when running it on a
-remote host.  The default value is \"git\", except on Windows
-where an absolute path is used for performance reasons.
-
-If the value already is just \"git\" but TRAMP never-the-less
-doesn't find the executable, then consult the info node
-`(tramp)Remote programs'.\n" remote) :error)))))
+To use this function instead of `magit-status', add this to your
+init file: (global-set-key (kbd \"C-x g\") \\='magit-status-quick)."
+  (interactive)
+  (if-let ((buffer
+            (and (not current-prefix-arg)
+                 (not (magit-get-mode-buffer 'magit-status-mode nil 'selected))
+                 (magit-get-mode-buffer 'magit-status-mode))))
+      (magit-display-buffer buffer)
+    (call-interactively #'magit-status)))
 
 ;;; Mode
 
 (defvar magit-status-mode-map
   (let ((map (make-sparse-keymap)))
     (set-keymap-parent map magit-mode-map)
-    (define-key map "j" 'magit-status-jump)
-    (define-key map [remap dired-jump] 'magit-dired-jump)
+    (define-key map "j" #'magit-status-jump)
+    (define-key map [remap dired-jump] #'magit-dired-jump)
     map)
   "Keymap for `magit-status-mode'.")
 
@@ -386,7 +372,8 @@ doesn't find the executable, then consult the info node
     ("a " "Assumed unstaged" magit-jump-to-assume-unchanged
      :if (lambda () (memq 'magit-insert-assume-unchanged-files magit-status-sections-hook)))
     ("w " "Skip worktree" magit-jump-to-skip-worktree
-     :if (lambda () (memq 'magit-insert-skip-worktree-files magit-status-sections-hook)))]])
+     :if (lambda () (memq 'magit-insert-skip-worktree-files magit-status-sections-hook)))]
+   [("i" "Using Imenu" imenu)]])
 
 (define-derived-mode magit-status-mode magit-mode "Magit"
   "Mode for looking at Git status.
@@ -416,8 +403,10 @@ Type \\[magit-commit] to create a commit.
 \\{magit-status-mode-map}"
   :group 'magit-status
   (hack-dir-local-variables-non-file-buffer)
-  (setq imenu-create-index-function
-        'magit-imenu--status-create-index-function))
+  (when magit-status-initial-section
+    (add-hook 'magit-refresh-buffer-hook
+              #'magit-status-goto-initial-section nil t))
+  (setq magit--imenu-group-types '(not branch commit)))
 
 (put 'magit-status-mode 'magit-diff-default-arguments
      '("--no-ext-diff"))
@@ -428,7 +417,8 @@ Type \\[magit-commit] to create a commit.
 (defun magit-status-setup-buffer (&optional directory)
   (unless directory
     (setq directory default-directory))
-  (magit--tramp-asserts directory)
+  (when (file-remote-p directory)
+    (magit-git-version-assert))
   (let* ((default-directory directory)
          (d (magit-diff--get-value 'magit-status-mode
                                    magit-status-use-buffer-arguments))
@@ -462,19 +452,7 @@ Type \\[magit-commit] to create a commit.
     (magit-run-section-hook 'magit-status-sections-hook)))
 
 (defun magit-status-goto-initial-section ()
-  "In a `magit-status-mode' buffer, jump `magit-status-initial-section'.
-Actually doing so is deferred until `magit-refresh-buffer-hook'
-runs `magit-status-goto-initial-section-1'.  That function then
-removes itself from the hook, so that this only happens when the
-status buffer is first created."
-  (when (and magit-status-initial-section
-             (derived-mode-p 'magit-status-mode))
-    (add-hook 'magit-refresh-buffer-hook
-              'magit-status-goto-initial-section-1 nil t)))
-
-(defun magit-status-goto-initial-section-1 ()
-  "In a `magit-status-mode' buffer, jump `magit-status-initial-section'.
-This function removes itself from `magit-refresh-buffer-hook'."
+  "Jump to the section specified by `magit-status-initial-section'."
   (when-let ((section
               (--some (if (integerp it)
                           (nth (1- it)
@@ -489,7 +467,7 @@ This function removes itself from `magit-refresh-buffer-hook'."
           (magit-section-hide section)
         (magit-section-show section))))
   (remove-hook 'magit-refresh-buffer-hook
-               'magit-status-goto-initial-section-1 t))
+               #'magit-status-goto-initial-section t))
 
 (defun magit-status-maybe-update-revision-buffer (&optional _)
   "When moving in the status buffer, update the revision buffer.
@@ -522,7 +500,8 @@ The sections are inserted by running the functions on the hook
 
 (defvar magit-error-section-map
   (let ((map (make-sparse-keymap)))
-    (define-key map [remap magit-visit-thing] 'magit-process-buffer)
+    (magit-menu-set map [magit-visit-thing]
+      #'magit-process-buffer "Visit process output")
     map)
   "Keymap for `error' sections.")
 
@@ -537,8 +516,7 @@ the status buffer causes this section to disappear again."
     (magit-insert-section (error 'git)
       (insert (propertize (format "%-10s" "GitError! ")
                           'font-lock-face 'magit-section-heading))
-      (insert (propertize magit-this-error
-                          'font-lock-face 'font-lock-warning-face))
+      (insert (propertize magit-this-error 'font-lock-face 'error))
       (when-let ((key (car (where-is-internal 'magit-process-buffer))))
         (insert (format "  [Type `%s' for details]" (key-description key))))
       (insert ?\n))
@@ -623,44 +601,45 @@ arguments are for internal use only."
               ((magit--valid-upstream-p remote merge)
                (if (equal remote ".")
                    (concat
-                    (propertize merge 'font-lock-face 'magit-branch-local)
-                    (propertize " does not exist"
-                                'font-lock-face 'font-lock-warning-face))
-                 (concat
+                    (propertize merge 'font-lock-face 'magit-branch-local) " "
+                    (propertize "does not exist"
+                                'font-lock-face 'magit-branch-warning))
+                 (format
+                  "%s %s %s"
                   (propertize merge 'font-lock-face 'magit-branch-remote)
-                  (propertize " does not exist on "
-                              'font-lock-face 'font-lock-warning-face)
+                  (propertize "does not exist on"
+                              'font-lock-face 'magit-branch-warning)
                   (propertize remote 'font-lock-face 'magit-branch-remote))))
               (t
                (propertize "invalid upstream configuration"
-                           'font-lock-face 'font-lock-warning-face)))))
+                           'font-lock-face 'magit-branch-warning)))))
           (insert ?\n))))))
 
 (defun magit-insert-push-branch-header ()
   "Insert a header line about the branch the current branch is pushed to."
-  (when-let ((branch (magit-get-current-branch))
-             (target (magit-get-push-branch branch)))
+  (when-let* ((branch (magit-get-current-branch))
+              (target (magit-get-push-branch branch)))
     (magit-insert-section (branch target)
       (insert (format "%-10s" "Push: "))
       (insert
        (if (magit-rev-verify target)
-           (concat target " "
-                   (and magit-status-show-hashes-in-headers
+           (concat (and magit-status-show-hashes-in-headers
                         (concat (propertize (magit-rev-format "%h" target)
                                             'font-lock-face 'magit-hash)
                                 " "))
+                   target " "
                    (funcall magit-log-format-message-function target
                             (funcall magit-log-format-message-function nil
                                      (or (magit-rev-format "%s" target)
                                          "(no commit message)"))))
          (let ((remote (magit-get-push-remote branch)))
            (if (magit-remote-p remote)
-               (concat target
-                       (propertize " does not exist"
-                                   'font-lock-face 'font-lock-warning-face))
-             (concat remote
-                     (propertize " remote does not exist"
-                                 'font-lock-face 'font-lock-warning-face))))))
+               (concat target " "
+                       (propertize "does not exist"
+                                   'font-lock-face 'magit-branch-warning))
+             (concat remote " "
+                     (propertize "remote does not exist"
+                                 'font-lock-face 'magit-branch-warning))))))
       (insert ?\n))))
 
 (defun magit-insert-tags-header ()
@@ -675,14 +654,13 @@ arguments are for internal use only."
     (when (or this-tag next-tag)
       (magit-insert-section (tag (or this-tag next-tag))
         (insert (format "%-10s" (if both-tags "Tags: " "Tag: ")))
-        (cl-flet ((insert-count
-                   (tag count face)
-                   (insert (concat (propertize tag 'font-lock-face 'magit-tag)
-                                   (and (> count 0)
-                                        (format " (%s)"
-                                                (propertize
-                                                 (format "%s" count)
-                                                 'font-lock-face face)))))))
+        (cl-flet ((insert-count (tag count face)
+                    (insert (concat (propertize tag 'font-lock-face 'magit-tag)
+                                    (and (> count 0)
+                                         (format " (%s)"
+                                                 (propertize
+                                                  (format "%s" count)
+                                                  'font-lock-face face)))))))
           (when this-tag  (insert-count this-tag this-cnt 'magit-branch-local))
           (when both-tags (insert ", "))
           (when next-tag  (insert-count next-tag next-cnt 'magit-tag)))
@@ -712,10 +690,10 @@ arguments are for internal use only."
 If no remote is configured for the current branch, then fall back
 showing the \"origin\" remote, or if that does not exist the first
 remote in alphabetic order."
-  (when-let ((name (magit-get-some-remote))
-             ;; Under certain configurations it's possible for url
-             ;; to be nil, when name is not, see #2858.
-             (url (magit-get "remote" name "url")))
+  (when-let* ((name (magit-get-some-remote))
+              ;; Under certain configurations it's possible for
+              ;; url to be nil, when name is not, see #2858.
+              (url (magit-get "remote" name "url")))
     (magit-insert-section (remote name)
       (insert (format "%-10s" "Remote: "))
       (insert (propertize name 'font-lock-face 'magit-branch-remote) ?\s)
@@ -725,8 +703,8 @@ remote in alphabetic order."
 
 (defvar magit-untracked-section-map
   (let ((map (make-sparse-keymap)))
-    (define-key map [remap magit-delete-thing] 'magit-discard)
-    (define-key map "s" 'magit-stage)
+    (magit-menu-set map [magit-stage-file]   #'magit-stage   "Stage files")
+    (magit-menu-set map [magit-delete-thing] #'magit-discard "Discard files")
     map)
   "Keymap for the `untracked' section.")
 

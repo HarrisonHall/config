@@ -1,11 +1,11 @@
 ;;; org-roam-utils.el --- Utilities for Org-roam -*- lexical-binding: t; -*-
 
-;; Copyright © 2020-2021 Jethro Kuan <jethrokuan95@gmail.com>
+;; Copyright © 2020-2022 Jethro Kuan <jethrokuan95@gmail.com>
 
 ;; Author: Jethro Kuan <jethrokuan95@gmail.com>
 ;; URL: https://github.com/org-roam/org-roam
 ;; Keywords: org-mode, roam, convenience
-;; Version: 2.1.0
+;; Version: 2.2.2
 ;; Package-Requires: ((emacs "26.1") (dash "2.13") (org "9.4"))
 
 ;; This file is NOT part of GNU Emacs.
@@ -34,6 +34,11 @@
 
 (require 'org-roam)
 
+(defun org-roam-require (libs)
+  "Require LIBS."
+  (dolist (lib libs)
+    (require lib nil 'noerror)))
+
 ;;; String utilities
 ;; TODO Refactor this.
 (defun org-roam-replace-string (old new s)
@@ -44,23 +49,81 @@
 (defun org-roam-quote-string (s)
   "Quotes string S."
   (->> s
-    (org-roam-replace-string "\\" "\\\\")
-    (org-roam-replace-string "\"" "\\\"")))
+       (org-roam-replace-string "\\" "\\\\")
+       (org-roam-replace-string "\"" "\\\"")))
+
+(defun org-roam-word-wrap (len s)
+  "If S is longer than LEN, wrap the words with newlines."
+  (declare (side-effect-free t))
+  (save-match-data
+    (with-temp-buffer
+      (insert s)
+      (let ((fill-column len))
+        (fill-region (point-min) (point-max)))
+      (buffer-substring (point-min) (point-max)))))
+
+(defun org-roam-string-equal (s1 s2)
+  "Return t if S1 and S2 are equal.
+Like `string-equal', but case-insensitive."
+  (and (= (length s1) (length s2))
+       (or (string-equal s1 s2)
+           (string-equal (downcase s1) (downcase s2)))))
+
+(defun org-roam-whitespace-content (s)
+  "Return the whitespace content at the end of S."
+  (with-temp-buffer
+    (let ((c 0))
+      (insert s)
+      (skip-chars-backward " \t\n")
+      (buffer-substring-no-properties
+       (point) (point-max)))))
+
+(defun org-roam-strip-comments (s)
+  "Strip Org comments from string S."
+  (with-temp-buffer
+    (insert s)
+    (goto-char (point-min))
+    (while (not (eobp))
+      (if (org-at-comment-p)
+          (delete-region (point-at-bol) (progn (forward-line) (point)))
+        (forward-line)))
+    (buffer-string)))
 
 ;;; List utilities
-(defmacro org-roam-plist-map! (fn plist)
-  "Map FN over PLIST, modifying it in-place."
-  (declare (indent 1))
-  (let ((plist-var (make-symbol "plist"))
-        (k (make-symbol "k"))
-        (v (make-symbol "v")))
-    `(let ((,plist-var (copy-sequence ,plist)))
-       (while ,plist-var
-         (setq ,k (pop ,plist-var))
-         (setq ,v (pop ,plist-var))
-         (setq ,plist (plist-put ,plist ,k (funcall ,fn ,k ,v)))))))
+(defun org-roam-plist-map! (fn plist)
+  "Map FN over PLIST, modifying it in-place and returning it.
+FN must take two arguments: the key and the value."
+  (let ((plist-index plist))
+    (while plist-index
+      (let ((key (pop plist-index)))
+        (setf (car plist-index) (funcall fn key (car plist-index))
+              plist-index (cdr plist-index)))))
+  plist)
+
+(defmacro org-roam-dolist-with-progress (spec msg &rest body)
+  "Loop over a list and report progress in the echo area.
+Like `dolist-with-progress-reporter', but falls back to `dolist'
+if the function does not yet exist.
+
+Evaluate BODY with VAR bound to each car from LIST, in turn.
+Then evaluate RESULT to get return value, default nil.
+
+MSG is a progress reporter object or a string.  In the latter
+case, use this string to create a progress reporter.
+
+SPEC is a list, as per `dolist'."
+  (declare (indent 2))
+  (if (fboundp 'dolist-with-progress-reporter)
+      `(dolist-with-progress-reporter ,spec ,msg ,@body)
+    `(dolist ,spec ,@body)))
 
 ;;; File utilities
+(defun org-roam-descendant-of-p (a b)
+  "Return t if A is descendant of B."
+  (unless (equal (file-truename a) (file-truename b))
+    (string-prefix-p (replace-regexp-in-string "^\\([A-Za-z]\\):" 'downcase (expand-file-name b) t t)
+                     (replace-regexp-in-string "^\\([A-Za-z]\\):" 'downcase (expand-file-name a) t t))))
+
 (defmacro org-roam-with-file (file keep-buf-p &rest body)
   "Execute BODY within FILE.
 If FILE is nil, execute BODY in the current buffer.
@@ -68,6 +131,7 @@ Kills the buffer if KEEP-BUF-P is nil, and FILE is not yet visited."
   (declare (indent 2) (debug t))
   `(let* (new-buf
           (auto-mode-alist nil)
+          (find-file-hook nil)
           (buf (or (and (not ,file)
                         (current-buffer)) ;If FILE is nil, use current buffer
                    (find-buffer-visiting ,file) ; If FILE is already visited, find buffer
@@ -76,11 +140,12 @@ Kills the buffer if KEEP-BUF-P is nil, and FILE is not yet visited."
                      (find-file-noselect ,file)))) ; Else, visit FILE and return buffer
           res)
      (with-current-buffer buf
-       (unless (equal major-mode 'org-mode)
+       (unless (derived-mode-p 'org-mode)
          (delay-mode-hooks
            (let ((org-inhibit-startup t)
                  (org-agenda-files nil))
-             (org-mode))))
+             (org-mode)
+             (hack-local-variables))))
        (setq res (progn ,@body))
        (unless (and new-buf (not ,keep-buf-p))
          (save-buffer)))
@@ -127,14 +192,20 @@ value (possibly nil). Adapted from `s-format'."
                  (let ((v (progn
                             (set-match-data saved-match-data)
                             (funcall replacer var default-val))))
-                   (if v (format "%s" v) (signal 'org-roam-format-resolve md)))
+                   (if v
+                       (format (apply #'propertize "%s" (text-properties-at 0 var)) v)
+                     (signal 'org-roam-format-resolve md)))
                (set-match-data replacer-match-data))))
-         template
+         (if (functionp template)
+             (funcall template)
+           template)
          ;; Need literal to make sure it works
          t t)
       (set-match-data saved-match-data))))
 
 ;;; Fontification
+(defvar org-ref-buffer-hacked)
+
 (defun org-roam-fontify-like-in-org-mode (s)
   "Fontify string S like in Org mode.
 Like `org-fontify-like-in-org-mode', but supports `org-ref'."
@@ -223,6 +294,45 @@ If BOUND, scan up to BOUND bytes of the buffer."
       (when (re-search-forward re bound t)
         (buffer-substring-no-properties (match-beginning 1) (match-end 1))))))
 
+(defun org-roam-end-of-meta-data (&optional full)
+  "Like `org-end-of-meta-data', but supports file-level metadata.
+
+When FULL is non-nil but not t, skip planning information,
+properties, clocking lines and logbook drawers.
+
+When optional argument FULL is t, skip everything above, and also
+skip keywords."
+  (org-back-to-heading-or-point-min t)
+  (when (org-at-heading-p) (forward-line))
+  ;; Skip planning information.
+  (when (looking-at-p org-planning-line-re) (forward-line))
+  ;; Skip property drawer.
+  (when (looking-at org-property-drawer-re)
+    (goto-char (match-end 0))
+    (forward-line))
+  ;; When FULL is not nil, skip more.
+  (when (and full (not (org-at-heading-p)))
+    (catch 'exit
+      (let ((end (save-excursion (outline-next-heading) (point)))
+            (re (concat "[ \t]*$" "\\|" org-clock-line-re)))
+        (while (not (eobp))
+          (cond ;; Skip clock lines.
+           ((looking-at-p re) (forward-line))
+           ;; Skip logbook drawer.
+           ((looking-at-p org-logbook-drawer-re)
+            (if (re-search-forward "^[ \t]*:END:[ \t]*$" end t)
+                (forward-line)
+              (throw 'exit t)))
+           ((looking-at-p org-drawer-regexp)
+            (if (re-search-forward "^[ \t]*:END:[ \t]*$" end t)
+                (forward-line)
+              (throw 'exit t)))
+           ;; When FULL is t, skip keywords too.
+           ((and (eq full t)
+                 (looking-at-p org-keyword-regexp))
+            (forward-line))
+           (t (throw 'exit t))))))))
+
 (defun org-roam-set-keyword (key value)
   "Set keyword KEY to VALUE.
 If the property is already set, it's value is replaced."
@@ -232,14 +342,13 @@ If the property is already set, it's value is replaced."
           (if (string-blank-p value)
               (kill-whole-line)
             (replace-match (concat " " value) 'fixedcase nil nil 1))
-        (while (and (not (eobp))
-                    (looking-at "^[#:]"))
-          (if (save-excursion (end-of-line) (eobp))
-              (progn
-                (end-of-line)
-                (insert "\n"))
-            (forward-line)
-            (beginning-of-line)))
+        (org-roam-end-of-meta-data 'drawers)
+        (if (save-excursion (end-of-line) (eobp))
+            (progn
+              (end-of-line)
+              (insert "\n"))
+          (forward-line)
+          (beginning-of-line))
         (insert "#+" key ": " value "\n")))))
 
 (defun org-roam-erase-keyword (keyword)
@@ -255,6 +364,18 @@ If the property is already set, it's value is replaced."
 (defun org-roam-add-property (val prop)
   "Add VAL value to PROP property for the node at point.
 Both, VAL and PROP are strings."
+  (org-roam-property-add prop val))
+
+(defun org-roam-remove-property (prop &optional val)
+  "Remove VAL value from PROP property for the node at point.
+Both VAL and PROP are strings.
+
+If VAL is not specified, user is prompted to select a value."
+  (org-roam-property-remove prop val))
+
+(defun org-roam-property-add (prop val)
+  "Add VAL value to PROP property for the node at point.
+Both, VAL and PROP are strings."
   (let* ((p (org-entry-get (point) prop))
          (lst (when p (split-string-and-unquote p)))
          (lst (if (memq val lst) lst (cons val lst)))
@@ -262,7 +383,7 @@ Both, VAL and PROP are strings."
     (org-set-property prop (combine-and-quote-strings lst))
     val))
 
-(defun org-roam-remove-property (prop &optional val)
+(defun org-roam-property-remove (prop &optional val)
   "Remove VAL value from PROP property for the node at point.
 Both VAL and PROP are strings.
 
@@ -275,6 +396,16 @@ If VAL is not specified, user is prompted to select a value."
         (org-set-property prop (combine-and-quote-strings lst))
       (org-delete-property prop))
     prop-to-remove))
+
+;;; Refs
+(defun org-roam-org-ref-path-to-keys (path)
+  "Return a list of keys given an org-ref cite: PATH.
+Accounts for both v2 and v3."
+  (cond ((fboundp 'org-ref-parse-cite-path)
+         (mapcar (lambda (cite) (plist-get cite :key))
+                 (plist-get (org-ref-parse-cite-path path) :references)))
+        ((fboundp 'org-ref-split-and-strip-string)
+         (org-ref-split-and-strip-string path))))
 
 ;;; Logs
 (defvar org-roam-verbose)
@@ -343,7 +474,8 @@ See <https://github.com/raxod502/straight.el/issues/520>."
                                          '("Doom" "Spacemacs" "N/A" "I don't know"))
                       (quit "N/A"))))
     (insert (format "- Org: %s\n" (org-version nil 'full)))
-    (insert (format "- Org-roam: %s" (org-roam-version)))))
+    (insert (format "- Org-roam: %s" (org-roam-version)))
+    (insert (format "- sqlite-connector: %s" org-roam-database-connector))))
 
 
 (provide 'org-roam-utils)

@@ -6,7 +6,7 @@ choice=$( echo -e $choices | rofi -dmenu -p "Screenshot Applications")
 case $choice in
     "screenshot")
         rm -f /tmp/tmp.png
-		scrot -s /tmp/tmp.png && xclip -selection clipboard -t image/png -i /tmp/tmp.png
+		    scrot -s --line mode=edge /tmp/tmp.png && xclip -selection clipboard -t image/png -i /tmp/tmp.png
         ;;
     "fullscreen screenshot")
         sleep .2

@@ -29,14 +29,10 @@ Custom builds of certain programs utilizing only the patches I need.
   * Minimal menu (new scripts use rofi)
 * dwm
   * Minimal tiling window manager
-* cava
-  * Audio visualizer
 * slock
   * Minimal lock screen
 * simple terminal (st)
   * Minimal (simple) terminal
-* tabbed
-  * Minimal tabbing application
 
 ### .config
 * dunst

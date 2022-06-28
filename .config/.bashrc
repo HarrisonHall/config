@@ -3,7 +3,7 @@
 # Custom aliases
 command -v ag &> /dev/null && alias ack="ag"
 alias anki="ANKI_NOHIGHDPI=1 anki"
-alias bat='bat --theme Nord'
+alias bat='bat --theme Nord --number'
 alias c='clear'
 alias cdtest="mkdir -p /tmp/test && cd /tmp/test"
 alias d='tmux detach-client'

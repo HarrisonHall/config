@@ -1,27 +1,24 @@
-;;; git-rebase.el --- Edit Git rebase files  -*- lexical-binding: t -*-
+;;; git-rebase.el --- Edit Git rebase files  -*- lexical-binding:t -*-
 
-;; Copyright (C) 2010-2021  The Magit Project Contributors
-;;
-;; You should have received a copy of the AUTHORS.md file which
-;; lists all contributors.  If not, see http://magit.vc/authors.
+;; Copyright (C) 2008-2022 The Magit Project Contributors
 
 ;; Author: Phil Jackson <phil@shellarchive.co.uk>
 ;; Maintainer: Jonas Bernoulli <jonas@bernoul.li>
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
 
-;; This file is free software; you can redistribute it and/or modify
-;; it under the terms of the GNU General Public License as published by
-;; the Free Software Foundation; either version 3, or (at your option)
-;; any later version.
-
-;; This file is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
-
+;; Magit is free software: you can redistribute it and/or modify it
+;; under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+;;
+;; Magit is distributed in the hope that it will be useful, but WITHOUT
+;; ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+;; or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
+;; License for more details.
+;;
 ;; You should have received a copy of the GNU General Public License
-;; along with this file.  If not, see <http://www.gnu.org/licenses/>.
+;; along with Magit.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
@@ -112,67 +109,72 @@
   :group 'faces
   :group 'git-rebase)
 
-(defface git-rebase-hash '((t (:inherit magit-hash)))
+(defface git-rebase-hash '((t :inherit magit-hash))
   "Face for commit hashes."
   :group 'git-rebase-faces)
 
-(defface git-rebase-label '((t (:inherit magit-refname)))
+(defface git-rebase-label '((t :inherit magit-refname))
   "Face for labels in label, merge, and reset lines."
   :group 'git-rebase-faces)
 
-(defface git-rebase-description nil
+(defface git-rebase-description '((t nil))
   "Face for commit descriptions."
   :group 'git-rebase-faces)
 
+(defface git-rebase-action
+  '((t :inherit font-lock-keyword-face))
+  "Face for action keywords."
+  :group 'git-rebase-faces)
+
 (defface git-rebase-killed-action
-  '((t (:inherit font-lock-comment-face :strike-through t)))
+  '((t :inherit font-lock-comment-face :strike-through t))
   "Face for commented commit action lines."
   :group 'git-rebase-faces)
 
 (defface git-rebase-comment-hash
-  '((t (:inherit git-rebase-hash :weight bold)))
+  '((t :inherit git-rebase-hash :weight bold))
   "Face for commit hashes in commit message comments."
   :group 'git-rebase-faces)
 
 (defface git-rebase-comment-heading
   '((t :inherit font-lock-keyword-face))
   "Face for headings in rebase message comments."
-  :group 'git-commit-faces)
+  :group 'git-rebase-faces)
 
 ;;; Keymaps
 
 (defvar git-rebase-mode-map
   (let ((map (make-sparse-keymap)))
     (set-keymap-parent map special-mode-map)
-    (define-key map (kbd "C-m") 'git-rebase-show-commit)
-    (define-key map (kbd   "p") 'git-rebase-backward-line)
-    (define-key map (kbd   "n") 'forward-line)
-    (define-key map (kbd "M-p") 'git-rebase-move-line-up)
-    (define-key map (kbd "M-n") 'git-rebase-move-line-down)
-    (define-key map (kbd   "c") 'git-rebase-pick)
-    (define-key map (kbd   "k") 'git-rebase-kill-line)
-    (define-key map (kbd "C-k") 'git-rebase-kill-line)
-    (define-key map (kbd "b") 'git-rebase-break)
-    (define-key map (kbd "e") 'git-rebase-edit)
-    (define-key map (kbd "l") 'git-rebase-label)
-    (define-key map (kbd "MM") 'git-rebase-merge)
-    (define-key map (kbd "Mt") 'git-rebase-merge-toggle-editmsg)
-    (define-key map (kbd "m") 'git-rebase-edit)
-    (define-key map (kbd "f") 'git-rebase-fixup)
-    (define-key map (kbd "q") 'undefined)
-    (define-key map (kbd "r") 'git-rebase-reword)
-    (define-key map (kbd "w") 'git-rebase-reword)
-    (define-key map (kbd "s") 'git-rebase-squash)
-    (define-key map (kbd "t") 'git-rebase-reset)
-    (define-key map (kbd "x") 'git-rebase-exec)
-    (define-key map (kbd "y") 'git-rebase-insert)
-    (define-key map (kbd "z") 'git-rebase-noop)
-    (define-key map (kbd "SPC")     'git-rebase-show-or-scroll-up)
-    (define-key map (kbd "DEL")     'git-rebase-show-or-scroll-down)
-    (define-key map (kbd "C-x C-t") 'git-rebase-move-line-up)
-    (define-key map [M-up]          'git-rebase-move-line-up)
-    (define-key map [M-down]        'git-rebase-move-line-down)
-    (define-key map [remap undo]    'git-rebase-undo)
+    (define-key map (kbd "C-m") #'git-rebase-show-commit)
+    (define-key map (kbd   "p") #'git-rebase-backward-line)
+    (define-key map (kbd   "n") #'forward-line)
+    (define-key map (kbd "M-p") #'git-rebase-move-line-up)
+    (define-key map (kbd "M-n") #'git-rebase-move-line-down)
+    (define-key map (kbd   "c") #'git-rebase-pick)
+    (define-key map (kbd   "k") #'git-rebase-kill-line)
+    (define-key map (kbd "C-k") #'git-rebase-kill-line)
+    (define-key map (kbd "b")   #'git-rebase-break)
+    (define-key map (kbd "e")   #'git-rebase-edit)
+    (define-key map (kbd "l")   #'git-rebase-label)
+    (define-key map (kbd "M M") #'git-rebase-merge)
+    (define-key map (kbd "M t") #'git-rebase-merge-toggle-editmsg)
+    (define-key map (kbd "m")   #'git-rebase-edit)
+    (define-key map (kbd "f")   #'git-rebase-fixup)
+    (define-key map (kbd "q")   #'undefined)
+    (define-key map (kbd "r")   #'git-rebase-reword)
+    (define-key map (kbd "w")   #'git-rebase-reword)
+    (define-key map (kbd "s")   #'git-rebase-squash)
+    (define-key map (kbd "t")   #'git-rebase-reset)
+    (define-key map (kbd "x")   #'git-rebase-exec)
+    (define-key map (kbd "y")   #'git-rebase-insert)
+    (define-key map (kbd "z")   #'git-rebase-noop)
+    (define-key map (kbd "SPC")     #'git-rebase-show-or-scroll-up)
+    (define-key map (kbd "DEL")     #'git-rebase-show-or-scroll-down)
+    (define-key map (kbd "C-x C-t") #'git-rebase-move-line-up)
+    (define-key map [M-up]          #'git-rebase-move-line-up)
+    (define-key map [M-down]        #'git-rebase-move-line-down)
+    (define-key map [remap undo]    #'git-rebase-undo)
     map)
   "Keymap for Git-Rebase mode.")
 
@@ -313,7 +315,7 @@ instance with all nil values is returned."
                              git-rebase-line-regexps)))
         (git-rebase-action
          :action-type    type
-         :action         (when-let ((action (match-string-no-properties 1)))
+         :action         (and-let* ((action (match-string-no-properties 1)))
                            (or (cdr (assoc action git-rebase-short-options))
                                action))
          :action-options (match-string-no-properties 2)
@@ -443,7 +445,7 @@ current line."
     (when bounds
       (magit-section-make-overlay (car bounds) (cadr bounds)
                                   'magit-section-heading-selection))
-    (if (and bounds (not magit-keep-region-overlay))
+    (if (and bounds (not magit-section-keep-region-overlay))
         (funcall (default-value 'redisplay-unhighlight-region-function) rol)
       (funcall (default-value 'redisplay-highlight-region-function)
                start end window rol))))
@@ -634,15 +636,15 @@ Like `undo' but works in read-only buffers."
     (undo arg)))
 
 (defun git-rebase--show-commit (&optional scroll)
-  (let ((disable-magit-save-buffers t))
+  (let ((magit--disable-save-buffers t))
     (save-excursion
       (goto-char (line-beginning-position))
       (--if-let (with-slots (action-type target) (git-rebase-current-line)
                   (and (eq action-type 'commit)
                        target))
           (pcase scroll
-            (`up   (magit-diff-show-or-scroll-up))
-            (`down (magit-diff-show-or-scroll-down))
+            ('up   (magit-diff-show-or-scroll-up))
+            ('down (magit-diff-show-or-scroll-down))
             (_     (apply #'magit-show-commit it
                           (magit-diff-arguments 'magit-revision-mode))))
         (ding)))))
@@ -684,10 +686,10 @@ Like `forward-line' but go into the opposite direction."
 (define-derived-mode git-rebase-mode special-mode "Git Rebase"
   "Major mode for editing of a Git rebase file.
 
-Rebase files are generated when you run 'git rebase -i' or run
+Rebase files are generated when you run \"git rebase -i\" or run
 `magit-interactive-rebase'.  They describe how Git should perform
 the rebase.  See the documentation for git-rebase (e.g., by
-running 'man git-rebase' at the command line) for details."
+running \"man git-rebase\" at the command line) for details."
   :group 'git-rebase
   (setq comment-start (or (magit-get "core.commentChar") "#"))
   (setq git-rebase-comment-re (concat "^" (regexp-quote comment-start)))
@@ -700,11 +702,11 @@ running 'man git-rebase' at the command line) for details."
     (with-editor-mode 1))
   (when git-rebase-confirm-cancel
     (add-hook 'with-editor-cancel-query-functions
-              'git-rebase-cancel-confirm nil t))
-  (setq-local redisplay-highlight-region-function 'git-rebase-highlight-region)
-  (setq-local redisplay-unhighlight-region-function 'git-rebase-unhighlight-region)
-  (add-hook 'with-editor-pre-cancel-hook  'git-rebase-autostash-save  nil t)
-  (add-hook 'with-editor-post-cancel-hook 'git-rebase-autostash-apply nil t)
+              #'git-rebase-cancel-confirm nil t))
+  (setq-local redisplay-highlight-region-function #'git-rebase-highlight-region)
+  (setq-local redisplay-unhighlight-region-function #'git-rebase-unhighlight-region)
+  (add-hook 'with-editor-pre-cancel-hook  #'git-rebase-autostash-save  nil t)
+  (add-hook 'with-editor-post-cancel-hook #'git-rebase-autostash-apply nil t)
   (setq imenu-prev-index-position-function
         #'magit-imenu--rebase-prev-index-position-function)
   (setq imenu-extract-index-name-function
@@ -731,25 +733,25 @@ running 'man git-rebase' at the command line) for details."
 (defun git-rebase-mode-font-lock-keywords ()
   "Font lock keywords for Git-Rebase mode."
   `((,(concat "^" (cdr (assq 'commit git-rebase-line-regexps)))
-     (1 'font-lock-keyword-face)
+     (1 'git-rebase-action)
      (3 'git-rebase-hash)
      (4 'git-rebase-description))
     (,(concat "^" (cdr (assq 'exec git-rebase-line-regexps)))
-     (1 'font-lock-keyword-face)
+     (1 'git-rebase-action)
      (3 'git-rebase-description))
     (,(concat "^" (cdr (assq 'bare git-rebase-line-regexps)))
-     (1 'font-lock-keyword-face))
+     (1 'git-rebase-action))
     (,(concat "^" (cdr (assq 'label git-rebase-line-regexps)))
-     (1 'font-lock-keyword-face)
+     (1 'git-rebase-action)
      (3 'git-rebase-label)
      (4 'font-lock-comment-face))
     ("^\\(m\\(?:erge\\)?\\) -[Cc] \\([^ \n]+\\) \\([^ \n]+\\)\\( #.*\\)?"
-     (1 'font-lock-keyword-face)
+     (1 'git-rebase-action)
      (2 'git-rebase-hash)
      (3 'git-rebase-label)
      (4 'font-lock-comment-face))
     ("^\\(m\\(?:erge\\)?\\) \\([^ \n]+\\)"
-     (1 'font-lock-keyword-face)
+     (1 'git-rebase-action)
      (2 'git-rebase-label))
     (,(concat git-rebase-comment-re " *"
               (cdr (assq 'commit git-rebase-line-regexps)))
@@ -781,47 +783,78 @@ By default, this is the same except for the \"pick\" command."
                   nil t))
         (goto-char (line-beginning-position))
         (pcase-dolist (`(,cmd . ,desc) git-rebase-command-descriptions)
-          (insert (format "%s %-8s %s\n"
+          (insert (format (propertize "%s %s %s\n"
+                                      'font-lock-face 'font-lock-comment-face)
                           comment-start
-                          (substitute-command-keys (format "\\[%s]" cmd))
+                          (string-pad
+                           (substitute-command-keys (format "\\[%s]" cmd)) 8)
                           desc)))
-        (while (re-search-forward (concat git-rebase-comment-re
-                                          "\\(  ?\\)\\([^\n,],\\) "
-                                          "\\([^\n ]+\\) ")
-                                  nil t)
-          (let ((cmd (intern (concat "git-rebase-" (match-string 3)))))
-            (if (not (fboundp cmd))
-                (delete-region (line-beginning-position) (1+ (line-end-position)))
-              (replace-match " " t t nil 1)
-              (replace-match
-               (format "%-8s"
-                       (mapconcat #'key-description
-                                  (--remove (eq (elt it 0) 'menu-bar)
-                                            (reverse (where-is-internal
-                                                      cmd git-rebase-mode-map)))
-                                  ", "))
-               t t nil 2))))))))
+        (while (re-search-forward
+                (concat git-rebase-comment-re "\\(?:"
+                        "\\( \\.?     *\\)\\|"
+                        "\\( +\\)\\([^\n,],\\) \\([^\n ]+\\) \\)")
+                nil t)
+          (if (match-string 1)
+              (replace-match (make-string 10 ?\s) t t nil 1)
+            (let ((cmd (intern (concat "git-rebase-" (match-string 4)))))
+              (if (not (fboundp cmd))
+                  (delete-region (line-beginning-position)
+                                 (1+ (line-end-position)))
+                (add-text-properties (line-beginning-position)
+                                     (1+ (line-end-position))
+                                     '(font-lock-face font-lock-comment-face))
+                (replace-match " " t t nil 2)
+                (replace-match
+                 (string-pad
+                  (mapconcat (lambda (key)
+                               (save-match-data
+                                 (substitute-command-keys
+                                  (format "\\`%s'" (key-description key)))))
+                             (cl-remove-if (lambda (key) (eq (elt key 0) 'menu-bar))
+                                           (reverse (where-is-internal
+                                                     cmd git-rebase-mode-map)))
+                             ", ")
+                  8)
+                 t t nil 3)))))))))
 
-(add-hook 'git-rebase-mode-hook 'git-rebase-mode-show-keybindings t)
+(add-hook 'git-rebase-mode-hook #'git-rebase-mode-show-keybindings t)
 
 (defun git-rebase-mode-disable-before-save-hook ()
   (set (make-local-variable 'before-save-hook) nil))
 
-(add-hook 'git-rebase-mode-hook 'git-rebase-mode-disable-before-save-hook)
+(add-hook 'git-rebase-mode-hook #'git-rebase-mode-disable-before-save-hook)
 
 ;;;###autoload
 (defconst git-rebase-filename-regexp "/git-rebase-todo\\'")
 ;;;###autoload
 (add-to-list 'auto-mode-alist
-             (cons git-rebase-filename-regexp 'git-rebase-mode))
+             (cons git-rebase-filename-regexp #'git-rebase-mode))
 
 (add-to-list 'with-editor-server-window-alist
-             (cons git-rebase-filename-regexp 'switch-to-buffer))
+             (cons git-rebase-filename-regexp #'switch-to-buffer))
 
 (with-eval-after-load 'recentf
   (add-to-list 'recentf-exclude git-rebase-filename-regexp))
 
 (add-to-list 'with-editor-file-name-history-exclude git-rebase-filename-regexp)
+
+;;; Imenu Support
+
+(defun magit-imenu--rebase-prev-index-position-function ()
+  "Move point to previous commit in git-rebase buffer.
+Used as a value for `imenu-prev-index-position-function'."
+  (catch 'found
+    (while (not (bobp))
+      (git-rebase-backward-line)
+      (when (git-rebase-line-p)
+        (throw 'found t)))))
+
+(defun magit-imenu--rebase-extract-index-name-function ()
+  "Return imenu name for line at point.
+Point should be at the beginning of the line.  This function
+is used as a value for `imenu-extract-index-name-function'."
+  (buffer-substring-no-properties (line-beginning-position)
+                                  (line-end-position)))
 
 ;;; _
 (provide 'git-rebase)

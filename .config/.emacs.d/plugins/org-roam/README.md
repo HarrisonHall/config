@@ -39,7 +39,7 @@ detailed information, please read the [manual][docs].
 
 ### Using `package.el`
 <details>
-<summary>Toggle instuctions</summary>
+<summary>Toggle instructions</summary>
 
 You can install `org-roam` from [MELPA](https://melpa.org/) or [MELPA
 Stable](https://stable.melpa.org/) using `package.el`:
@@ -47,35 +47,11 @@ Stable](https://stable.melpa.org/) using `package.el`:
 ```
 M-x package-install RET org-roam RET
 ```
-
-Here's a very basic sample for configuration of `org-roam` using `use-package`:
-
-```emacs-lisp
-(use-package org-roam
-  :ensure t
-  :custom
-  (org-roam-directory (file-truename "/path/to/org-files/"))
-  :bind (("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n f" . org-roam-node-find)
-         ("C-c n g" . org-roam-graph)
-         ("C-c n i" . org-roam-node-insert)
-         ("C-c n c" . org-roam-capture)
-         ;; Dailies
-         ("C-c n j" . org-roam-dailies-capture-today))
-  :config
-  (org-roam-db-autosync-mode)
-  ;; If using org-roam-protocol
-  (require 'org-roam-protocol))
-```
-
-Note that the `file-truename` function is only necessary when you use symbolic
-link to `org-roam-directory`. Org-roam won't automatically resolve symbolic link
-to the directory.
 </details>
 
 ### Using `straight.el`
 <details>
-<summary>Toggle instuctions</summary>
+<summary>Toggle instructions</summary>
 
 Installation from MELPA or MELPA Stable using `straight.el`:
 
@@ -115,7 +91,7 @@ next sample will get you there:
 
 ### Using Doom Emacs
 <details>
-<summary>Toggle instuctions</summary>
+<summary>Toggle instructions</summary>
 
 Doom's `:lang org` module comes with support for `org-roam`, but it's not
 enabled by default. To activate it pass `+roam2` flag to `org` module in your
@@ -198,6 +174,33 @@ Org-roam also comes with `.texi` files to integrate with Emacs' built-in Info
 system. Read the manual to find more details for how to install them manually.
 </details>
 
+## Configuration
+
+Here's a very basic sample for configuration of `org-roam` using `use-package`:
+
+```emacs-lisp
+(use-package org-roam
+  :ensure t
+  :custom
+  (org-roam-directory (file-truename "/path/to/org-files/"))
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n g" . org-roam-graph)
+         ("C-c n i" . org-roam-node-insert)
+         ("C-c n c" . org-roam-capture)
+         ;; Dailies
+         ("C-c n j" . org-roam-dailies-capture-today))
+  :config
+  ;; If you're using a vertical completion framework, you might want a more informative completion interface
+  (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+  (org-roam-db-autosync-mode)
+  ;; If using org-roam-protocol
+  (require 'org-roam-protocol))
+```
+
+Note that the `file-truename` function is only necessary when you use symbolic
+link to `org-roam-directory`. Org-roam won't automatically resolve symbolic link
+to the directory.
 ## Getting Started
 
 [David Wilson](https://github.com/daviwil) of [System
@@ -225,7 +228,7 @@ it has not already been addressed on [GitHub][issues] or on
 
 - [Jethro Kuan](https://braindump.jethro.dev/)
   ([Source](https://github.com/jethrokuan/braindump/tree/master/org))
-- [Alexey Shmalko](https://braindump.rasen.dev/)
+- [Alexey Shmalko](https://www.alexeyshmalko.com/)
 - [Sidharth Arya](https://sidhartharya.github.io/braindump/index.html)
 
 ## Contributing
@@ -249,6 +252,6 @@ General Public License, Version 3.
 [release]: https://github.com/org-roam/org-roam/releases
 [docs]: https://www.orgroam.com/manual.html
 [discourse]: https://org-roam.discourse.group/
-[slack]: https://join.slack.com/t/orgroam/shared_invite/zt-deoqamys-043YQ~s5Tay3iJ5QRI~Lxg
+[slack]: https://join.slack.com/t/orgroam/shared_invite/zt-wuoize1z-x3UyQnQ0WHF0RhuEQ2NLnQ
 [issues]: https://github.com/org-roam/org-roam/issues
 [faq]: https://www.orgroam.com/manual.html#FAQ

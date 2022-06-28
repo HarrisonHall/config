@@ -1,12 +1,12 @@
 #! /bin/bash
 
 # Start notifications
-dunst &
+pgrep dunst || dunst &
 
 # Start polkit poller
 ## This is important in case a user application needs to run something with higher
 ## privileges
-lxqt-policykit-agent &
+pgrep lxqt-policykit-agent || lxqt-policykit-agent &
 
 # Do custom macbook script
 if lspci | grep Apple; then
@@ -14,16 +14,11 @@ if lspci | grep Apple; then
 fi
 
 # Start emacs
-#echo "Starting emacs"
-#emacs --daemon &
+pgrep emacs || emacs --daemon &
 
 # Get monitors set up
 source ~/.screenlayout/default.sh
 feh --bg-scale ~/media/pictures/Wallpapers/clear_mountain.jpg
 
 # Start compositor
-if pacman -Qs picom-tryone-git; then
-	picom --experimental-backends --backend glx --config ~/config/.config/picom/picom.conf --daemon &
-elif pacman -Qs picom; then
-	picom --config ~/config/.config/picom/picom.conf --daemon &
-fi
+pgrep picom || picom --config ~/config/.config/picom/picom.conf --daemon --experimental-backends

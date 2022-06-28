@@ -1,12 +1,12 @@
 ;;; org-roam-migrate.el --- Migration utilities from v1 to v2 -*- coding: utf-8; lexical-binding: t; -*-
 
-;; Copyright © 2020-2021 Jethro Kuan <jethrokuan95@gmail.com>
+;; Copyright © 2020-2022 Jethro Kuan <jethrokuan95@gmail.com>
 
 ;; Author: Jethro Kuan <jethrokuan95@gmail.com>
 ;; URL: https://github.com/org-roam/org-roam
 ;; Keywords: org-mode, roam, convenience
-;; Version: 2.1.0
-;; Package-Requires: ((emacs "26.1") (dash "2.13") (f "0.17.2") (org "9.4") (emacsql "3.0.0") (emacsql-sqlite "1.0.0") (magit-section "3.0.0"))
+;; Version: 2.2.2
+;; Package-Requires: ((emacs "26.1") (dash "2.13") (org "9.4") (emacsql "3.0.0") (emacsql-sqlite "1.0.0") (magit-section "3.0.0"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -33,48 +33,6 @@
 ;;
 ;;; Code:
 (require 'org-roam)
-
-;;; v1 breaking warning
-(defvar org-roam-v2-ack nil
-  "When set to t, won't display the annoying warning message about the upgrade.
-Need to be set before the package is loaded, otherwise won't take
-any affect.")
-
-(unless org-roam-v2-ack
-  (lwarn 'org-roam :error "
-------------------------------------
-WARNING: You're now on Org-roam v2!
-------------------------------------
-
-You may have arrived here from a package upgrade. Please read the
-wiki entry at
-%s
-for an overview of the major changes.
-
-Notes taken in v1 are incompatible with v2, but you can upgrade
-them to the v2 format via a simple command. To migrate your
-notes, first make sure you're on at least Org 9.4 (check with
-C-h v org-version) and set your org-roam-directory to your notes:
-
-(setq org-roam-directory \"path/to/org/files\")
-
-then, run:
-
-  M-x org-roam-migrate-wizard
-
-If you wish to stay on v1, v1 is unfortunately not distributed on
-MELPA. See org-roam/org-roam-v1 on GitHub on how to install v1.
-
-If you've gone through the migration steps (if necessary), and
-know what you're doing set `org-roam-v2-ack' to `t' to disable
-this warning. You can do so by adding:
-
-(setq org-roam-v2-ack t)
-
-To your init file.
-
-"
-         "https://github.com/org-roam/org-roam/wiki/Hitchhiker's-Rough-Guide-to-Org-roam-V2"))
 
 ;;; Migration wizard (v1 -> v2)
 ;;;###autoload

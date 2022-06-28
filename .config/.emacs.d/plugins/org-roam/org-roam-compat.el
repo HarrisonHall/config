@@ -1,11 +1,11 @@
 ;;; org-roam-compat.el --- Backward compatibility code -*- coding: utf-8; lexical-binding: t; -*-
 
-;; Copyright © 2020-2021 Jethro Kuan <jethrokuan95@gmail.com>
+;; Copyright © 2020-2022 Jethro Kuan <jethrokuan95@gmail.com>
 
 ;; Author: Jethro Kuan <jethrokuan95@gmail.com>
 ;; URL: https://github.com/org-roam/org-roam
 ;; Keywords: org-mode, roam, convenience
-;; Version: 2.1.0
+;; Version: 2.2.2
 ;; Package-Requires: ((emacs "26.1"))
 
 ;; This file is NOT part of GNU Emacs.
@@ -220,6 +220,18 @@ nodes." org-id-locations-file)
 (define-obsolete-function-alias
   'org-roam-dailies-find-date
   'org-roam-dailies-goto-date "org-roam 2.0")
+
+(define-obsolete-function-alias
+  'org-roam-add-property
+  'org-roam-property-add "org-roam 2.1")
+
+(define-obsolete-function-alias
+  'org-roam-remove-property
+  'org-roam-property-remove "org-roam 2.1")
+
+(define-obsolete-variable-alias
+  'org-roam-mode-section-functions
+  'org-roam-mode-sections "org-roam 2.2.0")
 
 ;;; Obsolete functions
 (make-obsolete 'org-roam-get-keyword 'org-collect-keywords "org-roam 2.0")

@@ -5,6 +5,7 @@
 $ins arandr  # xrandr display gui
 $ins feh  # image viewer
 $ins evince  # pdf viewer
+$ins inetutils  # Internet utils
 $ins ipython  # better python
 $ins jupyter  # python notebook
 $ins libxss lib32-libxss  # for dunst, xscreensaver
@@ -30,13 +31,12 @@ sudo pip install jupyterthemes  # Jupyter themes
 jt -t chesterish -dfonts -T  # Dark blue jupyter theme
 
 ## Build programs
-$ins inetutils
+
 cd apps/dmenu; make;  sudo make; sudo make install; cd ../..;
 cd apps/dunst;  sudo make; sudo make install; cd ../..;
 cd apps/dwm; sudo make; sudo make install; cd ../..;
 cd apps/slock;  sudo make; sudo make install; cd ../..;
 cd apps/st;  sudo make; sudo make install; cd ../..;
-cd apps/tabbed;  sudo make; sudo make install; cd ../..;
 
 ## Fit simlinks
 ### Dunst
@@ -53,7 +53,7 @@ cd apps/tabbed;  sudo make; sudo make install; cd ../..;
 [ ! -f /usr/share/xsessions/dwm.desktop ] && sudo cp ${CONFIG_DIR}/.config/xsessions/dwm.desktop /usr/share/xsessions/dwm.desktop
 
 ### DWM
-[ ! -d ~/.config/dwm ] && ln -s ${CONFIG_DIR}/.config/dwm ~/dwm
+[ ! -d ~/.config/dwm ] && ln -s ${CONFIG_DIR}/.config/dwm ~/.config/dwm
 
 ### Zathura (pdf)
 [ ! -d ~/.config/zathura ] && ln -s ${CONFIG_DIR}/.config/zathura ~/.config/zathura

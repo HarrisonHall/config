@@ -1,10 +1,10 @@
 ;;; org-roam-protocol.el --- Protocol handler for roam:// links  -*- coding: utf-8; lexical-binding: t; -*-
 
-;; Copyright © 2020-2021 Jethro Kuan <jethrokuan95@gmail.com>
+;; Copyright © 2020-2022 Jethro Kuan <jethrokuan95@gmail.com>
 ;; Author: Jethro Kuan <jethrokuan95@gmail.com>
 ;; URL: https://github.com/org-roam/org-roam
 ;; Keywords: org-mode, roam, convenience
-;; Version: 2.1.0
+;; Version: 2.2.2
 ;; Package-Requires: ((emacs "26.1") (org "9.4") (org-roam "2.1"))
 
 ;; This file is NOT part of GNU Emacs.
@@ -141,12 +141,13 @@ It opens or creates a note with the given ref.
                                                               (plist-get info :ref)))
                         :initial (or (plist-get info :body) ""))
   (raise-frame)
-  (org-roam-capture-
-   :keys (plist-get info :template)
-   :node (org-roam-node-create :title (plist-get info :title))
-   :info (list :ref (plist-get info :ref)
-               :body (plist-get info :body))
-   :templates org-roam-capture-ref-templates)
+  (let ((org-capture-link-is-already-stored t))
+    (org-roam-capture-
+     :keys (plist-get info :template)
+     :node (org-roam-node-create :title (plist-get info :title))
+     :info (list :ref (plist-get info :ref)
+                 :body (plist-get info :body))
+     :templates org-roam-capture-ref-templates))
   nil)
 
 (defun org-roam-protocol-open-node (info)
@@ -167,25 +168,6 @@ org-protocol://roam-node?node=uuid"
       org-protocol-protocol-alist)
 (push '("org-roam-node"  :protocol "roam-node"   :function org-roam-protocol-open-node)
       org-protocol-protocol-alist)
-
-;;; Capture implementation
-(add-hook 'org-roam-capture-preface-hook #'org-roam-protocol--try-capture-to-ref-h)
-(defun org-roam-protocol--try-capture-to-ref-h ()
-  "Try to capture to an existing node that match the ref."
-  (when-let ((node (and (plist-get org-roam-capture--info :ref)
-                        (org-roam-node-from-ref
-                         (plist-get org-roam-capture--info :ref)))))
-    (set-buffer (org-capture-target-buffer (org-roam-node-file node)))
-    (goto-char (org-roam-node-point node))
-    (widen)
-    (org-roam-node-id node)))
-
-(add-hook 'org-roam-capture-new-node-hook #'org-roam-protocol--insert-captured-ref-h)
-(defun org-roam-protocol--insert-captured-ref-h ()
-  "Insert the ref if any."
-  (when-let ((ref (plist-get org-roam-capture--info :ref)))
-    (org-roam-ref-add ref)))
-
 
 (provide 'org-roam-protocol)
 

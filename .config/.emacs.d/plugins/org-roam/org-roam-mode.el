@@ -1,12 +1,12 @@
 ;;; org-roam-mode.el --- Major mode for special Org-roam buffers -*- lexical-binding: t -*-
 
-;; Copyright © 2020-2021 Jethro Kuan <jethrokuan95@gmail.com>
+;; Copyright © 2020-2022 Jethro Kuan <jethrokuan95@gmail.com>
 
 ;; Author: Jethro Kuan <jethrokuan95@gmail.com>
 ;; URL: https://github.com/org-roam/org-roam
 ;; Keywords: org-mode, roam, convenience
-;; Version: 2.1.0
-;; Package-Requires: ((emacs "26.1") (dash "2.13") (f "0.17.2") (org "9.4") (emacsql "3.0.0") (emacsql-sqlite "1.0.0") (magit-section "3.0.0"))
+;; Version: 2.2.2
+;; Package-Requires: ((emacs "26.1") (dash "2.13") (org "9.4") (emacsql "3.0.0") (emacsql-sqlite "1.0.0") (magit-section "3.0.0"))
 
 ;; This file is NOT part of GNU Emacs.
 
@@ -39,12 +39,50 @@
 (defvar org-ref-buffer-hacked)
 
 ;;; Options
-(defcustom org-roam-mode-section-functions (list #'org-roam-backlinks-section
-                                                 #'org-roam-reflinks-section)
-  "Functions that insert sections in the `org-roam-mode' based buffers.
-Each function is called with one argument, which is an
-`org-roam-node' for which the buffer will be constructed for.
-Normally this node is `org-roam-buffer-current-node'."
+(defcustom org-roam-mode-sections (list #'org-roam-backlinks-section
+                                        #'org-roam-reflinks-section)
+  "A list of sections for the `org-roam-mode' based buffers.
+Each section is a function that is passed the an `org-roam-node'
+for which the section will be constructed for as the first
+argument. Normally this node is `org-roam-buffer-current-node'.
+The function may also accept other optional arguments. Each item
+in the list is either:
+
+1. A function, which is called only with the `org-roam-node' as the argument
+2. A list, containing the function and the optional arguments.
+
+For example, one can add
+
+    (org-roam-backlinks-section :unique t)
+
+to the list to pass :unique t to the section-rendering function."
+  :group 'org-roam
+  :type `(repeat (choice (symbol :tag "Function")
+                         (list :tag "Function with arguments"
+                               (symbol :tag "Function")
+                               (repeat :tag "Arguments" :inline t (sexp :tag "Arg"))))))
+
+(defcustom org-roam-buffer-postrender-functions (list)
+  "Functions to run after the Org-roam buffer is rendered.
+Each function accepts no arguments, and is run with the Org-roam
+buffer as the current buffer."
+  :group 'org-roam
+  :type 'hook)
+
+(defcustom org-roam-preview-function #'org-roam-preview-default-function
+  "The preview function to use to populate the Org-roam buffer.
+
+The function takes no arguments, but the point is temporarily set
+to the exact location of the backlink."
+  :group 'org-roam
+  :type 'function)
+
+(defcustom org-roam-preview-postprocess-functions (list #'org-roam-strip-comments)
+  "A list of functions to postprocess the preview content.
+
+Each function takes a single argument, the string for the preview
+content, and returns the post-processed string. The functions are
+applied in order of appearance in the list."
   :group 'org-roam
   :type 'hook)
 
@@ -144,7 +182,7 @@ This mode is used by special Org-roam buffers, such as persistent
 `org-roam-buffer' and dedicated Org-roam buffers
 \(`org-roam-buffer-display-dedicated'), which render the
 information in a section-like manner (see
-`org-roam-mode-section-functions'), with which the user can
+`org-roam-mode-sections'), with which the user can
 interact with."
   :group 'org-roam
   (face-remap-add-relative 'header-line 'org-roam-header-line))
@@ -160,7 +198,8 @@ value shows the current node in the persistent `org-roam-buffer'.")
 
 (defvar org-roam-buffer-current-directory nil
   "The `org-roam-directory' value of `org-roam-buffer-current-node'.
-Set both, locally and globally in the same way as `org-roam-buffer-current-node'.")
+Set both, locally and globally in the same way as
+`org-roam-buffer-current-node'.")
 
 (put 'org-roam-buffer-current-directory 'permanent-local t)
 
@@ -203,7 +242,15 @@ buffer."
      (org-roam-node-title org-roam-buffer-current-node))
     (magit-insert-section (org-roam)
       (magit-insert-heading)
-      (run-hook-with-args 'org-roam-mode-section-functions org-roam-buffer-current-node))
+      (dolist (section org-roam-mode-sections)
+        (pcase section
+          ((pred functionp)
+           (funcall section org-roam-buffer-current-node))
+          (`(,fn . ,args)
+           (apply fn (cons org-roam-buffer-current-node args)))
+          (_
+           (user-error "Invalid `org-roam-mode-sections' specification")))))
+    (run-hooks 'org-roam-buffer-postrender-functions)
     (goto-char 0)))
 
 (defun org-roam-buffer-set-header-line-format (string)
@@ -263,7 +310,7 @@ To toggle its display use `org-roam-buffer-toggle' command.")
   (pcase (org-roam-buffer--visibility)
     ('visible
      (progn
-       (delete-window (get-buffer-window org-roam-buffer))
+       (quit-window nil (get-buffer-window org-roam-buffer))
        (remove-hook 'post-command-hook #'org-roam-buffer--redisplay-h)))
     ((or 'exists 'none)
      (progn
@@ -397,87 +444,29 @@ In interactive calls OTHER-WINDOW is set with
     (when (org-invisible-p) (org-show-context))
     buf))
 
-(defun org-roam-preview-get-contents (file point)
-  "Get preview content for FILE at POINT."
+(defun org-roam-preview-default-function ()
+  "Return the preview content at point.
+
+This function returns the all contents under the current
+headline, up to the next headline."
+  (let ((beg (save-excursion
+               (org-roam-end-of-meta-data t)
+               (point)))
+        (end (save-excursion
+               (org-next-visible-heading 1)
+               (point))))
+    (string-trim (buffer-substring-no-properties beg end))))
+
+(defun org-roam-preview-get-contents (file pt)
+  "Get preview content for FILE at PT."
   (save-excursion
     (org-roam-with-temp-buffer file
-      (goto-char point)
-      (let ((elem (org-element-at-point)))
-        ;; We want the parent element always
-        (while (org-element-property :parent elem)
-          (setq elem (org-element-property :parent elem)))
-        (pcase (car elem)
-          ('headline                    ; show subtree
-           (org-roam-preview-get-entry-text (point-marker) most-positive-fixnum))
-          (_
-           (let ((begin (org-element-property :begin elem))
-                 (end (org-element-property :end elem)))
-             (or (string-trim (buffer-substring-no-properties begin end))
-                 (org-element-property :raw-value elem)))))))))
-
-(defun org-roam-preview-get-entry-text (marker n-lines &optional indent)
-  "Extract entry text from MARKER, at most N-LINES lines.
-This will ignore drawers etc, just get the text.
-If INDENT is given, prefix every line with this string."
-  (let (txt ind)
-    (save-excursion
-      (with-current-buffer (marker-buffer marker)
-        (if (not (derived-mode-p 'org-mode))
-            (setq txt "")
-          (org-with-wide-buffer
-           (goto-char marker)
-           (end-of-line 1)
-           (setq txt (buffer-substring
-                      (min (1+ (point)) (point-max))
-                      (progn (outline-next-heading) (point))))
-           (with-temp-buffer
-             (insert txt)
-             (goto-char (point-min))
-             (while (org-activate-links (point-max))
-               (goto-char (match-end 0)))
-             (goto-char (point-min))
-             (while (re-search-forward org-link-bracket-re (point-max) t)
-               (set-text-properties (match-beginning 0) (match-end 0)
-                                    nil))
-             (goto-char (point-min))
-             (while (re-search-forward org-drawer-regexp nil t)
-               (delete-region
-                (match-beginning 0)
-                (progn (re-search-forward
-                        "^[ \t]*:END:.*\n?" nil 'move)
-                       (point))))
-             (goto-char (point-min))
-             (goto-char (point-max))
-             (skip-chars-backward " \t\n")
-             (when (looking-at "[ \t\n]+\\'") (replace-match ""))
-
-             ;; find and remove min common indentation
-             (goto-char (point-min))
-             (untabify (point-min) (point-max))
-             (setq ind (current-indentation))
-             (while (not (eobp))
-               (unless (looking-at "[ \t]*$")
-                 (setq ind (min ind (current-indentation))))
-               (beginning-of-line 2))
-             (goto-char (point-min))
-             (while (not (eobp))
-               (unless (looking-at "[ \t]*$")
-                 (move-to-column ind)
-                 (delete-region (point-at-bol) (point)))
-               (beginning-of-line 2))
-             (goto-char (point-min))
-             (when indent
-               (while (and (not (eobp)) (re-search-forward "^" nil t))
-                 (replace-match indent t t)))
-             (goto-char (point-min))
-             (while (looking-at "[ \t]*\n") (replace-match ""))
-             (goto-char (point-max))
-             (when (> (org-current-line)
-                      n-lines)
-               (org-goto-line (1+ n-lines))
-               (backward-char 1))
-             (setq txt (buffer-substring (point-min) (point))))))))
-    txt))
+      (org-with-wide-buffer
+       (goto-char pt)
+       (let ((s (funcall org-roam-preview-function)))
+         (dolist (fn org-roam-preview-postprocess-functions)
+           (setq s (funcall fn s)))
+         s)))))
 
 ;;;; Backlinks
 (cl-defstruct (org-roam-backlink (:constructor org-roam-backlink-create)
@@ -493,14 +482,23 @@ If INDENT is given, prefix every line with this string."
         (org-roam-populate (org-roam-backlink-target-node backlink)))
   backlink)
 
-(defun org-roam-backlinks-get (node)
-  "Return the backlinks for NODE."
-  (let ((backlinks (org-roam-db-query
-                    [:select [source dest pos properties]
-                     :from links
-                     :where (= dest $s1)
-                     :and (= type "id")]
-                    (org-roam-node-id node))))
+(cl-defun org-roam-backlinks-get (node &key unique)
+  "Return the backlinks for NODE.
+
+ When UNIQUE is nil, show all positions where references are found.
+ When UNIQUE is t, limit to unique sources."
+  (let* ((sql (if unique
+                  [:select :distinct [source dest pos properties]
+                   :from links
+                   :where (= dest $s1)
+                   :and (= type "id")
+                   :group :by source
+                   :having (funcall min pos)]
+                [:select [source dest pos properties]
+                 :from links
+                 :where (= dest $s1)
+                 :and (= type "id")]))
+         (backlinks (org-roam-db-query sql (org-roam-node-id node))))
     (cl-loop for backlink in backlinks
              collect (pcase-let ((`(,source-id ,dest-id ,pos ,properties) backlink))
                        (org-roam-populate
@@ -516,9 +514,12 @@ Sorts by title."
   (string< (org-roam-node-title (org-roam-backlink-source-node a))
            (org-roam-node-title (org-roam-backlink-source-node b))))
 
-(defun org-roam-backlinks-section (node)
-  "The backlinks section for NODE."
-  (when-let ((backlinks (seq-sort #'org-roam-backlinks-sort (org-roam-backlinks-get node))))
+(cl-defun org-roam-backlinks-section (node &key (unique nil))
+  "The backlinks section for NODE.
+
+When UNIQUE is nil, show all positions where references are found.
+When UNIQUE is t, limit to unique sources."
+  (when-let ((backlinks (seq-sort #'org-roam-backlinks-sort (org-roam-backlinks-get node :unique unique))))
     (magit-insert-section (org-roam-backlinks)
       (magit-insert-heading "Backlinks:")
       (dolist (backlink backlinks)
@@ -656,7 +657,7 @@ References from FILE are excluded."
                                 (shell-command-to-string "rg --pcre2-version"))))
     (let* ((titles (cons (org-roam-node-title node)
                          (org-roam-node-aliases node)))
-           (rg-command (concat "rg -o --vimgrep -P -i "
+           (rg-command (concat "rg -L -o --vimgrep -P -i "
                                (mapconcat (lambda (glob) (concat "-g " glob))
                                           (org-roam--list-files-search-globs org-roam-file-extensions)
                                           " ")
@@ -677,14 +678,14 @@ References from FILE are excluded."
                     col (string-to-number (match-string 3 line))
                     match (match-string 4 line))
               (when (and match
-                         (not (f-equal-p (org-roam-node-file node) f))
+                         (not (file-equal-p (org-roam-node-file node) f))
                          (member (downcase match) (mapcar #'downcase titles)))
                 (magit-insert-section section (org-roam-grep-section)
                   (oset section file f)
                   (oset section row row)
                   (oset section col col)
                   (insert (propertize (format "%s:%s:%s"
-                                              (truncate-string-to-width (file-name-base f) 15 nil nil "...")
+                                              (truncate-string-to-width (file-name-base f) 15 nil nil t)
                                               row col) 'font-lock-face 'org-roam-dim)
                           " "
                           (org-roam-fontify-like-in-org-mode
