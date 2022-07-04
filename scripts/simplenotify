@@ -1,7 +1,7 @@
 #!/bin/python
 '''
-simplenotify.py
-===============
+simplenotify
+============
 Reference notifications by custom id for scripting.
 
 Details:
@@ -24,48 +24,59 @@ Note:
 
 import argparse as ap
 import functools
-import notify2 as notify
-import os
+from os import fork
+from pathlib import Path
+import socket
 import time
-import zmq
 
-PORT = 45655
-URL = f"tcp://localhost:{PORT}"
-BIND_URL = f"tcp://*:{PORT}"
-POLL_TIME = 0.2 * 1000
-APP_NAME = "SimpleNotify"
+import notify2 as notify
 
 
-def is_already_running():
-    try:
-        context = zmq.Context()
-        socket = context.socket(zmq.REQ)
-        socket.bind(BIND_URL)
+APP_NAME: str = "simplenotify"  # libnotify source name
+URI: Path = Path(f"/tmp/{APP_NAME}.sock")  # unix domain socket
+POLL_TIME: float = 0.2  # seconds
+MAX_MSG_SIZE: int = 10000  # 10 kb
+
+
+def is_already_running() -> bool:
+    if not URI.exists():
         return False
-    except Exception as e:
+    try:
+        sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        sock.connect(str(URI))
+        sock.close()
         return True
+    except Exception as e:
+        return False
+    return False
 
-def receive_data(socket, notifications):
-    if (p := socket.poll(POLL_TIME)) == 0:
-        return notifications
-    info = socket.recv().decode().split(",")
-    nid = info[-1]
-    if nid == "" or nid not in notifications:
-        notifications[nid] = {
-            "notification": Notification(info)
-        }
-    else:
-        notifications[nid]["notification"].parse_info(info)
-    notifications[nid]["notification"].show()
+def receive_data(sock: socket, notifications: dict) -> dict:
+    while True:
+        try:
+            conn, _ = sock.accept()
+        except Exception as e:
+            time.sleep(POLL_TIME)
+            break
+        resp: str = conn.recv(MAX_MSG_SIZE).decode()
+        if resp == "": continue
+        info: list = resp.split(",")
+        nid = info[-1]
+        if nid == "" or nid not in notifications:
+            notifications[nid] = {
+                "notification": Notification(info)
+            }
+        else:
+            notifications[nid]["notification"].parse_info(info)
+        notifications[nid]["notification"].show()
+        conn.close()
     return notifications
 
-def send_notification(notification):
-    context = zmq.Context()
-    socket = context.socket(zmq.REQ)
-    socket.connect(URL)
-    socket.send(str(notification).encode())
+def send_notification(notification) -> None:
+    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    sock.connect(str(URI))
+    sock.send(str(notification).encode())
 
-def server_loop(n):
+def server_loop(n: "Notification") -> None:
     notify.init(APP_NAME)
     notifications = {
         n.id : {
@@ -73,20 +84,24 @@ def server_loop(n):
         }
     }
     n.show()
+    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    if URI.exists():
+        URI.unlink()
+    sock.bind(str(URI))
+    sock.setblocking(False)
+    sock.listen()
     while len(notifications) > 0:
-        context = zmq.Context()
-        socket = context.socket(zmq.REP)
-        socket.bind(BIND_URL)
-        to_pop = []
-        for nid in notifications.keys():
-            if (time.time() - notifications[nid]["notification"].start_time >
-                notifications[nid]["notification"].timeout):
+        to_pop: list = []
+        for nid in notifications:
+            now = time.time()
+            start_time = notifications[nid]["notification"].start_time
+            end_length = notifications[nid]["notification"].timeout
+            if now - start_time > end_length:
                 to_pop.append(nid)
         for p in to_pop:
             notifications.pop(p)
-        notifications = receive_data(socket, notifications)
-        del socket
-        del context
+        notifications = receive_data(sock, notifications)
+    sock.close()
 
 class Notification:
     def __init__(self, info = None):
@@ -188,6 +203,7 @@ class Notification:
          self.timeout, self.reset, self.action,
          self.urgency, self.category, self.debug, self.id) = info
         self.timeout = int(self.timeout)
+        self.debug = (self.debug.lower() == "true")
         if "true" in self.reset.lower():  self.reset = True
         else:  self.reset = False
         if self.debug:
@@ -212,11 +228,10 @@ class Notification:
 
 if __name__ == "__main__":
     n = Notification()
-    pid = os.fork()
+    pid = fork()
     if pid != 0:
         exit(0)
     if is_already_running():
         send_notification(n)
     else:
         server_loop(n)
-
