@@ -1,7 +1,7 @@
 ;; Harrison Hall - emacs config
 
 ;; general
-(setq auto-revert-mode t)
+(auto-revert-mode)
 (setq scroll-step 1
       scroll-conservatively 10000)
 
@@ -161,6 +161,10 @@
         ("STUB"   . "#d08770")))
 (add-hook 'prog-mode-hook 'hl-todo-mode)
 
+;; highlight-matching symbols
+(require 'highlight-symbol)
+(add-hook 'prog-mode-hook #'highlight-symbol-mode)
+
 ;; org-mode
 (require 'org)
 (setq org-roam-v2-ack t)
@@ -185,7 +189,7 @@
 
 ;;;; Org Roam
 (add-to-list 'load-path "/plugins/org-roam/")
-(add-to-list 'load-path "/plugins/extensions/")
+(add-to-list 'load-path "/plugins/org-roam/extensions/")
 (require 'org-roam)
 
 (require 'eyebrowse)
@@ -212,6 +216,7 @@
 ;;(add-hook 'prog-mode-hook 'annotate-mode)
 
 ;; Magit
+(require 'with-editor)
 (require 'magit)
 
 ;; Use smex instead of M-x for commands
@@ -254,10 +259,6 @@
 
 ;; frame
 (global-set-key (kbd "C-x f") 'make-frame-command)
-
-;; copy-paste
-;(setq x-select-enable-clipboard t)
-;(setq x-select-enable-primary t)
 
 ;; closing emacs
 ;; define function to shutdown emacs server instance
