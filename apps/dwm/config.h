@@ -23,8 +23,18 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
+const size_t tags_len = 8;
 static const char *tags[] = { "●", "●", "●", "●", "●", "●", "●", "●"}; // ⚃ ●
-static const char *alttags[] = { "α", "β", "γ", "δ", "ε", "ζ", "η", "θ" };
+static const char *alttags_greek[] = { "α", "β", "γ", "δ", "ε", "ζ", "η", "θ" };
+static const char *alttags_jap[] = { "一", "二", "三", "四", "五", "六", "七", "八" };
+static const char **alttags = alttags_greek;
+void swap_tags() {
+  if (alttags == alttags_greek) {
+    alttags = alttags_jap;
+  } else if (alttags == alttags_jap) {
+    alttags = alttags_greek;
+  }
+}
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -98,6 +108,7 @@ static Key keys[] = {
   { MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },  // Shift size of master
   { MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },  // Shift size of master
   { MODKEY|ShiftMask,             XK_l,      spawn,          {.v = menucmd} },  // script menu
+  { MODKEY|ShiftMask,             XK_j,      swap_tags,      {}},
   { MODKEY,                       XK_Return, zoom,           {0} },  // ?
 /*{ MODKEY,                       XK_Tab,    view,           {0} },*/
   { 0,                            PrintScreenDWM, spawn,     {.v = printscreencmd} },  // print screen
