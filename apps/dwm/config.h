@@ -8,7 +8,6 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int scalepreview       = 4;        /* Tag preview scaling */
 static const char *fonts[]          = { "Hack:size=14" };  // 14,18
-static const char dmenufont[]       = "Hack:size=14";
 static const char col_gray1[]       = "#2e3440";
 static const char col_gray2[]       = "#81a1c1";
 static const char col_gray3[]       = "#81a1c1";
@@ -23,18 +22,12 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-const size_t tags_len = 8;
 static const char *tags[] = { "●", "●", "●", "●", "●", "●", "●", "●"}; // ⚃ ●
-static const char *alttags_greek[] = { "α", "β", "γ", "δ", "ε", "ζ", "η", "θ" };
-static const char *alttags_jap[] = { "一", "二", "三", "四", "五", "六", "七", "八" };
-static const char **alttags = alttags_greek;
-void swap_tags() {
-  if (alttags == alttags_greek) {
-    alttags = alttags_jap;
-  } else if (alttags == alttags_jap) {
-    alttags = alttags_greek;
-  }
-}
+static const char *alttags[][8] = {
+  { "α", "β", "γ", "δ", "ε", "ζ", "η", "θ" },
+  { "一", "二", "三", "四", "五", "六", "七", "八" },
+};
+static const char **alttags_current = alttags[0];
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -77,57 +70,42 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run_conf", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *roficmd[] = { "rofi", "-show", "run", NULL };
-static const char *pythoncmd[] = { "st", "-e", "ipython3", NULL};
-static const char *termcmd[]  = { "st", "-e", "tmux", "new-session", "-A", "-s", "MAIN", NULL };
-static const char *newtermcmd[]  = { "st", "-e", "tmux",NULL };
-static const char *windowcmd[] = { "rofi", "-show", "window", NULL};
-static const char *windowcdcmd[] = { "rofi", "-show", "windowcd", NULL};
-static const char *sshcmd[] = { "rofi", "-show", "ssh", NULL};
-static const char *lockscreencmd[] = { "/home/harrison/config/scripts/lockscreen", NULL};
-static const char *powercmd[] = { "/home/harrison/config/scripts/powermenu", NULL};
-static const char *printscreencmd[] = { "/home/harrison/config/scripts/printscreen", NULL};
-static const char *menucmd[] = { "/home/harrison/config/scripts/menu", NULL};
-static const char *screenshotclipcmd[] = { "/home/harrison/config/scripts/screenshot_clip", NULL};
+static const Arg termcmd  = SHCMD("st -e tmux new-session -A -s MAIN");
 
 static Key keys[] = {
   /* modifier                     key        function        argument */
-  { MODKEY,                       XK_s,      spawn,          {.v = roficmd } },  // search
-  { MODKEY|ShiftMask,             XK_t,      spawn,          {.v = termcmd } },  // terminal
-  { MODKEY|ControlMask,           XK_t,      spawn,          {.v = termcmd } },  // terminal
-  { MODKEY|ShiftMask,             XK_n,      spawn,          {.v = newtermcmd } },  // terminal
-  { MODKEY|ShiftMask,             XK_p,      spawn,          {.v = pythoncmd } },  // ipython window
-  { MODKEY|ShiftMask,             XK_q,      spawn,          {.v = powercmd} },  // powermenu
-  { MODKEY,                       XK_b,      togglebar,      {0} },  // toggle the status bar
+  { MODKEY,                       XK_s,      spawn,          SHCMD("rofi -show run") },  // Search programs
+  { MODKEY|ShiftMask,             XK_t,      spawn,          termcmd },  // Main terminal
+  { MODKEY|ControlMask,           XK_t,      spawn,          termcmd },  // Main terminal
+  { MODKEY|ShiftMask,             XK_n,      spawn,          SHCMD("st -e tmux") },  // Fresh terminal
+  { MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("st -e ipython3") },  // ipython window
+  { MODKEY|ShiftMask,             XK_q,      spawn,          SHCMD("powermenu") },  // powermenu
+  { MODKEY,                       XK_b,      togglebar,      {0} },  // Toggle the status bar
   { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },  // Rotate focus
   { MODKEY,                       XK_k,      focusstack,     {.i = -1 } },  // Rotate focus
-  { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },  // Incriment on left
+  { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },  // Increment on left
   { MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },  // Decrement on left
   { MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },  // Shift size of master
   { MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },  // Shift size of master
-  { MODKEY|ShiftMask,             XK_l,      spawn,          {.v = menucmd} },  // script menu
-  { MODKEY|ShiftMask,             XK_j,      swap_tags,      {}},
-  { MODKEY,                       XK_Return, zoom,           {0} },  // ?
-/*{ MODKEY,                       XK_Tab,    view,           {0} },*/
-  { 0,                            PrintScreenDWM, spawn,     {.v = printscreencmd} },  // print screen
-  { MODKEY,                       XK_Tab,    spawn,          {.v = windowcmd} },  // window switcher
-  { MODKEY|ShiftMask,             XK_s,      spawn,          {.v = sshcmd} },  // ssh holder
-  { MODKEY|ShiftMask,             XK_w,      killclient,     {0} },  // close window
-  { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[1]} },  // tiling mode
-  { MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },  // floating mode
-  { MODKEY,                       XK_F,      togglefloating, {0} },  // ?
-  { MODKEY,                       XK_m,      setlayout,      {.v = &layouts[0]} },  // monicle mode
-  { MODKEY,                       XK_space,  setlayout,      {0} },  // change layout back
-  { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },  // ?
-  { MODKEY,                       XK_0,      view,           {.ui = ~0 } },  // view all tags
-  { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },  // give window every tag
-  { MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-  { MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-  { MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },  // shift focus betweeen monitors
-  { MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },  // shift focus betweeen monitors
-  { MODKEY|ControlMask,           XK_4,      spawn,          {.v = screenshotclipcmd } },  // screenshot with cmd+shift+4 like macos
+  { MODKEY|ShiftMask,             XK_l,      spawn,          SHCMD("menu") },  // Script menu
+  { MODKEY|ShiftMask,             XK_j,      swaptags,       {}},  // Swap alttags
+  { MODKEY,                       XK_Return, zoom,           {0} },  // Swap focus
+  { 0,                            PrintScreenDWM, spawn,     SHCMD("printscreen") },  // print screen
+  { MODKEY,                       XK_Tab,    spawn,          SHCMD("rofi -show windowcd") },  // Window switcher
+  { MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("rofi -show ssh") },  // SSH Menu
+  { MODKEY|ShiftMask,             XK_w,      killclient,     {0} },  // Close window
+  { MODKEY,                       XK_t,      setlayout,      {.v = &layouts[1]} },  // Tiling mode
+  { MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },  // Floating mode
+  { MODKEY,                       XK_m,      setlayout,      {.v = &layouts[0]} },  // Monicle mode
+  { MODKEY,                       XK_space,  setlayout,      {0} },  // Swap layout mode
+  { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },  // Toggle floating on focused window
+  { MODKEY,                       XK_0,      view,           {.ui = ~0 } },  // View all tags
+  { MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },  // Give window every tag
+  { MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },  // Decrement monitor focus
+  { MODKEY,                       XK_period, focusmon,       {.i = +1 } },  // Increment monitor focus
+  { MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },  // Move window down monitor
+  { MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },  // Move window up monitor
+  { MODKEY|ControlMask,           XK_4,      spawn,          SHCMD("screenshot_clip") },  // Screenshot (like macos)
   TAGKEYS(                        XK_1,                      0)
   TAGKEYS(                        XK_2,                      1)
   TAGKEYS(                        XK_3,                      2)
@@ -137,19 +115,19 @@ static Key keys[] = {
   TAGKEYS(                        XK_7,                      6)
   TAGKEYS(                        XK_8,                      7)
   TAGKEYS(                        XK_9,                      8)
-  /*{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },  // close dwm */
-  { MODKEY|ControlMask,           XK_q,      quit,           {1} },  // restart dwm (keep apps open)
+  { MODKEY|ControlMask,           XK_q,      quit,           {1} },  // Restart DWM (keeps windows)
 };
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
+// TODO - figure out why this doesn't work
 static Button buttons[] = {
 	/* click                event mask      button          function        argument */
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button1,        togglewin,      {0} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
+	{ ClkStatusText,        0,              Button2,        spawn,          termcmd },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },

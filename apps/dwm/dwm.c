@@ -68,23 +68,31 @@ enum { WMProtocols, WMDelete, WMState, WMTakeFocus, WMLast }; /* default atoms *
 enum { ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle,
        ClkClientWin, ClkRootWin, ClkLast }; /* clicks */
 
-typedef union {
+typedef union Arg Arg;
+typedef struct Button Button;
+typedef struct Client Client;
+typedef struct Key Key;
+typedef struct Layout Layout;
+typedef struct Monitor Monitor;
+typedef struct Rule Rule;
+typedef struct Signal Signal;
+
+
+union Arg {
 	int i;
 	unsigned int ui;
 	float f;
 	const void *v;
-} Arg;
+};
 
-typedef struct {
+struct Button {
 	unsigned int click;
 	unsigned int mask;
 	unsigned int button;
 	void (*func)(const Arg *arg);
 	const Arg arg;
-} Button;
+};
 
-typedef struct Monitor Monitor;
-typedef struct Client Client;
 struct Client {
 	char name[256];
 	float mina, maxa;
@@ -100,23 +108,17 @@ struct Client {
 	Window win;
 };
 
-typedef struct {
+struct Key {
 	unsigned int mod;
 	KeySym keysym;
 	void (*func)(const Arg *);
 	const Arg arg;
-} Key;
+};
 
-typedef struct {
-	unsigned int signum;
-	void (*func)(const Arg *);
-	const Arg arg;
-} Signal;
-
-typedef struct {
+struct Layout {
 	const char *symbol;
 	void (*arrange)(Monitor *);
-} Layout;
+};
 
 struct Monitor {
 	char ltsymbol[16];
@@ -143,14 +145,20 @@ struct Monitor {
 	const Layout *lt[2];
 };
 
-typedef struct {
+struct Rule {
 	const char *class;
 	const char *instance;
 	const char *title;
 	unsigned int tags;
 	int isfloating;
 	int monitor;
-} Rule;
+};
+
+struct Signal {
+	unsigned int signum;
+	void (*func)(const Arg *);
+	const Arg arg;
+};
 
 /* function declarations */
 static void applyrules(Client *c);
@@ -164,6 +172,8 @@ static void checkotherwm(void);
 static void cleanup(void);
 static void cleanupmon(Monitor *mon);
 static void clientmessage(XEvent *e);
+static void combotag(const Arg *arg);
+static void comboview(const Arg *arg);
 static void configure(Client *c);
 static void configurenotify(XEvent *e);
 static void configurerequest(XEvent *e);
@@ -177,6 +187,7 @@ static void drawbars(void);
 static int drawstatusbar(Monitor *m, int bh, char* text);
 static void enternotify(XEvent *e);
 static void expose(XEvent *e);
+static int fake_signal(void);
 static void focus(Client *c);
 static void focusin(XEvent *e);
 static void focusmon(const Arg *arg);
@@ -192,7 +203,7 @@ static void hide(const Arg *arg);
 static void hidewin(Client *c);
 static void incnmaster(const Arg *arg);
 static void keypress(XEvent *e);
-static int fake_signal(void);
+static void keyrelease(XEvent *e);
 static void killclient(const Arg *arg);
 static void manage(Window w, XWindowAttributes *wa);
 static void mappingnotify(XEvent *e);
@@ -229,6 +240,7 @@ static void sigchld(int unused);
 static void sighup(int unused);
 static void sigterm(int unused);
 static void spawn(const Arg *arg);
+static void swaptags(const Arg *arg);
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
 static void tile(Monitor *);
@@ -257,10 +269,6 @@ static int xerror(Display *dpy, XErrorEvent *ee);
 static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
-
-static void keyrelease(XEvent *e);
-static void combotag(const Arg *arg);
-static void comboview(const Arg *arg);
 
 
 /* variables */
@@ -299,6 +307,7 @@ static Display *dpy;
 static Drw *drw;
 static Monitor *mons, *selmon;
 static Window root, wmcheckwin;
+static int combo = 0;
 
 /* configuration, allows nested code to access above variables */
 #include "config.h"
@@ -307,42 +316,6 @@ static Window root, wmcheckwin;
 struct NumTags { char limitexceeded[LENGTH(tags) > 31 ? -1 : 1]; };
 
 /* function implementations */
-static int combo = 0;
-
-void
-keyrelease(XEvent *e) {
-	combo = 0;
-}
-
-void
-combotag(const Arg *arg) {
-	if(selmon->sel && arg->ui & TAGMASK) {
-		if (combo) {
-			selmon->sel->tags |= arg->ui & TAGMASK;
-		} else {
-			combo = 1;
-			selmon->sel->tags = arg->ui & TAGMASK;
-		}
-		focus(NULL);
-		arrange(selmon);
-	}
-}
-
-void
-comboview(const Arg *arg) {
-	unsigned newtags = arg->ui & TAGMASK;
-	if (combo) {
-		selmon->tagset[selmon->seltags] |= newtags;
-	} else {
-		selmon->seltags ^= 1;	/*toggle tagset*/
-		combo = 1;
-		if (newtags)
-			selmon->tagset[selmon->seltags] = newtags;
-	}
-	focus(NULL);
-	arrange(selmon);
-}
-
 void
 applyrules(Client *c)
 {
@@ -504,7 +477,7 @@ buttonpress(XEvent *e)
 			occ |= c->tags;
 
 		do
-			x += TEXTW(occ & 1 << i ? alttags[i] : tags[i]);
+			x += TEXTW(occ & 1 << i ? alttags_current[i] : tags[i]);
 		while (ev->x >= x && ++i < LENGTH(tags));
 		if (i < LENGTH(tags)) {
 			click = ClkTagBar;
@@ -620,6 +593,35 @@ clientmessage(XEvent *e)
 			restack(selmon);
 		}
 	}
+}
+
+void
+combotag(const Arg *arg) {
+	if(selmon->sel && arg->ui & TAGMASK) {
+		if (combo) {
+			selmon->sel->tags |= arg->ui & TAGMASK;
+		} else {
+			combo = 1;
+			selmon->sel->tags = arg->ui & TAGMASK;
+		}
+		focus(NULL);
+		arrange(selmon);
+	}
+}
+
+void
+comboview(const Arg *arg) {
+	unsigned newtags = arg->ui & TAGMASK;
+	if (combo) {
+		selmon->tagset[selmon->seltags] |= newtags;
+	} else {
+		selmon->seltags ^= 1;	/*toggle tagset*/
+		combo = 1;
+		if (newtags)
+			selmon->tagset[selmon->seltags] = newtags;
+	}
+	focus(NULL);
+	arrange(selmon);
 }
 
 void
@@ -917,7 +919,7 @@ drawbar(Monitor *m)
 	}
 	x = 0;
 	for (i = 0; i < LENGTH(tags); i++) {
-		tagtext = occ & 1 << i ? alttags[i] : tags[i];
+		tagtext = occ & 1 << i ? alttags_current[i] : tags[i];
 		w = TEXTW(tagtext);
  		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
 		drw_text(drw, x, 0, w, bh, lrpad / 2, tagtext, urg & 1 << i);
@@ -1269,22 +1271,6 @@ isuniquegeom(XineramaScreenInfo *unique, size_t n, XineramaScreenInfo *info)
 }
 #endif /* XINERAMA */
 
-void
-keypress(XEvent *e)
-{
-	unsigned int i;
-	KeySym keysym;
-	XKeyEvent *ev;
-
-	ev = &e->xkey;
-	keysym = XKeycodeToKeysym(dpy, (KeyCode)ev->keycode, 0);
-	for (i = 0; i < LENGTH(keys); i++)
-		if (keysym == keys[i].keysym
-		&& CLEANMASK(keys[i].mod) == CLEANMASK(ev->state)
-		&& keys[i].func)
-			keys[i].func(&(keys[i].arg));
-}
-
 int
 fake_signal(void)
 {
@@ -1324,6 +1310,28 @@ fake_signal(void)
 
 	// No fake signal was sent, so proceed with update
 	return 0;
+}
+
+void
+keypress(XEvent *e)
+{
+	unsigned int i;
+	KeySym keysym;
+	XKeyEvent *ev;
+
+	ev = &e->xkey;
+	keysym = XKeycodeToKeysym(dpy, (KeyCode)ev->keycode, 0);
+	for (i = 0; i < LENGTH(keys); i++)
+		if (keysym == keys[i].keysym
+		&& CLEANMASK(keys[i].mod) == CLEANMASK(ev->state)
+		&& keys[i].func)
+			keys[i].func(&(keys[i].arg));
+}
+
+
+void
+keyrelease(XEvent *e) {
+	combo = 0;
 }
 
 void
@@ -1580,7 +1588,6 @@ propertynotify(XEvent *e)
 void
 quit(const Arg *arg)
 {
-	// fix: reloading dwm keeps all the hidden clients hidden
 	Monitor *m;
 	Client *c;
 	for (m = mons; m; m = m->next) {
@@ -2042,8 +2049,6 @@ sigterm(int unused)
 void
 spawn(const Arg *arg)
 {
-	if (arg->v == dmenucmd)
-		dmenumon[0] = '0' + selmon->num;
 	if (fork() == 0) {
 		if (dpy)
 			close(ConnectionNumber(dpy));
@@ -2053,6 +2058,19 @@ spawn(const Arg *arg)
 		perror(" failed");
 		exit(EXIT_SUCCESS);
 	}
+}
+
+void
+swaptags(const Arg *arg)
+{
+  const int num_alts = sizeof(alttags) / sizeof(alttags[0]);
+  //const int num_tags = sizeof(alttags[0]) / sizeof(alttags[0][0]);
+  for (int i = 0; i < num_alts; i++) {
+    if (alttags_current == alttags[i]) {
+      alttags_current = alttags[(i + 1) % num_alts];
+      break;
+    }
+  }
 }
 
 void
